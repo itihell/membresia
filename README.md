@@ -5,6 +5,13 @@ Este es un proyecto con [Next.js](https://nextjs.org/) project bootstrapped with
 ## Levantar la apliación 
 
 Para levantar el proyecto:
+1. Clonar el repositorio
+2. Copiar y renombrar el archivo .env.template por .env
+3. Rellenar los datos de las variables de entorno del archivo .env
+4. Instalar dependencias ```npm install```
+5. Correr las migraciones de Primsa ```npx prisma migrate dev```
+6. Ejecutar seed ```npm run seed```
+7. Correr el proyecto ```npm run dev```
 
 ```bash
 npm run dev
