@@ -2,14 +2,18 @@ import { QuantitySelector, Title } from "@/components";
 import Link from "next/link";
 import { initialData } from "@/seed/seed";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
-const pruductsInCart = [
+const productsInCart = [
   initialData.products[0],
   initialData.products[1],
   initialData.products[2],
 ];
 
 export default function CartPage() {
+  if (productsInCart.length === 0) {
+    redirect("/empty");
+  }
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-0">
       <div className="flex flex-col w-[1000px]">
@@ -22,7 +26,7 @@ export default function CartPage() {
 
             {/* Items del carrito */}
 
-            {pruductsInCart.map((product) => (
+            {productsInCart.map((product) => (
               <div key={product.slug} className="flex mb-5">
                 <Image
                   src={`/products/${product.images[0]}`}
