@@ -75,10 +75,17 @@ export default function CheckOutPage() {
               <span className="mt-5 text-2xl text-right">$ 200</span>
             </div>
             <div className="mt-5 mb-2 w-full">
-            <p className="mb-5">
-                {/* Disclaimer */ }
+              <p className="mb-5">
+                {/* Disclaimer */}
                 <span className="text-xs">
-                  Al hacer clic en "Colocar orden", aceptas nuestros <a href="#" className="underline">términos y condiciones</a> y <a href="#" className="underline">política de privacidad</a>
+                  Al hacer clic en Colocar orden, aceptas nuestros{" "}
+                  <a href="#" className="underline">
+                    términos y condiciones
+                  </a>{" "}
+                  y{" "}
+                  <a href="#" className="underline">
+                    política de privacidad
+                  </a>
                 </span>
               </p>
               <Link
