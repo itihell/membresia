@@ -16,8 +16,6 @@ export default async function PeoplePage() {
         subtitle="Catalogo de personas dentro de Membershiping"
         className="mb-2"
       />
-
-      <h1>Pagina de personas</h1>
       <PeopleGrid peoples={peoples} />
     </>
   );

@@ -18,7 +18,7 @@ export default async function Home({ searchParams }: Props) {
 
   return (
     <>
-      <Title title="Home" subtitle="Página principal" className="mb-2" />
+      <Title title="Home" subtitle="Versiculos del día" className="mb-2" />
       <PostGrid posts={posts} />
     </>
   );

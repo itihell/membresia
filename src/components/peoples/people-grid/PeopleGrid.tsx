@@ -7,7 +7,7 @@ interface Props {
 
 export const PeopleGrid = ({ peoples }: Props) => {
   return (
-    <div className="md:px-32  w-full">
+    <div className="w-full">
       <div className="shadow overflow-hidden rounded border-b border-gray-200">
         <table className="min-w-full bg-white">
           <thead className="bg-gray-800 text-white">
@@ -21,7 +21,7 @@ export const PeopleGrid = ({ peoples }: Props) => {
               <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Cédula
               </th>
-               <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
+              <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
                 Teléfono
               </th>
               <th className="text-left py-3 px-4 uppercase font-semibold text-sm">

@@ -162,6 +162,27 @@ async function main() {
         slug: "titulo-3",
         userId: users[0].id,
       },
+      {
+        title: "Titulo 4",
+        content: "Contenido 4",
+        categoryId: categorias[0].id,
+        slug: "titulo-4",
+        userId: users[0].id,
+      },
+      {
+        title: "Titulo 5",
+        content: "Contenido 5",
+        categoryId: categorias[1].id,
+        slug: "titulo-5",
+        userId: users[0].id,
+      },
+      {
+        title: "Titulo 6",
+        content: "Contenido 6",
+        categoryId: categorias[2].id,
+        slug: "titulo-6",
+        userId: users[0].id,
+      },
     ],
   });
 
@@ -169,14 +190,41 @@ async function main() {
 
   await prisma.postHasImage.createMany({
     data: [
-      { postId: posts[0].id, url: "8765120-00-A_0_2000.jpg" },
+      { postId: posts[0].id, url: "pedro_1_3_13.png" },
+      { postId: posts[0].id, url: "colosenses_1_16.png" },
       {
         postId: posts[1].id,
-        url: "5645680-00-A_0_2000.jpg",
+        url: "coreintios1_13_34.png",
+      },
+      {
+        postId: posts[1].id,
+        url: "mateo_8_26.png",
       },
       {
         postId: posts[2].id,
-        url: "1473829-00-A_2_2000.jpg",
+        url: "lucas_1_37.png",
+      },
+      {
+        postId: posts[2].id,
+        url: "juan_3_16.png",
+      },
+      { postId: posts[3].id, url: "colosenses_1_16.png" },
+      { postId: posts[3].id, url: "pedro_1_3_13.png" },
+      {
+        postId: posts[4].id,
+        url: "mateo_8_26.png",
+      },
+      {
+        postId: posts[4].id,
+        url: "coreintios1_13_34.png",
+      },
+      {
+        postId: posts[5].id,
+        url: "juan_3_16.png",
+      },
+      {
+        postId: posts[5].id,
+        url: "lucas_1_37.png",
       },
     ],
   });
