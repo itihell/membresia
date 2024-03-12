@@ -3,9 +3,13 @@ import { useUiStore } from "@/store";
 import clsx from "clsx";
 import Link from "next/link";
 import {
+  IoBan,
+  IoBusiness,
   IoCloseOutline,
   IoLogInOutline,
   IoLogOutOutline,
+  IoPeople,
+  IoPeopleCircle,
   IoPeopleOutline,
   IoPersonOutline,
   IoSearchOutline,
@@ -72,7 +76,7 @@ export const SideBar = () => {
           className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
         >
           <IoTicketOutline size={30} />
-          <span className="ml-3 text-xl">Ordenes</span>
+          <span className="ml-3 text-xl">Asistencias</span>
         </Link>
         <Link
           href="/"
@@ -95,16 +99,24 @@ export const SideBar = () => {
           href="/"
           className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
         >
-          <IoShirtOutline size={30} />
-          <span className="ml-3 text-xl">Productos</span>
+          <IoPeopleCircle size={30} />
+          <span className="ml-3 text-xl">Miembros</span>
         </Link>
 
         <Link
           href="/"
           className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
         >
-          <IoTicketOutline size={30} />
-          <span className="ml-3 text-xl">Ordenes</span>
+          <IoPeople size={30} />
+          <span className="ml-3 text-xl">Personas</span>
+        </Link> 
+        
+        <Link
+          href="/"
+          className="flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+        >
+          <IoBusiness size={30} />
+          <span className="ml-3 text-xl">Iglesias</span>
         </Link>
 
         <Link

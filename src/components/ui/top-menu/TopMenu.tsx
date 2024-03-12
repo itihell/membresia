@@ -12,30 +12,30 @@ export const TopMenu = () => {
       <div>
         <Link href="/">
           <span className={`${titleFont.className} antialiased font-bold`}>
-            Teslo
+          Member
           </span>
-          <span> | Shop</span>
+          <span> | shiping</span>
         </Link>
       </div>
       {/* Cerrar el menu */}
       <div className="hidden sm:block">
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/men"
+          href="/members"
         >
-          hombres
+          Miembros
         </Link>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/women"
+          href="/peoples"
         >
-          Mujeres
+          Personas
         </Link>
         <Link
           className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/gender/kid"
+          href="/asistencias"
         >
-          Niños
+          Asistencias
         </Link>
       </div>
       {/* Search cart menu */}

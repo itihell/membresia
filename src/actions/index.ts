@@ -1,1 +1,2 @@
-export * from "./products/product-pagination";
+export * from "./peoples/peoples-actions";
+export * from "./post/post-actions";

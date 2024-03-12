@@ -1,56 +1,187 @@
 import { create } from "zustand";
-import { initialData } from "./seed";
+
 import prisma from "../lib/prisma";
 
 async function main() {
   // 1. Borrar registros previos
   // await Promise.all( [
-  await prisma.productImage.deleteMany();
-  await prisma.product.deleteMany();
+  await prisma.people.deleteMany();
+  await prisma.sexos.deleteMany();
+  await prisma.estadoCivil.deleteMany();
+  await prisma.tipoMembresia.deleteMany();
+  await prisma.membresia.deleteMany();
+  await prisma.church.deleteMany();
+  await prisma.userHasChurch.deleteMany();
+  await prisma.userHasRole.deleteMany();
+  await prisma.postHasImage.deleteMany();
+  await prisma.post.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.role.deleteMany();
   // ]);
-
-  const { categories, products } = initialData;
 
   //  Categorias
   // {
   //   name: 'Shirt'
   // }
-  const categoriesData = categories.map((name) => ({ name }));
+
+  await prisma.sexos.createMany({
+    data: [{ name: "Masculino" }, { name: "Femenino" }],
+  });
+
+  const sexos = await prisma.sexos.findMany();
+
+  await prisma.estadoCivil.createMany({
+    data: [
+      { estado_civil: "Soltero" },
+      { estado_civil: "Casado" },
+      { estado_civil: "Divorciado" },
+      { estado_civil: "Union Libre" },
+    ],
+  });
+
+  const estadoCivil = await prisma.estadoCivil.findMany();
+
+  await prisma.role.createMany({
+    data: [{ name: "admin" }, { name: "user" }, { name: "secretario" }],
+  });
+
+  await prisma.user.createMany({
+    data: [{ email: "admin@test.com", password: "12345678", name: "Admin" }],
+  });
+
+  const users = await prisma.user.findMany();
+
+  await prisma.people.createMany({
+    data: [
+      {
+        nombres: "Juana Maria",
+        apellidos: "Perez Garcia",
+        sexoId: sexos[1].id,
+        fecha_nacimiento: new Date("1990-01-01"),
+        fecha_bautizo: new Date("2010-01-01"),
+        fecha_fe: new Date("2010-01-01"),
+        cedula: "1234567890",
+        userId: users[0].id,
+        direccion: "Calle 1",
+        telefono: "1234567890",
+        estado_civilId: estadoCivil[1].id,
+      },
+      {
+        nombres: "Karla Azucena",
+        apellidos: "Martinez Alvarez",
+        sexoId: sexos[1].id,
+        fecha_nacimiento: new Date("1983-07-03"),
+        fecha_bautizo: new Date("2010-01-01"),
+        fecha_fe: new Date("2010-01-01"),
+        cedula: "616435345435",
+        userId: users[0].id,
+        direccion: "Calle 12",
+        telefono: "67898934535",
+        estado_civilId: estadoCivil[2].id,
+      },
+      {
+        nombres: "Iker Adonay",
+        apellidos: "Gomez Rodriguez",
+        sexoId: sexos[1].id,
+        fecha_nacimiento: new Date("1989-12-12"),
+        fecha_bautizo: new Date("2009-03-09"),
+        fecha_fe: new Date("2011-02-12"),
+        cedula: "1219789789",
+        userId: users[0].id,
+        direccion: "Calle 24",
+        telefono: "67767767897",
+        estado_civilId: estadoCivil[1].id,
+      },
+    ],
+  });
+
+  await prisma.church.createMany({
+    data: [
+      {
+        name: "Eben Ezer",
+        address: "Calle 1",
+        phone: "1234567890",
+        email: "eben.ezer.ng@gmail.com",
+      },
+      {
+        name: "Rosa de Saron",
+        address: "Calle central",
+        phone: "8787898023",
+        email: "rosa.saron.ng@gmail.com",
+      },
+      {
+        name: "Esmirna",
+        address: "Calle central",
+        phone: "8787898023",
+        email: "esmirna.ng@gmail.com",
+      },
+    ],
+  });
+
+  await prisma.tipoMembresia.createMany({
+    data: [{ tipo_mebresia: "Pleno" }, { tipo_mebresia: "Asociado" }],
+  });
 
   await prisma.category.createMany({
-    data: categoriesData,
+    data: [
+      {
+        name: "Noticia",
+      },
+      {
+        name: "Evento",
+      },
+      {
+        name: "Anuncio",
+      },
+    ],
   });
 
-  const categoriesDB = await prisma.category.findMany();
+  const categorias = await prisma.category.findMany();
 
-  const categoriesMap = categoriesDB.reduce((map, category) => {
-    map[category.name.toLowerCase()] = category.id;
-    return map;
-  }, {} as Record<string, string>); //<string=shirt, string=categoryID>
+  await prisma.post.createMany({
+    data: [
+      {
+        title: "Titulo 1",
+        content: "Contenido 1",
+        categoryId: categorias[0].id,
+        slug: "titulo-1",
+        userId: users[0].id,
+      },
+      {
+        title: "Titulo 2",
+        content: "Contenido 2",
+        categoryId: categorias[1].id,
+        slug: "titulo-2",
+        userId: users[0].id,
+      },
+      {
+        title: "Titulo 3",
+        content: "Contenido 3",
+        categoryId: categorias[2].id,
+        slug: "titulo-3",
+        userId: users[0].id,
+      },
+    ],
+  });
+
+  const posts = await prisma.post.findMany();
+
+  await prisma.postHasImage.createMany({
+    data: [
+      { postId: posts[0].id, url: "8765120-00-A_0_2000.jpg" },
+      {
+        postId: posts[1].id,
+        url: "5645680-00-A_0_2000.jpg",
+      },
+      {
+        postId: posts[2].id,
+        url: "1473829-00-A_2_2000.jpg",
+      },
+    ],
+  });
 
   // Productos
-
-  products.forEach(async (product) => {
-    const { type, images, ...rest } = product;
-
-    const dbProduct = await prisma.product.create({
-      data: {
-        ...rest,
-        categoryId: categoriesMap[type],
-      },
-    });
-
-    // Images
-    const imagesData = images.map((image) => ({
-      url: image,
-      productId: dbProduct.id,
-    }));
-
-    await prisma.productImage.createMany({
-      data: imagesData,
-    });
-  });
 
   console.log("Seed ejecutado correctamente");
 }
