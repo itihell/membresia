@@ -5,8 +5,8 @@ import prisma from "../lib/prisma";
 async function main() {
   // 1. Borrar registros previos
   // await Promise.all( [
-  await prisma.people.deleteMany();
-  await prisma.sexos.deleteMany();
+  await prisma.persona.deleteMany();
+  await prisma.sexo.deleteMany();
   await prisma.estadoCivil.deleteMany();
   await prisma.tipoMembresia.deleteMany();
   await prisma.membresia.deleteMany();
@@ -18,6 +18,11 @@ async function main() {
   await prisma.category.deleteMany();
   await prisma.user.deleteMany();
   await prisma.role.deleteMany();
+  await prisma.barrio.deleteMany();
+  await prisma.zonaGeografica.deleteMany();
+  await prisma.municipio.deleteMany();
+  await prisma.departamento.deleteMany();
+  await prisma.pais.deleteMany();
   // ]);
 
   //  Categorias
@@ -25,18 +30,68 @@ async function main() {
   //   name: 'Shirt'
   // }
 
-  await prisma.sexos.createMany({
+  await prisma.sexo.createMany({
     data: [{ name: "Masculino" }, { name: "Femenino" }],
   });
 
-  const sexos = await prisma.sexos.findMany();
+  await prisma.estado.createMany({
+    data: [{ name: "Activo" }, { name: "Baja" }],
+  });
+
+  await prisma.pais.createMany({
+    data: [
+      { id: 1, name: "Nicaragua" },
+      { id: 2, name: "Costa Rica" },
+    ],
+  });
+
+  await prisma.departamento.createMany({
+    data: [
+      { id: 1, paisId: 1, name: "RACCS" },
+      { id: 2, paisId: 1, name: "Managua" },
+    ],
+  });
+
+  await prisma.municipio.createMany({
+    data: [
+      { id: 1, departamentoId: 1, name: "Nueva Guinea" },
+      { id: 2, departamentoId: 1, name: "El Rama" },
+      { id: 3, departamentoId: 1, name: "Bluefields" },
+      { id: 4, departamentoId: 1, name: "Mueye de los Buelles" },
+    ],
+  });
+
+  await prisma.zonaGeografica.createMany({
+    data: [
+      { id: 1, name: "Urbano" },
+      { id: 2, name: "Rural" },
+    ],
+  });
+
+  await prisma.barrio.createMany({
+    data: [
+      { id: 1, zonaGeograficaId: 1, municipioId: 1, name: "Zona 1" },
+      { id: 2, zonaGeograficaId: 1, municipioId: 1, name: "Zona 2" },
+      { id: 3, zonaGeograficaId: 1, municipioId: 1, name: "Zona 3" },
+      { id: 4, zonaGeograficaId: 1, municipioId: 1, name: "Zona 4" },
+      { id: 5, zonaGeograficaId: 1, municipioId: 1, name: "Zona 5" },
+      { id: 6, zonaGeograficaId: 1, municipioId: 1, name: "Zona 6" },
+      { id: 7, zonaGeograficaId: 1, municipioId: 1, name: "Zona 7" },
+      { id: 8, zonaGeograficaId: 1, municipioId: 1, name: "Zona 8" },
+      { id: 9, zonaGeograficaId: 1, municipioId: 1, name: "Zona 9" },
+      { id: 10, zonaGeograficaId: 1, municipioId: 1, name: "Bo. Linda Vista" },
+      { id: 11, zonaGeograficaId: 1, municipioId: 1, name: "Bo. 5 Marzo" },
+    ],
+  });
+
+  const sexos = await prisma.sexo.findMany();
 
   await prisma.estadoCivil.createMany({
     data: [
-      { estado_civil: "Soltero" },
-      { estado_civil: "Casado" },
-      { estado_civil: "Divorciado" },
-      { estado_civil: "Union Libre" },
+      { id: 1, estadoCivil: "Soltero" },
+      { id: 2, estadoCivil: "Casado" },
+      { id: 3, estadoCivil: "Divorciado" },
+      { id: 4, estadoCivil: "Union Libre" },
     ],
   });
 
@@ -52,46 +107,49 @@ async function main() {
 
   const users = await prisma.user.findMany();
 
-  await prisma.people.createMany({
+  await prisma.persona.createMany({
     data: [
       {
         nombres: "Juana Maria",
         apellidos: "Perez Garcia",
         sexoId: sexos[1].id,
-        fecha_nacimiento: new Date("1990-01-01"),
-        fecha_bautizo: new Date("2010-01-01"),
-        fecha_fe: new Date("2010-01-01"),
+        fechaNacimiento: new Date("1990-01-01"),
+        fechaBautizo: new Date("2010-01-01"),
+        fechaFe: new Date("2010-01-01"),
         cedula: "1234567890",
         userId: users[0].id,
         direccion: "Calle 1",
         telefono: "1234567890",
-        estado_civilId: estadoCivil[1].id,
+        estadoCivilId: estadoCivil[1].id,
+        barrioId: 1,
       },
       {
         nombres: "Karla Azucena",
         apellidos: "Martinez Alvarez",
         sexoId: sexos[1].id,
-        fecha_nacimiento: new Date("1983-07-03"),
-        fecha_bautizo: new Date("2010-01-01"),
-        fecha_fe: new Date("2010-01-01"),
+        fechaNacimiento: new Date("1983-07-03"),
+        fechaBautizo: new Date("2010-01-01"),
+        fechaFe: new Date("2010-01-01"),
         cedula: "616435345435",
         userId: users[0].id,
         direccion: "Calle 12",
         telefono: "67898934535",
-        estado_civilId: estadoCivil[2].id,
+        estadoCivilId: estadoCivil[2].id,
+        barrioId: 2,
       },
       {
         nombres: "Iker Adonay",
         apellidos: "Gomez Rodriguez",
         sexoId: sexos[1].id,
-        fecha_nacimiento: new Date("1989-12-12"),
-        fecha_bautizo: new Date("2009-03-09"),
-        fecha_fe: new Date("2011-02-12"),
+        fechaNacimiento: new Date("1989-12-12"),
+        fechaBautizo: new Date("2009-03-09"),
+        fechaFe: new Date("2011-02-12"),
         cedula: "1219789789",
         userId: users[0].id,
         direccion: "Calle 24",
         telefono: "67767767897",
-        estado_civilId: estadoCivil[1].id,
+        estadoCivilId: estadoCivil[1].id,
+        barrioId: 3,
       },
     ],
   });
@@ -120,7 +178,7 @@ async function main() {
   });
 
   await prisma.tipoMembresia.createMany({
-    data: [{ tipo_mebresia: "Pleno" }, { tipo_mebresia: "Asociado" }],
+    data: [{ tipoMebresia: "Pleno" }, { tipoMebresia: "Asociado" }],
   });
 
   await prisma.category.createMany({

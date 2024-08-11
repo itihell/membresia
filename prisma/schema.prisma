@@ -10,53 +10,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Size {
-  XS
-  S
-  M
-  L
-  XL
-  XXL
-  XXXL
-}
-
-enum Gender {
-  men
-  women
-  kid
-  unisex
-}
-
 model User {
-  id          String        @id @default(uuid())
-  email       String        @unique
-  password    String
-  name        String
-  UserHasRole UserHasRole[]
-  churchId    String?
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String
+  name     String
+  churchId String? @map("church_id")
 
-  Autor         People[]        @relation(name: "Autor")
-  Editor        People[]        @relation(name: "Editor")
-  AutorBaja     Bajas[]         @relation(name: "Autor")
-  EditorBaja    Bajas[]         @relation(name: "Editor")
+  // Relaciones
+
+  UserHasRole   UserHasRole[]
+  Autor         Persona[]       @relation(name: "Autor")
+  Editor        Persona[]       @relation(name: "Editor")
+  AutorBaja     Baja[]          @relation(name: "Autor")
+  EditorBaja    Baja[]          @relation(name: "Editor")
   UserHasChurch UserHasChurch[]
   post          Post[]
   Eventos       Eventos[]
 
-  @@map("user")
+  @@map("users")
 }
 
 model Role {
-  id          Int           @id @default(autoincrement())
-  name        String        @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  // Relaciones
   UserHasRole UserHasRole[]
 
-  @@map("role")
+  @@map("roles")
+}
+
+model Estado {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  // Relaciones
+
+  @@map("estados")
 }
 
 model UserHasRole {
-  userId String
-  roleId Int
+  userId String @map("user_id")
+  roleId Int    @map("role_id")
+
+  // Relaciones
 
   User User @relation(fields: [userId], references: [id])
   Role Role @relation(fields: [roleId], references: [id])
@@ -66,164 +64,255 @@ model UserHasRole {
 }
 
 model Sexo {
-  id     Int      @id @default(autoincrement())
-  name   String   @unique
-  People People[]
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  // Relaciones
+  People Persona[]
 
   @@map("sexos")
 }
 
 model EstadoCivil {
-  id           Int      @id @default(autoincrement())
-  estado_civil String   @unique
-  People       People[]
-
-  @@map("estado_civil")
-}
-
-model People {
-  id               String    @id @default(uuid())
-  nombres          String
-  apellidos        String
-  cedula           String    @unique
-  fecha_nacimiento DateTime
-  fecha_fe         DateTime?
-  fecha_bautizo    DateTime?
-  sexoId           Int
-  direccion        String
-  telefono         String?
-  userId           String
-  editorId         String?
-  estado_civilId   Int
-  email            String?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  id          Int    @id @default(autoincrement())
+  estadoCivil String @unique @map("estado_civil")
 
   // Relaciones
-  sexo        Sexo        @relation(fields: [sexoId], references: [id])
-  autor       User        @relation(name: "Autor", fields: [userId], references: [id])
-  editor      User?       @relation(name: "Editor", fields: [editorId], references: [id])
-  estadoCivil EstadoCivil @relation(fields: [estado_civilId], references: [id])
-  membresia   Membresia[]
-  bajas       Bajas[]
+  People Persona[]
 
-  @@map("people")
+  @@map("estados_civil")
+}
+
+model Pais {
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  Departamentos Departamento[]
+
+  @@map("paises")
+}
+
+model Departamento {
+  id     Int    @id @default(autoincrement())
+  name   String @unique
+  paisId Int    @map("pais_id")
+
+  // Relaciones
+  pais       Pais        @relation(fields: [paisId], references: [id])
+  Municipios Municipio[]
+
+  @@map("departamentos")
+}
+
+model Municipio {
+  id             Int    @id @default(autoincrement())
+  name           String @unique
+  departamentoId Int    @map("departamento_id")
+
+  // Relaciones
+  departamento Departamento @relation(fields: [departamentoId], references: [id])
+  Barrio       Barrio[]
+
+  @@map("municipios")
+}
+
+model ZonaGeografica {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  // Relaciones
+  Barrio Barrio[]
+
+  @@map("zonas_geograficas")
+}
+
+model Barrio {
+  id               Int    @id @default(autoincrement())
+  name             String @unique
+  municipioId      Int    @map("municipio_id")
+  zonaGeograficaId Int    @map("zona_geografica_id")
+
+  // Relaciones
+  municipio      Municipio       @relation(fields: [municipioId], references: [id])
+  ZonaGeografica ZonaGeografica? @relation(fields: [zonaGeograficaId], references: [id])
+  Persona        Persona[]
+
+  @@map("barrios")
+}
+
+model Persona {
+  id              String    @id @default(uuid())
+  nombres         String
+  apellidos       String
+  cedula          String    @unique
+  fechaNacimiento DateTime  @map("fecha_nacimiento")
+  fechaFe         DateTime? @map("fecha_fe")
+  fechaBautizo    DateTime? @map("fecha_bautizo")
+  sexoId          Int       @map("sexo_id")
+  barrioId        Int       @map("barrio_id")
+  direccion       String
+  telefono        String?
+  userId          String    @map("user_id")
+  editorId        String?   @map("editor_id")
+  estadoCivilId   Int       @map("estado_civil_id")
+  email           String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relaciones
+  sexo                Sexo                   @relation(fields: [sexoId], references: [id])
+  autor               User                   @relation(name: "Autor", fields: [userId], references: [id])
+  editor              User?                  @relation(name: "Editor", fields: [editorId], references: [id])
+  estadoCivil         EstadoCivil            @relation(fields: [estadoCivilId], references: [id])
+  membresia           Membresia[]
+  bajas               Baja[]
+  EventoHasAsistencia EventosHasAsistencia[]
+  barrio              Barrio                 @relation(fields: [barrioId], references: [id])
+
+  @@map("personas")
 }
 
 model Membresia {
   id        String   @id @default(uuid())
-  peopleId  String
+  peopleId  String   @map("people_id")
   fecha     DateTime
-  tipoId    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tipoId    Int      @map("tipo_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   // Relaciones
-  people People        @relation(fields: [peopleId], references: [id])
+  people Persona       @relation(fields: [peopleId], references: [id])
   tipo   TipoMembresia @relation(fields: [tipoId], references: [id])
 
-  @@map("membresia")
+  @@map("membresias")
 }
 
 model TipoMembresia {
-  id            Int         @id @default(autoincrement())
-  tipo_mebresia String
-  membresia     Membresia[]
+  id           Int    @id @default(autoincrement())
+  tipoMebresia String @map("tipo_mebresia")
 
-  @@map("tipo_membresia")
+  // Relaciones
+  membresia Membresia[]
+
+  @@map("tipos_membresia")
 }
 
 model Baja {
   id       String   @id @default(uuid())
-  peopleId String
+  peopleId String   @map("people_id")
   fecha    DateTime
   motivo   String
-  userId   String
-  editorId String?
+  userId   String   @map("user_id")
+  editorId String?  @map("editor_id")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   // Relaciones
-  people People @relation(fields: [peopleId], references: [id])
-  autor  User   @relation(name: "Autor", fields: [userId], references: [id])
-  editor User?  @relation(name: "Editor", fields: [editorId], references: [id])
+  people Persona @relation(fields: [peopleId], references: [id])
+  autor  User    @relation(name: "Autor", fields: [userId], references: [id])
+  editor User?   @relation(name: "Editor", fields: [editorId], references: [id])
 
   @@map("bajas")
 }
 
-model Church {
+model Iglesia {
   id      String @id @default(uuid())
   name    String
   address String
   phone   String
   email   String
 
+  // Relaciones
   userHasChurch UserHasChurch[]
   Eventos       Eventos[]
 
-  @@map("church")
+  @@map("iglesia")
 }
 
 model UserHasChurch {
-  id       Int    @id @default(autoincrement())
-  userId   String
-  churchId String
+  id        Int    @id @default(autoincrement())
+  userId    String @map("user_id")
+  iglesiaId String @map("iglesia_id")
 
-  user   User   @relation(fields: [userId], references: [id])
-  church Church @relation(fields: [churchId], references: [id])
+  // Relaciones
+  user    User    @relation(fields: [userId], references: [id])
+  iglesia Iglesia @relation(fields: [iglesiaId], references: [id])
 
   // @@id([userId, churchId])
-  @@map("user_has_church")
+  @@map("users_has_church")
 }
 
 model Category {
   id   Int    @id @default(autoincrement())
   name String @unique
+
+  // Relaciones
   post Post[]
 
-  @@map("category")
+  @@map("categorys")
 }
 
 model Post {
-  id           String         @id @default(uuid())
-  title        String
-  slug         String         @unique
-  content      String
-  published    Boolean        @default(false)
-  userId       String
-  categoryId   Int
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id         String   @id @default(uuid())
+  title      String
+  slug       String   @unique
+  content    String
+  published  Boolean  @default(false)
+  userId     String   @map("user_id")
+  categoryId Int      @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
   user         User           @relation(fields: [userId], references: [id])
   category     Category       @relation(fields: [categoryId], references: [id])
   postHasImage PostHasImage[]
 
-  @@map("post")
+  @@map("posts")
 }
 
 model Eventos {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String?
   date        DateTime
   location    String
-  userId      String
-  churchId    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  userId      String    @map("user_id")
+  iglesiaId   String    @map("iglesia_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
 
-  user   User   @relation(fields: [userId], references: [id])
-  church Church @relation(fields: [churchId], references: [id])
+  // Relaciones
+  user                 User                   @relation(fields: [userId], references: [id])
+  iglesia              Iglesia                @relation(fields: [iglesiaId], references: [id])
+  EventosHasAsistencia EventosHasAsistencia[]
 
   @@map("eventos")
+}
+
+model EventosHasAsistencia {
+  id        Int       @id @default(autoincrement())
+  eventoId  String    @map("evento_id")
+  peopleId  String    @map("people_id")
+  asistio   Boolean
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relaciones
+  evento Eventos @relation(fields: [eventoId], references: [id])
+  people Persona @relation(fields: [peopleId], references: [id])
+
+  @@map("eventos_has_asistencia")
 }
 
 model PostHasImage {
   id     Int    @id @default(autoincrement())
   url    String
-  postId String
+  postId String @map("post_id")
 
+  // Relaciones
   post Post @relation(fields: [postId], references: [id])
 
   @@map("post_has_image")
