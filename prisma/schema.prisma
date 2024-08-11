@@ -27,41 +27,6 @@ enum Gender {
   unisex
 }
 
-// model Category {
-//   id      String    @id @default(uuid())
-//   name    String    @unique
-//   Product Product[]
-// }
-
-// model Product {
-//   id          String   @id @default(uuid())
-//   title       String
-//   description String
-//   inStock     Int
-//   price       Float    @default(0)
-//   sizes       Size[]   @default([])
-//   slug        String   @unique
-//   tags        String[] @default([])
-//   gender      Gender
-
-//   // Relaciones
-
-//   category   Category @relation(fields: [categoryId], references: [id])
-//   categoryId String
-
-//   ProductImage ProductImage[]
-
-//   @@index([gender])
-// }
-
-// model ProductImage {
-//   id  Int    @id @default(autoincrement())
-//   url String
-
-//   product   Product @relation(fields: [productId], references: [id])
-//   productId String
-// }
-
 model User {
   id          String        @id @default(uuid())
   email       String        @unique
@@ -76,12 +41,17 @@ model User {
   EditorBaja    Bajas[]         @relation(name: "Editor")
   UserHasChurch UserHasChurch[]
   post          Post[]
+  Eventos       Eventos[]
+
+  @@map("user")
 }
 
 model Role {
   id          Int           @id @default(autoincrement())
   name        String        @unique
   UserHasRole UserHasRole[]
+
+  @@map("role")
 }
 
 model UserHasRole {
@@ -92,18 +62,23 @@ model UserHasRole {
   Role Role @relation(fields: [roleId], references: [id])
 
   @@id([userId, roleId])
+  @@map("user_has_role")
 }
 
-model Sexos {
+model Sexo {
   id     Int      @id @default(autoincrement())
   name   String   @unique
   People People[]
+
+  @@map("sexos")
 }
 
 model EstadoCivil {
   id           Int      @id @default(autoincrement())
   estado_civil String   @unique
   People       People[]
+
+  @@map("estado_civil")
 }
 
 model People {
@@ -125,12 +100,14 @@ model People {
   updatedAt        DateTime  @updatedAt
 
   // Relaciones
-  sexo        Sexos       @relation(fields: [sexoId], references: [id])
-  Autor       User        @relation(name: "Autor", fields: [userId], references: [id])
-  Editor      User?       @relation(name: "Editor", fields: [editorId], references: [id])
+  sexo        Sexo        @relation(fields: [sexoId], references: [id])
+  autor       User        @relation(name: "Autor", fields: [userId], references: [id])
+  editor      User?       @relation(name: "Editor", fields: [editorId], references: [id])
   estadoCivil EstadoCivil @relation(fields: [estado_civilId], references: [id])
-  Membresia   Membresia[]
-  Bajas       Bajas[]
+  membresia   Membresia[]
+  bajas       Bajas[]
+
+  @@map("people")
 }
 
 model Membresia {
@@ -144,15 +121,19 @@ model Membresia {
   // Relaciones
   people People        @relation(fields: [peopleId], references: [id])
   tipo   TipoMembresia @relation(fields: [tipoId], references: [id])
+
+  @@map("membresia")
 }
 
 model TipoMembresia {
   id            Int         @id @default(autoincrement())
   tipo_mebresia String
-  Membresia     Membresia[]
+  membresia     Membresia[]
+
+  @@map("tipo_membresia")
 }
 
-model Bajas {
+model Baja {
   id       String   @id @default(uuid())
   peopleId String
   fecha    DateTime
@@ -165,8 +146,10 @@ model Bajas {
 
   // Relaciones
   people People @relation(fields: [peopleId], references: [id])
-  Autor  User   @relation(name: "Autor", fields: [userId], references: [id])
-  Editor User?  @relation(name: "Editor", fields: [editorId], references: [id])
+  autor  User   @relation(name: "Autor", fields: [userId], references: [id])
+  editor User?  @relation(name: "Editor", fields: [editorId], references: [id])
+
+  @@map("bajas")
 }
 
 model Church {
@@ -176,7 +159,10 @@ model Church {
   phone   String
   email   String
 
-  UserHasChurch UserHasChurch[]
+  userHasChurch UserHasChurch[]
+  Eventos       Eventos[]
+
+  @@map("church")
 }
 
 model UserHasChurch {
@@ -184,16 +170,19 @@ model UserHasChurch {
   userId   String
   churchId String
 
-  User   User   @relation(fields: [userId], references: [id])
-  Church Church @relation(fields: [churchId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+  church Church @relation(fields: [churchId], references: [id])
 
   // @@id([userId, churchId])
+  @@map("user_has_church")
 }
 
-model category {
-  id   Int @id @default(autoincrement())
+model Category {
+  id   Int    @id @default(autoincrement())
   name String @unique
   post Post[]
+
+  @@map("category")
 }
 
 model Post {
@@ -207,8 +196,27 @@ model Post {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   user         User           @relation(fields: [userId], references: [id])
-  category     category       @relation(fields: [categoryId], references: [id])
-  PostHasImage PostHasImage[]
+  category     Category       @relation(fields: [categoryId], references: [id])
+  postHasImage PostHasImage[]
+
+  @@map("post")
+}
+
+model Eventos {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  date        DateTime
+  location    String
+  userId      String
+  churchId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  church Church @relation(fields: [churchId], references: [id])
+
+  @@map("eventos")
 }
 
 model PostHasImage {
@@ -217,4 +225,6 @@ model PostHasImage {
   postId String
 
   post Post @relation(fields: [postId], references: [id])
+
+  @@map("post_has_image")
 }

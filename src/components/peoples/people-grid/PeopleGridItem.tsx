@@ -24,7 +24,7 @@ export const PeopleGridItem = ({ people }: Props) => {
   //const [displayImage, setDisplayImage] = useState(product.images[0]);
 
   return (
-    <tr className="fade-in">
+    <tr>
       <td className="w-1/3 text-left py-3 px-4">
         <Link className="hover:text-blue-700" href={`/peoples/${people.id}`}>
           {people.nombres} {people.apellidos}
