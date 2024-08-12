@@ -7,7 +7,7 @@ export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
 
-    const peoples = await prisma.people.findMany({
+    const peoples = await prisma.persona.findMany({
       take: take,
       skip: (page - 1) * take,
       include: {
@@ -16,7 +16,7 @@ export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
       },
     });
 
-    const totalCount = await prisma.people.count();
+    const totalCount = await prisma.persona.count();
     const totalPages = Math.ceil(totalCount / take);
 
     return {
