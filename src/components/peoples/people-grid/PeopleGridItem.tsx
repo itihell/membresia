@@ -1,20 +1,9 @@
 "use client";
-import { useState } from "react";
+
 import { People } from "@/interfaces";
-import Image from "next/image";
+
 import Link from "next/link";
-import {
-  IoCallSharp,
-  IoCellular,
-  IoFemale,
-  IoFemaleSharp,
-  IoMaleSharp,
-  IoManSharp,
-  IoTelescope,
-  IoWomanOutline,
-  IoWomanSharp,
-} from "react-icons/io5";
-import { Size } from "../../../interfaces/product.interface";
+import { IoCallSharp, IoManSharp, IoWomanSharp } from "react-icons/io5";
 
 interface Props {
   people: People;
@@ -49,7 +38,7 @@ export const PeopleGridItem = ({ people }: Props) => {
       </td>
       <td className="text-left py-3 px-4">
         <a className="hover:text-blue-500" href="mailto:jonsmith@mail.com">
-          {people.estadoCivil.estado_civil}
+          {people.estadoCivil.estadoCivil}
         </a>
       </td>
     </tr>
