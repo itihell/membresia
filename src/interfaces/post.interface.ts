@@ -9,11 +9,11 @@ export interface Post {
   content: string;
   published: string;
   userId: string;
-  categoryId: number;
+  categoriaId: number;
   createdAt: Date;
   updatedAt: Date;
+
   user: User;
-  category: Category;
-  PostHasImage: PostHasImage[];
-  images: string[];
+  categoria: Category;
+  postHasImage: PostHasImage[];
 }
