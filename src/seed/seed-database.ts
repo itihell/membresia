@@ -5,19 +5,24 @@ import prisma from "../lib/prisma";
 async function main() {
   // 1. Borrar registros previos
   // await Promise.all( [
-  await prisma.people.deleteMany();
-  await prisma.sexos.deleteMany();
+  await prisma.persona.deleteMany();
+  await prisma.sexo.deleteMany();
   await prisma.estadoCivil.deleteMany();
   await prisma.tipoMembresia.deleteMany();
   await prisma.membresia.deleteMany();
-  await prisma.church.deleteMany();
-  await prisma.userHasChurch.deleteMany();
-  await prisma.userHasRole.deleteMany();
+  await prisma.iglesia.deleteMany();
+  await prisma.usersHasChurch.deleteMany();
+  await prisma.usersHasRole.deleteMany();
   await prisma.postHasImage.deleteMany();
   await prisma.post.deleteMany();
-  await prisma.category.deleteMany();
+  await prisma.categoria.deleteMany();
   await prisma.user.deleteMany();
-  await prisma.role.deleteMany();
+  await prisma.roles.deleteMany();
+  await prisma.barrio.deleteMany();
+  await prisma.municipio.deleteMany();
+  await prisma.departamento.deleteMany();
+  await prisma.pais.deleteMany();
+  await prisma.zonaGeografica.deleteMany();
   // ]);
 
   //  Categorias
@@ -25,11 +30,50 @@ async function main() {
   //   name: 'Shirt'
   // }
 
-  await prisma.sexos.createMany({
+  await prisma.sexo.createMany({
     data: [{ name: "Masculino" }, { name: "Femenino" }],
   });
 
-  const sexos = await prisma.sexos.findMany();
+  await prisma.zonaGeografica.createMany({
+    data: [{ name: "Urbana" }, { name: "Rural" }],
+  });
+
+  await prisma.pais.createMany({
+    data: [{ name: "Nicaragua" }, { name: "Costa Rica" }],
+  });
+
+  await prisma.departamento.createMany({
+    data: [
+      { name: "RACCS", pais_id: 1 },
+      { name: "RACCN", pais_id: 1 },
+      { name: "Managua", pais_id: 1 },
+      { name: "Chontales", pais_id: 1 },
+      { name: "Chinandega", pais_id: 1 },
+    ],
+  });
+
+  await prisma.municipio.createMany({
+    data: [
+      { name: "Nueva Guinea", departamento_id: 1 },
+      { name: "El Rama", departamento_id: 1 },
+    ],
+  });
+
+  await prisma.barrio.createMany({
+    data: [
+      { name: "Zona 1", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 2", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 3", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 4", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 5", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 6", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 7", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 8", municipio_id: 1, zona_geografica_id: 1 },
+      { name: "Zona 9", municipio_id: 1, zona_geografica_id: 1 },
+    ],
+  });
+
+  const sexos = await prisma.sexo.findMany();
 
   await prisma.estadoCivil.createMany({
     data: [
@@ -42,7 +86,7 @@ async function main() {
 
   const estadoCivil = await prisma.estadoCivil.findMany();
 
-  await prisma.role.createMany({
+  await prisma.roles.createMany({
     data: [{ name: "admin" }, { name: "user" }, { name: "secretario" }],
   });
 
@@ -52,68 +96,74 @@ async function main() {
 
   const users = await prisma.user.findMany();
 
-  await prisma.people.createMany({
+  await prisma.persona.createMany({
     data: [
       {
         nombres: "Juana Maria",
         apellidos: "Perez Garcia",
-        sexoId: sexos[1].id,
+        sexo_id: sexos[1].id,
         fecha_nacimiento: new Date("1990-01-01"),
         fecha_bautizo: new Date("2010-01-01"),
         fecha_fe: new Date("2010-01-01"),
         cedula: "1234567890",
-        userId: users[0].id,
+        user_id: users[0].id,
         direccion: "Calle 1",
-        telefono: "1234567890",
-        estado_civilId: estadoCivil[1].id,
+        telefono: "123456789",
+        estado_civil_id: estadoCivil[1].id,
+        barrio_id: 1,
+        updated_at: new Date(),
       },
       {
         nombres: "Karla Azucena",
         apellidos: "Martinez Alvarez",
-        sexoId: sexos[1].id,
+        sexo_id: sexos[1].id,
         fecha_nacimiento: new Date("1983-07-03"),
         fecha_bautizo: new Date("2010-01-01"),
         fecha_fe: new Date("2010-01-01"),
         cedula: "616435345435",
-        userId: users[0].id,
+        user_id: users[0].id,
         direccion: "Calle 12",
-        telefono: "67898934535",
-        estado_civilId: estadoCivil[2].id,
+        telefono: "678989345",
+        estado_civil_id: estadoCivil[2].id,
+        barrio_id: 1,
+        updated_at: new Date(),
       },
       {
         nombres: "Iker Adonay",
         apellidos: "Gomez Rodriguez",
-        sexoId: sexos[1].id,
+        sexo_id: sexos[1].id,
         fecha_nacimiento: new Date("1989-12-12"),
         fecha_bautizo: new Date("2009-03-09"),
         fecha_fe: new Date("2011-02-12"),
         cedula: "1219789789",
-        userId: users[0].id,
+        user_id: users[0].id,
         direccion: "Calle 24",
-        telefono: "67767767897",
-        estado_civilId: estadoCivil[1].id,
+        telefono: "677677678",
+        estado_civil_id: estadoCivil[1].id,
+        barrio_id: 1,
+        updated_at: new Date(),
       },
     ],
   });
 
-  await prisma.church.createMany({
+  await prisma.iglesia.createMany({
     data: [
       {
         name: "Eben Ezer",
-        address: "Calle 1",
-        phone: "1234567890",
+        direccion: "Calle 1",
+        telefonos: "1234567890",
         email: "eben.ezer.ng@gmail.com",
       },
       {
         name: "Rosa de Saron",
-        address: "Calle central",
-        phone: "8787898023",
+        direccion: "Calle central",
+        telefonos: "8787898023",
         email: "rosa.saron.ng@gmail.com",
       },
       {
         name: "Esmirna",
-        address: "Calle central",
-        phone: "8787898023",
+        direccion: "Calle central",
+        telefonos: "8787898023",
         email: "esmirna.ng@gmail.com",
       },
     ],
@@ -123,7 +173,7 @@ async function main() {
     data: [{ tipo_mebresia: "Pleno" }, { tipo_mebresia: "Asociado" }],
   });
 
-  await prisma.category.createMany({
+  await prisma.categoria.createMany({
     data: [
       {
         name: "Noticia",
@@ -137,51 +187,51 @@ async function main() {
     ],
   });
 
-  const categorias = await prisma.category.findMany();
+  const categorias = await prisma.categoria.findMany();
 
   await prisma.post.createMany({
     data: [
       {
         title: "Titulo 1",
         content: "Contenido 1",
-        categoryId: categorias[0].id,
+        categoria_id: categorias[0].id,
         slug: "titulo-1",
-        userId: users[0].id,
+        user_id: users[0].id,
       },
       {
         title: "Titulo 2",
         content: "Contenido 2",
-        categoryId: categorias[1].id,
+        categoria_id: categorias[1].id,
         slug: "titulo-2",
-        userId: users[0].id,
+        user_id: users[0].id,
       },
       {
         title: "Titulo 3",
         content: "Contenido 3",
-        categoryId: categorias[2].id,
+        categoria_id: categorias[2].id,
         slug: "titulo-3",
-        userId: users[0].id,
+        user_id: users[0].id,
       },
       {
         title: "Titulo 4",
         content: "Contenido 4",
-        categoryId: categorias[0].id,
+        categoria_id: categorias[0].id,
         slug: "titulo-4",
-        userId: users[0].id,
+        user_id: users[0].id,
       },
       {
         title: "Titulo 5",
         content: "Contenido 5",
-        categoryId: categorias[1].id,
+        categoria_id: categorias[1].id,
         slug: "titulo-5",
-        userId: users[0].id,
+        user_id: users[0].id,
       },
       {
         title: "Titulo 6",
         content: "Contenido 6",
-        categoryId: categorias[2].id,
+        categoria_id: categorias[2].id,
         slug: "titulo-6",
-        userId: users[0].id,
+        user_id: users[0].id,
       },
     ],
   });
@@ -190,40 +240,40 @@ async function main() {
 
   await prisma.postHasImage.createMany({
     data: [
-      { postId: posts[0].id, url: "pedro_1_3_13.png" },
-      { postId: posts[0].id, url: "colosenses_1_16.png" },
+      { post_id: posts[0].id, url: "pedro_1_3_13.png" },
+      { post_id: posts[0].id, url: "colosenses_1_16.png" },
       {
-        postId: posts[1].id,
+        post_id: posts[1].id,
         url: "coreintios1_13_34.png",
       },
       {
-        postId: posts[1].id,
+        post_id: posts[1].id,
         url: "mateo_8_26.png",
       },
       {
-        postId: posts[2].id,
+        post_id: posts[2].id,
         url: "lucas_1_37.png",
       },
       {
-        postId: posts[2].id,
+        post_id: posts[2].id,
         url: "juan_3_16.png",
       },
-      { postId: posts[3].id, url: "colosenses_1_16.png" },
-      { postId: posts[3].id, url: "pedro_1_3_13.png" },
+      { post_id: posts[3].id, url: "colosenses_1_16.png" },
+      { post_id: posts[3].id, url: "pedro_1_3_13.png" },
       {
-        postId: posts[4].id,
+        post_id: posts[4].id,
         url: "mateo_8_26.png",
       },
       {
-        postId: posts[4].id,
+        post_id: posts[4].id,
         url: "coreintios1_13_34.png",
       },
       {
-        postId: posts[5].id,
+        post_id: posts[5].id,
         url: "juan_3_16.png",
       },
       {
-        postId: posts[5].id,
+        post_id: posts[5].id,
         url: "lucas_1_37.png",
       },
     ],
