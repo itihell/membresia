@@ -12,9 +12,9 @@ export const TopMenu = () => {
       <div>
         <Link href="/">
           <span className={`${titleFont.className} antialiased font-bold`}>
-            United
+          Member
           </span>
-          <span> | Members</span>
+          <span> | shiping</span>
         </Link>
       </div>
       {/* Cerrar el menu */}
