@@ -3,9 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL")
-  directUrl = env("POSTGRES_URL_NON_POOLING")
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+  //directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Baja {
@@ -178,7 +178,7 @@ model Persona {
   updated_at          DateTime
   barrios             Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
   estadoCivil         EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
-  sexos               Sexo                  @relation(fields: [sexo_id], references: [id])
+  sexo                Sexo                  @relation(fields: [sexo_id], references: [id])
   autor               User                  @relation("persona_autor_id", fields: [user_id], references: [id])
   editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
   bajas               Baja[]                @relation("baja_persona_id")

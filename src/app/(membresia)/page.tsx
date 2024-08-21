@@ -14,7 +14,6 @@ export default async function Home({ searchParams }: Props) {
   const { posts, currentPage, totalPages } = await getPaginatedPost({ page });
 
   //console.log(JSON.stringify(posts, null, 2));
-  
 
   return (
     <>

@@ -2,6 +2,8 @@ import { create } from "zustand";
 
 import prisma from "../lib/prisma";
 
+import bcryptjs from "bcryptjs";
+
 async function main() {
   // 1. Borrar registros previos
   // await Promise.all( [
@@ -91,7 +93,13 @@ async function main() {
   });
 
   await prisma.user.createMany({
-    data: [{ email: "admin@test.com", password: "12345678", name: "Admin" }],
+    data: [
+      {
+        email: "admin@test.com",
+        password: bcryptjs.hashSync("12345678", 10),
+        name: "Admin",
+      },
+    ],
   });
 
   const users = await prisma.user.findMany();
