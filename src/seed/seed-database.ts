@@ -33,45 +33,54 @@ async function main() {
   // }
 
   await prisma.sexo.createMany({
-    data: [{ name: "Masculino" }, { name: "Femenino" }],
+    data: [
+      { id: 1, name: "Masculino" },
+      { id: 2, name: "Femenino" },
+    ],
   });
 
   await prisma.zonaGeografica.createMany({
-    data: [{ name: "Urbana" }, { name: "Rural" }],
+    data: [
+      { id: 1, name: "Urbana" },
+      { id: 2, name: "Rural" },
+    ],
   });
 
   await prisma.pais.createMany({
-    data: [{ name: "Nicaragua" }, { name: "Costa Rica" }],
+    data: [
+      { id: 1, name: "Nicaragua" },
+      { id: 2, name: "Costa Rica" },
+    ],
   });
 
   await prisma.departamento.createMany({
     data: [
-      { name: "RACCS", pais_id: 1 },
-      { name: "RACCN", pais_id: 1 },
-      { name: "Managua", pais_id: 1 },
-      { name: "Chontales", pais_id: 1 },
-      { name: "Chinandega", pais_id: 1 },
+      { id: 1, name: "RACCS", pais_id: 1 },
+      { id: 2, name: "RACCN", pais_id: 1 },
+      { id: 3, name: "Managua", pais_id: 1 },
+      { id: 4, name: "Chontales", pais_id: 1 },
+      { id: 5, name: "Chinandega", pais_id: 1 },
     ],
   });
 
   await prisma.municipio.createMany({
     data: [
-      { name: "Nueva Guinea", departamento_id: 1 },
-      { name: "El Rama", departamento_id: 1 },
+      { id: 1, name: "Nueva Guinea", departamento_id: 1 },
+      { id: 2, name: "El Rama", departamento_id: 1 },
     ],
   });
 
   await prisma.barrio.createMany({
     data: [
-      { name: "Zona 1", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 2", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 3", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 4", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 5", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 6", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 7", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 8", municipio_id: 1, zona_geografica_id: 1 },
-      { name: "Zona 9", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 1, name: "Zona 1", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 2, name: "Zona 2", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 3, name: "Zona 3", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 4, name: "Zona 4", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 5, name: "Zona 5", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 6, name: "Zona 6", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 7, name: "Zona 7", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 8, name: "Zona 8", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 9, name: "Zona 9", municipio_id: 1, zona_geografica_id: 1 },
     ],
   });
 
@@ -79,17 +88,21 @@ async function main() {
 
   await prisma.estadoCivil.createMany({
     data: [
-      { estado_civil: "Soltero" },
-      { estado_civil: "Casado" },
-      { estado_civil: "Divorciado" },
-      { estado_civil: "Union Libre" },
+      { id: 1, estado_civil: "Soltero" },
+      { id: 2, estado_civil: "Casado" },
+      { id: 3, estado_civil: "Divorciado" },
+      { id: 4, estado_civil: "Union Libre" },
     ],
   });
 
   const estadoCivil = await prisma.estadoCivil.findMany();
 
   await prisma.roles.createMany({
-    data: [{ name: "admin" }, { name: "user" }, { name: "secretario" }],
+    data: [
+      { id: 1, name: "admin" },
+      { id: 2, name: "user" },
+      { id: 3, name: "secretario" },
+    ],
   });
 
   await prisma.user.createMany({
@@ -178,18 +191,24 @@ async function main() {
   });
 
   await prisma.tipoMembresia.createMany({
-    data: [{ tipo_mebresia: "Pleno" }, { tipo_mebresia: "Asociado" }],
+    data: [
+      { id: 1, tipo_mebresia: "Pleno" },
+      { id: 2, tipo_mebresia: "Asociado" },
+    ],
   });
 
   await prisma.categoria.createMany({
     data: [
       {
+        id: 1,
         name: "Noticia",
       },
       {
+        id: 2,
         name: "Evento",
       },
       {
+        id: 3,
         name: "Anuncio",
       },
     ],

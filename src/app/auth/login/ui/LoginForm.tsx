@@ -68,18 +68,6 @@ export const LoginForm = () => {
       <Suspense>
         <LoginButton />
       </Suspense>
-      {/* divisor l ine */}
-      <div className="flex items-center my-5">
-        <div className="flex-1 border-t border-gray-500"></div>
-        <div className="px-2 text-gray-800">O</div>
-        <div className="flex-1 border-t border-gray-500"></div>
-      </div>
-
-      <Button asChild>
-        <Link href="/auth/new-account" className="btn-secondary text-center">
-          Crear una nueva cuenta
-        </Link>
-      </Button>
     </form>
   );
 };
