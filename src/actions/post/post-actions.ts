@@ -11,14 +11,14 @@ export const getPaginatedPost = async ({ page = 1, take = 12 }) => {
       take: take,
       skip: (page - 1) * take,
       include: {
-        PostHasImage: {
+        postHasImage: {
           take: 2,
           select: {
             url: true,
           },
         },
-        category: true,
-        user: true,
+        categoria: true,
+        users: true,
       },
     });
 
@@ -31,7 +31,7 @@ export const getPaginatedPost = async ({ page = 1, take = 12 }) => {
       posts: posts.map((post) => {
         return {
           ...post,
-          images: post.PostHasImage.map((image) => image.url),
+          images: post.postHasImage.map((image) => image.url),
         };
       }),
     };
