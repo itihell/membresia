@@ -20,7 +20,7 @@ export const PeopleGridItem = ({ people }: Props) => {
         </Link>
       </td>
       <td className="w-1/3 text-left py-3 px-4">
-        {people.sexo.name === "Femenino" ? (
+        {people?.sexo?.name === "Femenino" ? (
           <IoWomanSharp size={30} />
         ) : (
           <IoManSharp size={30} />
@@ -30,15 +30,15 @@ export const PeopleGridItem = ({ people }: Props) => {
       <td className="text-left py-3 px-4">
         <a
           className="hover:text-blue-500 flex items-center "
-          href="tel:622322662"
+          href={`tel:${people.telefono}`}
         >
           <IoCallSharp />
           <span className="ml-2">{people.telefono}</span>
         </a>
       </td>
       <td className="text-left py-3 px-4">
-        <a className="hover:text-blue-500" href="mailto:jonsmith@mail.com">
-          {people.estadoCivil.estadoCivil}
+        <a className="hover:text-blue-500" href={`mailto:${people.email}`}>
+          {people.estadoCivil?.estado_civil}
         </a>
       </td>
     </tr>

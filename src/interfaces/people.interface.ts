@@ -1,24 +1,24 @@
 import { EstadoCivil, Sexo } from "@prisma/client";
 
 export interface People {
-  id: String;
-  nombres: String;
-  apellidos: String;
-  cedula: String;
-  fechaNacimiento: Date;
+  id: string;
+  nombres: string;
+  apellidos: string;
+  cedula: string | null;
+  fechaNacimiento?: Date | null;
   fechaFe?: Date | null;
   fechaBautizo?: Date | null;
-  sexoId: number;
-  barrioId: number;
-  direccion: String;
-  telefono?: String | null;
-  userId: String;
-  editorId?: String | null;
-  estadoCivilId: number;
+  sexo_id: number;
+  barrio_id: number;
+  direccion: string;
+  telefono?: string | null;
+  user_id: string;
+  editor_id?: string | null;
+  estado_civil_id: number;
   email?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  created_at: Date;
+  updated_at: Date;
 
-  sexo: Sexo;
-  estadoCivil: EstadoCivil;
+  sexo?: Sexo;
+  estadoCivil?: EstadoCivil;
 }
