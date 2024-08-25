@@ -160,8 +160,8 @@ model Persona {
   id                  String                @id @default(uuid())
   nombres             String                @db.VarChar(60)
   apellidos           String                @db.VarChar(60)
-  cedula              String                @unique @db.VarChar(20)
-  fecha_nacimiento    DateTime
+  cedula              String?               @unique @db.VarChar(20)
+  fecha_nacimiento    DateTime?
   fecha_fe            DateTime?
   fecha_bautizo       DateTime?
   sexo_id             Int
@@ -172,6 +172,7 @@ model Persona {
   estado_civil_id     Int
   email               String?               @db.VarChar(100)
   barrio_id           Int
+  // Relaciones
   eventoHasAsistencia EventoHasAsistencia[]
   membresia           Membresia[]
   created_at          DateTime              @default(now())
@@ -282,12 +283,15 @@ model UsersHasChurch {
 }
 
 model UsersHasRole {
-  user_id String
-  role_id Int
-  roles   Roles  @relation(fields: [role_id], references: [id])
-  users   User   @relation(fields: [user_id], references: [id])
+  id         Int       @id @default(autoincrement())
+  user_id    String
+  role_id    Int
+  roles      Roles     @relation(fields: [role_id], references: [id])
+  users      User      @relation(fields: [user_id], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
 
-  @@id([user_id, role_id])
   @@map("users_has_roles")
 }
 

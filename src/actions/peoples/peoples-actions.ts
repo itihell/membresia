@@ -25,6 +25,8 @@ export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
       peoples: peoples,
     };
   } catch (error) {
+    console.log(error);
+
     throw new Error("No se pudo cargar el listado de personas");
   }
 };

@@ -7,6 +7,7 @@ import bcryptjs from "bcryptjs";
 async function main() {
   // 1. Borrar registros previos
   // await Promise.all( [
+  await prisma.tipoEvento.deleteMany();
   await prisma.persona.deleteMany();
   await prisma.sexo.deleteMany();
   await prisma.estadoCivil.deleteMany();
@@ -36,6 +37,14 @@ async function main() {
     data: [
       { id: 1, name: "Masculino" },
       { id: 2, name: "Femenino" },
+    ],
+  });
+
+  await prisma.tipoEvento.createMany({
+    data: [
+      { id: 1, name: "Culto" },
+      { id: 2, name: "Sesión" },
+      { id: 3, name: "Santa Cena" },
     ],
   });
 
@@ -102,20 +111,30 @@ async function main() {
       { id: 1, name: "admin" },
       { id: 2, name: "user" },
       { id: 3, name: "secretario" },
+      { id: 4, name: "tesorero" },
     ],
   });
 
   await prisma.user.createMany({
     data: [
       {
-        email: "admin@test.com",
+        email: "itihell.mejia@gmail.com",
         password: bcryptjs.hashSync("12345678", 10),
-        name: "Admin",
+        name: "Itihell Mejia",
       },
     ],
   });
 
   const users = await prisma.user.findMany();
+
+  await prisma.usersHasRole.createMany({
+    data: [
+      { user_id: users[0].id, role_id: 1 },
+      { user_id: users[0].id, role_id: 2 },
+      { user_id: users[0].id, role_id: 3 },
+      { user_id: users[0].id, role_id: 4 },
+    ],
+  });
 
   await prisma.persona.createMany({
     data: [
@@ -123,10 +142,6 @@ async function main() {
         nombres: "Juana Maria",
         apellidos: "Perez Garcia",
         sexo_id: sexos[1].id,
-        fecha_nacimiento: new Date("1990-01-01"),
-        fecha_bautizo: new Date("2010-01-01"),
-        fecha_fe: new Date("2010-01-01"),
-        cedula: "1234567890",
         user_id: users[0].id,
         direccion: "Calle 1",
         telefono: "123456789",
@@ -138,10 +153,6 @@ async function main() {
         nombres: "Karla Azucena",
         apellidos: "Martinez Alvarez",
         sexo_id: sexos[1].id,
-        fecha_nacimiento: new Date("1983-07-03"),
-        fecha_bautizo: new Date("2010-01-01"),
-        fecha_fe: new Date("2010-01-01"),
-        cedula: "616435345435",
         user_id: users[0].id,
         direccion: "Calle 12",
         telefono: "678989345",
@@ -153,9 +164,6 @@ async function main() {
         nombres: "Iker Adonay",
         apellidos: "Gomez Rodriguez",
         sexo_id: sexos[1].id,
-        fecha_nacimiento: new Date("1989-12-12"),
-        fecha_bautizo: new Date("2009-03-09"),
-        fecha_fe: new Date("2011-02-12"),
         cedula: "1219789789",
         user_id: users[0].id,
         direccion: "Calle 24",
@@ -194,6 +202,7 @@ async function main() {
     data: [
       { id: 1, tipo_mebresia: "Pleno" },
       { id: 2, tipo_mebresia: "Asociado" },
+      { id: 3, tipo_mebresia: "Traslado" },
     ],
   });
 
