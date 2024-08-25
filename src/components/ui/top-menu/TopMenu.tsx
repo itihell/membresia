@@ -3,60 +3,36 @@ import { titleFont } from "@/config/fonts";
 import { useUiStore } from "@/store";
 import Link from "next/link";
 import { IoSearchOutline, IoCartOutline } from "react-icons/io5";
+import { Input } from "../input";
+import { AvatarUser } from "./avatar-user";
 
 export const TopMenu = () => {
   const openMenu = useUiStore((state) => state.openSideMenu);
   return (
-    <nav className="flex px-5 items-center justify-between w-full">
-      {/* Logo */}
-      <div>
-        <Link href="/">
-          <span className={`${titleFont.className} antialiased font-bold`}>
-          Member
+    <nav className="bg-gray-500 h-16 flex items-center  justify-between">
+      <div className="ml-2 flex w-2/12 md:w-4/12 justify-start">
+        <Link href="/" className="grid grid-cols-12  w-full ">
+          <span className="invisible md:visible w-36  flex  items-center justify-center ">
+            <span className={titleFont.className}>United</span>
+            <span className="font-mono ml-1">Members</span>
           </span>
-          <span> | shiping</span>
+          <span className="visible md:invisible  rounded-full bg-white w-10 h-10 flex items-center justify-center ">
+            <span className={titleFont.className}>U</span>
+            <span className="font-mono ml-1">M</span>
+          </span>
         </Link>
       </div>
-      {/* Cerrar el menu */}
-      <div className="hidden sm:block">
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/members"
-        >
-          Miembros
-        </Link>
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/peoples"
-        >
-          Personas
-        </Link>
-        <Link
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/asistencias"
-        >
-          Asistencias
-        </Link>
-      </div>
-      {/* Search cart menu */}
-      <div className="flex items-center">
-        <Link href="/search" className="mx-2">
-          <IoSearchOutline className="w-5 h-5" />
-        </Link>{" "}
-        <Link href="/cart" className="mx-2">
-          <div className="relative">
-            <span className="absolute text-xs rounded-full px-1 font-bold -top-2 bg-blue-700 text-white -right-2">
-              3
-            </span>
-            <IoCartOutline className="w-5 h-5" />
-          </div>
-        </Link>
-        <button
-          className="m-2 p-2 rounded-md transition-all hover:bg-gray-100"
-          onClick={openMenu}
-        >
-          Menu
-        </button>
+      <div className="flex flex-row items-center justify-end mr-2 s w-10/12 md:w-8/12">
+        <div className="w-full flex justify-end">
+          <Input
+            type="text"
+            placeholder="Buscar..."
+            className="md:w-4/12 bg-white"
+          />
+        </div>
+        <div className="ml-3">
+          <AvatarUser />
+        </div>
       </div>
     </nav>
   );

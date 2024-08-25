@@ -12,3 +12,4 @@ export * from "./ui/title/Title";
 export * from "./ui/sidebar/SideBar";
 
 export * from "./provider/Provider";
+export * from "./ui/top-menu/avatar-user";
