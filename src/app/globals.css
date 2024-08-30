@@ -67,3 +67,27 @@
     @apply bg-background text-foreground;
   }
 }
+
+.btn-primary {
+  @apply bg-blue-700 text-white;
+}
+
+.btn-primary:hover {
+  @apply !bg-blue-900;
+}
+
+.btn-secundary {
+  @apply !bg-gray-600 text-white;
+}
+
+.btn-secundary:hover {
+  @apply !bg-gray-800;
+}
+
+.btn-warning {
+  @apply bg-yellow-700 text-white;
+}
+
+.btn-warning:hover {
+  @apply !bg-yellow-900;
+}

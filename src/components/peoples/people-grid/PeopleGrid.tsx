@@ -7,34 +7,17 @@ interface Props {
 
 export const PeopleGrid = ({ peoples }: Props) => {
   return (
-    <div className="overflow-auto p-2  bg-gray-500 rounded-md  w-full">
+    <div className="overflow-auto    rounded-md w-full shadow-lg">
       <div className="w-full shadow overflow-hidden rounded border-b border-gray-200">
-        <table className=" table-auto min-w-full bg-white">
-          <thead className="bg-gray-800 text-white">
-            <tr>
-              <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                Persona
-              </th>
-              <th className="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">
-                Sexo
-              </th>
-              <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Cédula
-              </th>
-              <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Teléfono
-              </th>
-              <th className="text-left py-3 px-4 uppercase font-semibold text-sm">
-                Estado Civil
-              </th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-700">
-            {peoples.map((people, i) => (
-              <PeopleGridItem key={i} people={people} />
-            ))}
-          </tbody>
-        </table>
+        <div className="grid grid-cols-12 bg-blue-700 text-white p-2 ">
+          <div className="col-span-8">Nombres</div>
+          <div className="col-span-4">Teléfono</div>
+        </div>
+        <div className="bg-white p-2">
+          {peoples.map((people) => (
+            <PeopleGridItem key={people.id} people={people} />
+          ))}
+        </div>
       </div>
     </div>
   );

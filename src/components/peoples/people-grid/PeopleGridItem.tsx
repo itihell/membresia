@@ -3,6 +3,8 @@
 import { People } from "@/interfaces";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import { IoCallSharp, IoManSharp, IoWomanSharp } from "react-icons/io5";
 
 interface Props {
@@ -10,37 +12,24 @@ interface Props {
 }
 
 export const PeopleGridItem = ({ people }: Props) => {
+  const router = useRouter();
   //const [displayImage, setDisplayImage] = useState(product.images[0]);
 
+  const onSelectedPeople = (id: string) => {
+    router.push(`/personas/edit/${id}`);
+  };
+
   return (
-    <tr>
-      <td className="w-1/3 text-left py-3 px-4">
-        <Link className="hover:text-blue-700" href={`/peoples/${people.id}`}>
-          {people.nombres} {people.apellidos}
-        </Link>
-      </td>
-      <td className="w-1/3 text-left py-3 px-4">
-        {people?.sexo?.name === "Femenino" ? (
-          <IoWomanSharp size={30} />
-        ) : (
-          <IoManSharp size={30} />
-        )}
-      </td>
-      <td className="text-left py-3 px-4">{people.cedula}</td>
-      <td className="text-left py-3 px-4">
-        <a
-          className="hover:text-blue-500 flex items-center "
-          href={`tel:${people.telefono}`}
-        >
-          <IoCallSharp />
-          <span className="ml-2">{people.telefono}</span>
-        </a>
-      </td>
-      <td className="text-left py-3 px-4">
-        <a className="hover:text-blue-500" href={`mailto:${people.email}`}>
-          {people.estadoCivil?.estado_civil}
-        </a>
-      </td>
-    </tr>
+    <div
+      onClick={(e) => {
+        onSelectedPeople(people.id);
+      }}
+      className="grid grid-cols-12 py-2 hover:bg-blue-300 hover:cursor-pointer border-b border-blue-500"
+    >
+      <div className="col-span-8">
+        {people.nombres} {people.apellidos}
+      </div>
+      <div className="col-span-4">{people.telefono}</div>
+    </div>
   );
 };
