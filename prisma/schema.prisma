@@ -160,7 +160,7 @@ model Persona {
   id                  String                @id @default(uuid())
   nombres             String                @db.VarChar(60)
   apellidos           String                @db.VarChar(60)
-  cedula              String?               @unique @db.VarChar(20)
+  cedula              String?               @db.VarChar(20)
   fecha_nacimiento    DateTime?
   fecha_fe            DateTime?
   fecha_bautizo       DateTime?
@@ -176,7 +176,7 @@ model Persona {
   eventoHasAsistencia EventoHasAsistencia[]
   membresia           Membresia[]
   created_at          DateTime              @default(now())
-  updated_at          DateTime
+  updated_at          DateTime?
   barrios             Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
   estadoCivil         EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
   sexo                Sexo                  @relation(fields: [sexo_id], references: [id])

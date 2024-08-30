@@ -30,15 +30,3 @@ export async function loginForm(
     throw error;
   }
 }
-export const login = async (email: string, password: string) => {
-  try {
-    await signIn("credentials", { email, password });
-
-    return {
-      ok: true,
-      message: "Usuario logueado correctamente",
-    };
-  } catch (error) {
-    console.log(error);
-  }
-};
