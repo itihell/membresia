@@ -1,3 +1,4 @@
+export const revalidate = 0;
 import { PeopleGrid, Title } from "@/components";
 
 import { getPaginatedPeoples } from "@/actions";

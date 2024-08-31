@@ -2,6 +2,7 @@
 import { getPeopleId, savePeople, testSession, updatePeople } from "@/actions";
 import { ListBarrios, ListEstadoCivil, ListSexo } from "@/components";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -10,16 +11,31 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { titleFont } from "@/config/fonts";
 import { People } from "@/interfaces";
+import { cn } from "@/lib/utils";
 import { PeopleSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaAddressBook, FaBan, FaFloppyDisk } from "react-icons/fa6";
+import {
+  FaAddressBook,
+  FaBan,
+  FaCalendarCheck,
+  FaFloppyDisk,
+  FaMapLocation,
+  FaUser,
+} from "react-icons/fa6";
 import { z } from "zod";
 
 interface Props {
@@ -27,7 +43,9 @@ interface Props {
 }
 
 export const FormPeople = ({ id }: Props) => {
-  const session = useSession();
+  const [openNacimiento, setOpenNacimiento] = useState(false);
+  const [openFe, setOpenFe] = useState(false);
+  const [openBautismo, setOpenBautismo] = useState(false);
   const route = useRouter();
   const form = useForm<z.infer<typeof PeopleSchema>>({
     resolver: zodResolver(PeopleSchema),
@@ -62,11 +80,9 @@ export const FormPeople = ({ id }: Props) => {
   const onSubmit = async (data: z.infer<typeof PeopleSchema>) => {
     if (id) {
       const people = await updatePeople(id as string, data);
-      console.log({ data, people });
       route.push("/personas");
     } else {
       const people = await savePeople(data);
-      console.log({ data, people });
       route.push("/personas");
     }
   };
@@ -76,6 +92,17 @@ export const FormPeople = ({ id }: Props) => {
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="border-b border-blue-400 mt-10">
+              <div className="flex ">
+                <FaUser className="text-blue-900 text-2xl" />
+                <h1
+                  className={`${titleFont.className} text-blue-900 text-2xl ml-2`}
+                >
+                  Generales
+                </h1>
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-12 mt-1">
               <div className="col-span-3 md:justify-end mr-1 flex items-center">
                 <label className="font-bold">Nombres</label>
@@ -155,6 +182,203 @@ export const FormPeople = ({ id }: Props) => {
                 />
               </div>
             </div>
+
+            <div className="border-b border-blue-400 mt-10">
+              <div className="flex ">
+                <FaCalendarCheck className="text-blue-900 text-2xl" />
+                <h1
+                  className={`${titleFont.className} text-blue-900 text-2xl ml-2`}
+                >
+                  Fechas
+                </h1>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-12 mt-1">
+              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+                <label className="font-bold">Fecha de nacimiento</label>
+              </div>
+              <div className="col-span-9">
+                <FormField
+                  control={form.control}
+                  name="fecha_nacimiento"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Popover
+                        open={openNacimiento}
+                        onOpenChange={setOpenNacimiento}
+                      >
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "d-MM-yyyy")
+                              ) : (
+                                <span>Fecha de nacimiento</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            onDayClick={(e) => {
+                              setOpenNacimiento(false);
+                            }}
+                            captionLayout="dropdown-buttons"
+                            fromYear={1970}
+                            toYear={new Date().getFullYear()}
+                            mode="single"
+                            selected={
+                              field.value ? new Date(field.value) : undefined
+                            }
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-12 mt-1">
+              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+                <label className="font-bold">Fecha de Fe</label>
+              </div>
+              <div className="col-span-9">
+                <FormField
+                  control={form.control}
+                  name="fecha_fe"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Popover open={openFe} onOpenChange={setOpenFe}>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "d-MM-yyyy")
+                              ) : (
+                                <span>Fecha de Fe</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            onDayClick={(e) => {
+                              setOpenFe(false);
+                            }}
+                            captionLayout="dropdown-buttons"
+                            fromYear={1970}
+                            toYear={new Date().getFullYear()}
+                            mode="single"
+                            selected={
+                              field.value ? new Date(field.value) : undefined
+                            }
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-12 mt-1">
+              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+                <label className="font-bold">Fecha de Bautismo</label>
+              </div>
+              <div className="col-span-9">
+                <FormField
+                  control={form.control}
+                  name="fecha_bautizo"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Popover
+                        open={openBautismo}
+                        onOpenChange={setOpenBautismo}
+                      >
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "w-full pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "d-MM-yyyy")
+                              ) : (
+                                <span>Fecha de Bautismo</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            onDayClick={(e) => {
+                              setOpenBautismo(false);
+                            }}
+                            captionLayout="dropdown-buttons"
+                            fromYear={1970}
+                            toYear={new Date().getFullYear()}
+                            mode="single"
+                            selected={
+                              field.value ? new Date(field.value) : undefined
+                            }
+                            onSelect={field.onChange}
+                            disabled={(date) =>
+                              date > new Date() || date < new Date("1900-01-01")
+                            }
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+
+            <div className="border-b border-blue-400 mt-10">
+              <div className="flex ">
+                <FaMapLocation className="text-blue-900 text-2xl" />
+                <h1
+                  className={`${titleFont.className} text-blue-900 text-2xl ml-2`}
+                >
+                  Ubicacion
+                </h1>
+              </div>
+            </div>
+
             <div className="grid md:grid-cols-12 mt-1">
               <div className="col-span-3 md:justify-end mr-1 flex items-center">
                 <label className="font-bold">Barrio</label>
