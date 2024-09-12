@@ -1,3 +1,4 @@
+"use client";
 import { People } from "@/interfaces";
 import { PeopleGridItem } from "./PeopleGridItem";
 
