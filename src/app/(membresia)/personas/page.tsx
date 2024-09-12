@@ -1,6 +1,6 @@
 export const revalidate = 0;
+export const dynamic = "force-dynamic";
 import { PeopleGrid, Title } from "@/components";
-
 import { getPaginatedPeoples } from "@/actions";
 import Link from "next/link";
 import { FaUserPlus } from "react-icons/fa6";

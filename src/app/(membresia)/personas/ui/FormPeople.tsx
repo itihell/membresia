@@ -1,5 +1,5 @@
 "use client";
-import { getPeopleId, savePeople, testSession, updatePeople } from "@/actions";
+import { getPeopleId, savePeople, updatePeople } from "@/actions";
 import { ListBarrios, ListEstadoCivil, ListSexo } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -92,7 +92,7 @@ export const FormPeople = ({ id }: Props) => {
           },
         });
 
-        route.push("/personas");
+        route.replace("/personas");
       } else {
         const people = await savePeople(data);
         toast.success("Éxito", {

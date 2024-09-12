@@ -51,6 +51,7 @@ export const updatePeople = async (id: string, data: People) => {
         fecha_nacimiento: data.fecha_nacimiento,
         barrio_id: data.barrio_id,
         editor_id: session?.user?.id as string,
+        iglesia_id: session?.user?.iglesia_id as string,
       },
     });
 
@@ -80,6 +81,7 @@ export const savePeople = async (data: People) => {
         fecha_nacimiento: data.fecha_nacimiento,
         barrio_id: data.barrio_id,
         user_id: session?.user?.id as string,
+        iglesia_id: session?.user?.iglesia_id as string,
       },
     });
 
@@ -92,6 +94,8 @@ export const savePeople = async (data: People) => {
 };
 
 export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
+  console.log("pedir personas");
+  
   try {
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
