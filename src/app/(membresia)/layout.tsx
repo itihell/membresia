@@ -1,4 +1,5 @@
 import { Footer, SideBar, TopMenu } from "@/components";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function ShopLayout({
   children,
@@ -7,6 +8,7 @@ export default function ShopLayout({
 }) {
   return (
     <main className="min-h-screen">
+      <Toaster position="top-right" expand />
       <TopMenu />
       <SideBar />
       <div className="px-3 sm:px-10">{children}</div>

@@ -36,6 +36,7 @@ import {
   FaMapLocation,
   FaUser,
 } from "react-icons/fa6";
+import { toast } from "sonner";
 import { z } from "zod";
 
 interface Props {
@@ -78,12 +79,34 @@ export const FormPeople = ({ id }: Props) => {
   }, [form, id]);
 
   const onSubmit = async (data: z.infer<typeof PeopleSchema>) => {
-    if (id) {
-      const people = await updatePeople(id as string, data);
-      route.push("/personas");
-    } else {
-      const people = await savePeople(data);
-      route.push("/personas");
+    try {
+      if (id) {
+        const people = await updatePeople(id as string, data);
+
+        toast.success("Éxito", {
+          description: "Registro actualizado con éxito",
+          classNames: {
+            toast: "!bg-green-100 border !border-green-300",
+            title: "text-green-800 text-xl border-b border-green-600",
+            description: "!text-green-600",
+          },
+        });
+
+        route.push("/personas");
+      } else {
+        const people = await savePeople(data);
+        toast.success("Éxito", {
+          description: "Registro creado con éxito",
+          classNames: {
+            toast: "!bg-green-100 border !border-green-300",
+            title: "text-green-800 text-xl border-b border-green-600",
+            description: "!text-green-600",
+          },
+        });
+        route.push("/personas");
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -232,7 +255,7 @@ export const FormPeople = ({ id }: Props) => {
                               setOpenNacimiento(false);
                             }}
                             captionLayout="dropdown-buttons"
-                            fromYear={1970}
+                            fromYear={1940}
                             toYear={new Date().getFullYear()}
                             mode="single"
                             selected={
