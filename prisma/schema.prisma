@@ -122,6 +122,7 @@ model Iglesia {
   eventos          Evento[]         @relation("evento_iglesia_id")
   Evento           Evento[]
   Persona          Persona[]
+  Familia          Familia[]
 
   @@map("iglesias")
 }
@@ -186,6 +187,8 @@ model Persona {
   editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
   bajas               Baja[]                @relation("baja_persona_id")
   iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
+
+  familia FamiliaHasPersona[]
 
   @@map("personas")
 }
@@ -262,17 +265,20 @@ model User {
   updated_at DateTime @updatedAt
 
   // Relaciones
-  userHasChurch UsersHasChurch[]
-  userHasRole   UsersHasRole[]
-  iglesias      Iglesia?         @relation(fields: [iglesia_id], references: [id])
-  bajaAutor     Baja[]           @relation("baja_autor_user_id")
-  bajaEditor    Baja[]           @relation("baja_editor_user_id")
-  eventoAutor   Evento[]         @relation("evento_autor_id")
-  eventoEditor  Evento[]         @relation("evento_editor_id")
-  personaAutor  Persona[]        @relation("persona_autor_id")
-  PersonaEditor Persona[]        @relation("persona_editor_id")
-  posts         Post[]           @relation("post_autor_id")
-  Post          Post[]
+  userHasChurch     UsersHasChurch[]
+  userHasRole       UsersHasRole[]
+  iglesias          Iglesia?            @relation(fields: [iglesia_id], references: [id])
+  bajaAutor         Baja[]              @relation("baja_autor_user_id")
+  bajaEditor        Baja[]              @relation("baja_editor_user_id")
+  eventoAutor       Evento[]            @relation("evento_autor_id")
+  eventoEditor      Evento[]            @relation("evento_editor_id")
+  personaAutor      Persona[]           @relation("persona_autor_id")
+  PersonaEditor     Persona[]           @relation("persona_editor_id")
+  posts             Post[]              @relation("post_autor_id")
+  Post              Post[]
+  familia_autor     Familia[]           @relation("familia_user_id")
+  familia_editor    Familia[]           @relation("familia_user_edit_id")
+  FamiliaHasPersona FamiliaHasPersona[]
 
   @@map("users")
 }
@@ -306,4 +312,35 @@ model ZonaGeografica {
   barrios Barrio[]
 
   @@map("zonas_geograficas")
+}
+
+model Familia {
+  id           String              @id @default(uuid())
+  name         String
+  iglesia_id   String
+  user_id      String
+  user_edit_id String
+  iglesia      Iglesia             @relation(fields: [iglesia_id], references: [id])
+  user         User                @relation("familia_user_id", fields: [user_id], references: [id])
+  editor       User                @relation("familia_user_edit_id", fields: [user_edit_id], references: [id])
+  created_at   DateTime            @default(now())
+  updated_at   DateTime            @updatedAt
+  miembros     FamiliaHasPersona[]
+
+  @@map("familias")
+}
+
+model FamiliaHasPersona {
+  id         String   @id @default(uuid())
+  familia_id String
+  persona_id String
+  user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  familia    Familia  @relation(fields: [familia_id], references: [id])
+  persona    Persona  @relation(fields: [persona_id], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@unique([familia_id, persona_id])
+  @@map("familias_has_personas")
 }

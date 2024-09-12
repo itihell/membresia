@@ -1,12 +1,24 @@
 "use client";
 import { People } from "@/interfaces";
 import { PeopleGridItem } from "./PeopleGridItem";
+import { getPaginatedPeoples } from "@/actions";
+import { useEffect, useState } from "react";
 
-interface Props {
-  peoples: People[];
-}
+// interface Props {
+//   peoples: People[];
+// }
 
-export const PeopleGrid = ({ peoples }: Props) => {
+export const PeopleGrid = () => {
+  const [peoples, setPeoples] = useState<People[]>([]);
+  useEffect(() => {
+    (async () => {
+      const { currentPage, totalPages, peoples } = await getPaginatedPeoples({
+        page: 1,
+      });
+      setPeoples(peoples);
+    })();
+  }, []);
+
   return (
     <div className="overflow-auto    rounded-md w-full shadow-lg">
       <div className="w-full shadow overflow-hidden rounded border-b border-gray-200">

@@ -3,6 +3,7 @@ import {
   FaCalendarCheck,
   FaChurch,
   FaListCheck,
+  FaPeopleGroup,
   FaPeopleLine,
   FaPerson,
   FaUserCheck,
@@ -26,6 +27,7 @@ const useMenu = () => {
     },
     { name: "Eventos", path: "/eventos", icono: <FaCalendarCheck size={40} /> },
     { name: "Iglesia", path: "/iglesias", icono: <FaChurch size={40} /> },
+    { name: "Familias", path: "/familias", icono: <FaPeopleGroup size={40} /> },
   ]);
 
   return {

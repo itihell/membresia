@@ -94,8 +94,6 @@ export const savePeople = async (data: People) => {
 };
 
 export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
-  console.log("pedir personas");
-  
   try {
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
