@@ -80,6 +80,7 @@ export const savePeople = async (data: People) => {
         fecha_nacimiento: data.fecha_nacimiento,
         barrio_id: data.barrio_id,
         user_id: session?.user?.id as string,
+        iglesia_id: session?.user?.iglesia_id as string,
       },
     });
 

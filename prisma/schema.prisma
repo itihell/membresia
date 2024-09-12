@@ -121,6 +121,7 @@ model Iglesia {
   updated_at       DateTime         @updatedAt
   eventos          Evento[]         @relation("evento_iglesia_id")
   Evento           Evento[]
+  Persona          Persona[]
 
   @@map("iglesias")
 }
@@ -172,17 +173,19 @@ model Persona {
   estado_civil_id     Int
   email               String?               @db.VarChar(100)
   barrio_id           Int
+  iglesia_id          String
+  created_at          DateTime              @default(now())
+  updated_at          DateTime?             @updatedAt
   // Relaciones
   eventoHasAsistencia EventoHasAsistencia[]
   membresia           Membresia[]
-  created_at          DateTime              @default(now())
-  updated_at          DateTime?
   barrios             Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
   estadoCivil         EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
   sexo                Sexo                  @relation(fields: [sexo_id], references: [id])
   autor               User                  @relation("persona_autor_id", fields: [user_id], references: [id])
   editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
   bajas               Baja[]                @relation("baja_persona_id")
+  iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
 
   @@map("personas")
 }
@@ -249,14 +252,16 @@ model TipoMembresia {
 }
 
 model User {
-  id            String           @id @default(uuid())
-  email         String           @unique @db.VarChar(200)
-  password      String
-  name          String           @db.VarChar(100)
-  iglesia_id    String?
-  activo        Boolean          @default(true)
-  created_at    DateTime         @default(now())
-  updated_at    DateTime         @updatedAt
+  id         String   @id @default(uuid())
+  email      String   @unique @db.VarChar(200)
+  password   String
+  name       String   @db.VarChar(100)
+  iglesia_id String?
+  activo     Boolean  @default(true)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Relaciones
   userHasChurch UsersHasChurch[]
   userHasRole   UsersHasRole[]
   iglesias      Iglesia?         @relation(fields: [iglesia_id], references: [id])

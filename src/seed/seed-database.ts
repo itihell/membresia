@@ -115,12 +115,38 @@ async function main() {
     ],
   });
 
+  await prisma.iglesia.createMany({
+    data: [
+      {
+        name: "Eben Ezer",
+        direccion: "Calle 1",
+        telefonos: "1234567890",
+        email: "eben.ezer.ng@gmail.com",
+      },
+      {
+        name: "Rosa de Saron",
+        direccion: "Calle central",
+        telefonos: "8787898023",
+        email: "rosa.saron.ng@gmail.com",
+      },
+      {
+        name: "Esmirna",
+        direccion: "Calle central",
+        telefonos: "8787898023",
+        email: "esmirna.ng@gmail.com",
+      },
+    ],
+  });
+
+  const iglesia = await prisma.iglesia.findMany();
+
   await prisma.user.createMany({
     data: [
       {
         email: "itihell.mejia@gmail.com",
         password: bcryptjs.hashSync("12345678", 10),
         name: "Itihell Mejia",
+        iglesia_id: iglesia[0].id,
       },
     ],
   });
@@ -147,7 +173,7 @@ async function main() {
         telefono: "123456789",
         estado_civil_id: estadoCivil[1].id,
         barrio_id: 1,
-        updated_at: new Date(),
+        iglesia_id: iglesia[0].id,
       },
       {
         nombres: "Karla Azucena",
@@ -158,7 +184,7 @@ async function main() {
         telefono: "678989345",
         estado_civil_id: estadoCivil[2].id,
         barrio_id: 1,
-        updated_at: new Date(),
+        iglesia_id: iglesia[0].id,
       },
       {
         nombres: "Iker Adonay",
@@ -170,30 +196,7 @@ async function main() {
         telefono: "677677678",
         estado_civil_id: estadoCivil[1].id,
         barrio_id: 1,
-        updated_at: new Date(),
-      },
-    ],
-  });
-
-  await prisma.iglesia.createMany({
-    data: [
-      {
-        name: "Eben Ezer",
-        direccion: "Calle 1",
-        telefonos: "1234567890",
-        email: "eben.ezer.ng@gmail.com",
-      },
-      {
-        name: "Rosa de Saron",
-        direccion: "Calle central",
-        telefonos: "8787898023",
-        email: "rosa.saron.ng@gmail.com",
-      },
-      {
-        name: "Esmirna",
-        direccion: "Calle central",
-        telefonos: "8787898023",
-        email: "esmirna.ng@gmail.com",
+        iglesia_id: iglesia[0].id,
       },
     ],
   });

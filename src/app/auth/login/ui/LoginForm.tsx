@@ -19,7 +19,7 @@ export const LoginForm = () => {
   const querysParams = useSearchParams();
 
   if (session?.user) {
-    window.location.replace("/perfil");
+    window.location.replace("/");
   }
 
   useEffect(() => {

@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 import { Button } from "../button";
 import {
@@ -14,8 +16,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../dropdown-menu";
+import { logout } from "@/actions";
 
 export function AvatarUser() {
+  const onClickLogout = async () => {
+    await logout();
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -69,8 +78,8 @@ export function AvatarUser() {
         <DropdownMenuItem>Support</DropdownMenuItem>
         <DropdownMenuItem disabled>API</DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          Log out
+        <DropdownMenuItem onClick={() => onClickLogout()}>
+          Salir
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
