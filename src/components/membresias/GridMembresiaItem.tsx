@@ -1,24 +1,17 @@
 "use client";
 
 import { People } from "@/interfaces";
-
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { IoCallSharp, IoManSharp, IoWomanSharp } from "react-icons/io5";
 
 interface Props {
   people: People;
 }
 
-export const PeopleGridItem = ({ people }: Props) => {
+export const GridMembresiaItem = ({ people }: Props) => {
   const router = useRouter();
-  //const [displayImage, setDisplayImage] = useState(product.images[0]);
-
   const onSelectedPeople = (id: string) => {
-    router.push(`/personas/edit/${id}`);
+    router.push(`/membresias/edit/${id}`);
   };
-
   return (
     <div
       onClick={(e) => {

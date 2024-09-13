@@ -129,12 +129,12 @@ model Iglesia {
 
 model Membresia {
   id            String        @id @default(uuid())
-  people_id     String
+  persona_id     String
   fecha         DateTime
   tipo_id       Int
   created_at    DateTime      @default(now())
   updated_at    DateTime      @updatedAt
-  personas      Persona       @relation(fields: [people_id], references: [id])
+  persona      Persona       @relation(fields: [persona_id], references: [id])
   tipoMembresia TipoMembresia @relation(fields: [tipo_id], references: [id])
 
   @@map("membresias")

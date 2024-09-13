@@ -1,6 +1,15 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { Barrio, EstadoCivil, Sexos } from "@/interfaces";
+import { Barrio, EstadoCivil, People, Sexos } from "@/interfaces";
+
+export const getListPersonas = async (): Promise<People[]> => {
+  try {
+    const items = await prisma.persona.findMany();
+    return items;
+  } catch (error) {
+    throw new Error("No se pueden cargar el listado de personas");
+  }
+};
 
 export const getListSexos = async (): Promise<Sexos[]> => {
   try {

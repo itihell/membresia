@@ -11,3 +11,6 @@ export * from "./menu/menus.interface";
 export * from "./sexos";
 export * from "./estado-civil.interface";
 export * from "./sobre-barrio.interface";
+
+export * from "./membresia.interface";
+export * from "./tipo-membresia.interface";

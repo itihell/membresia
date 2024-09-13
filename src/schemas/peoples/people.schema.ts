@@ -1,4 +1,4 @@
-import { literal, nullable, optional, z } from "zod";
+import { literal, z } from "zod";
 
 export const PeopleSchema = z.object({
   nombres: z
