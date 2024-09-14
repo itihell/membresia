@@ -14,3 +14,4 @@ export * from "./sobre-barrio.interface";
 
 export * from "./membresia.interface";
 export * from "./tipo-membresia.interface";
+export * from "./iglesia.interface";

@@ -2,10 +2,18 @@
 import prisma from "@/lib/prisma";
 import { Barrio, EstadoCivil, People, Sexos } from "@/interfaces";
 
-export const getListPersonas = async (): Promise<People[]> => {
+export const getListPersonas = async (
+  search: string = ""
+): Promise<People[]> => {
   try {
-    const items = await prisma.persona.findMany();
-    return items;
+    const rows = (await prisma.$queryRaw`
+      select *, concat(nombres, ' ', apellidos) as full_name
+      from personas
+      where translate(nombres,'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') ILIKE '%' || translate(${search}, 'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') || '%' 
+      or translate(apellidos,'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') ILIKE '%' || translate(${search}, 'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') || '%' 
+      or cedula ILIKE '%' || ${search} || '%' limit 30`) as People[];
+
+    return rows;
   } catch (error) {
     throw new Error("No se pueden cargar el listado de personas");
   }
