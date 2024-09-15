@@ -3,6 +3,8 @@ import {
   FaCalendarCheck,
   FaChurch,
   FaListCheck,
+  FaMoneyBill1Wave,
+  FaPeopleCarryBox,
   FaPeopleGroup,
   FaPeopleLine,
   FaPerson,
@@ -28,6 +30,15 @@ const useMenu = () => {
     { name: "Eventos", path: "/eventos", icono: <FaCalendarCheck size={40} /> },
     { name: "Iglesia", path: "/iglesias", icono: <FaChurch size={40} /> },
     { name: "Familias", path: "/familias", icono: <FaPeopleGroup size={40} /> },
+    {
+      name: "Donaciones",
+      path: "/donacion",
+      icono: <FaPeopleCarryBox size={40} />,
+    },{
+      name: "Diezmos",
+      path: "/diezmos",
+      icono: <FaMoneyBill1Wave size={40} />,
+    },
   ]);
 
   return {

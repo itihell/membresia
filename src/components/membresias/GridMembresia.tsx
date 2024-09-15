@@ -23,10 +23,7 @@ export const GridMembresia = () => {
         </div>
         <div className="bg-white p-2">
           {miembros.map((miembro) => (
-            <GridMembresiaItem
-              key={miembro.id}
-              people={miembro.persona as People}
-            />
+            <GridMembresiaItem key={miembro.id} miembro={miembro} />
           ))}
         </div>
       </div>

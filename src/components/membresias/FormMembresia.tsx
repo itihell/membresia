@@ -20,12 +20,12 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { Calendar } from "../ui/calendar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ListPersonas } from "../ui/lists/list-personas";
 import { ListTipoMembresia } from "../ui/lists/list-tipo-membresia";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
 import { Switch } from "../ui/switch";
-import { createMembresia, updateMembresia } from "@/actions";
+import { createMembresia, getMembresiaById, updateMembresia } from "@/actions";
 import { Membresia } from "@/interfaces";
 import { toast } from "sonner";
 
@@ -42,14 +42,22 @@ export const FormMembresia = ({ id }: Props) => {
     defaultValues: {},
   });
 
+  useEffect(() => {
+    if (id) {
+      (async () => {
+        const membresia = await getMembresiaById(id);
+        form.reset(membresia);
+      })();
+    }
+  }, [id, form]);
+
   const onSubmit = async (data: z.infer<typeof MembresiaSchema>) => {
     try {
-      console.log({ data });
       if (id) {
         const membresia = await updateMembresia(id, data as Membresia);
         if (membresia.id) {
           toast.success("Éxito", {
-            description: "Registro creado con éxito",
+            description: "Registro actualizado con éxito",
             classNames: {
               toast: "!bg-green-100 border !border-green-300",
               title: "text-green-800 text-xl border-b border-green-600",
@@ -71,7 +79,6 @@ export const FormMembresia = ({ id }: Props) => {
           });
           route.push(`/personas/${membresia.persona_id}`);
         }
-        console.log({ membresia });
       }
     } catch (error) {}
   };

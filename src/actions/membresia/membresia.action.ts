@@ -7,7 +7,7 @@ import { auth } from "@/auth.config";
 
 export const getMembresiaById = async (id: string): Promise<Membresia> => {
   try {
-    const membresia = await prisma.membresia.findUnique({
+    const membresia = await prisma.membresia.findFirst({
       where: {
         id: id,
       },
