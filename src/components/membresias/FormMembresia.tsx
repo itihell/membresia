@@ -8,8 +8,10 @@ import { z } from "zod";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -22,6 +24,10 @@ import { useState } from "react";
 import { ListPersonas } from "../ui/lists/list-personas";
 import { ListTipoMembresia } from "../ui/lists/list-tipo-membresia";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
+import { Switch } from "../ui/switch";
+import { createMembresia, updateMembresia } from "@/actions";
+import { Membresia } from "@/interfaces";
+import { toast } from "sonner";
 
 interface Props {
   id?: string;
@@ -37,7 +43,37 @@ export const FormMembresia = ({ id }: Props) => {
   });
 
   const onSubmit = async (data: z.infer<typeof MembresiaSchema>) => {
-    console.log({ data });
+    try {
+      console.log({ data });
+      if (id) {
+        const membresia = await updateMembresia(id, data as Membresia);
+        if (membresia.id) {
+          toast.success("Éxito", {
+            description: "Registro creado con éxito",
+            classNames: {
+              toast: "!bg-green-100 border !border-green-300",
+              title: "text-green-800 text-xl border-b border-green-600",
+              description: "!text-green-600",
+            },
+          });
+          route.push(`/personas/${membresia.persona_id}`);
+        }
+      } else {
+        const membresia = await createMembresia(data as Membresia);
+        if (membresia.id) {
+          toast.success("Éxito", {
+            description: "Registro creado con éxito",
+            classNames: {
+              toast: "!bg-green-100 border !border-green-300",
+              title: "text-green-800 text-xl border-b border-green-600",
+              description: "!text-green-600",
+            },
+          });
+          route.push(`/personas/${membresia.persona_id}`);
+        }
+        console.log({ membresia });
+      }
+    } catch (error) {}
   };
   return (
     <div>
@@ -120,6 +156,32 @@ export const FormMembresia = ({ id }: Props) => {
                   form={form}
                   campo="tipo_id"
                   nameRelation="tipoMembresia"
+                />
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-12">
+              <div className="col-span-3"></div>
+              <div className="col-span-9">
+                <FormField
+                  control={form.control}
+                  name="activo"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                      <div className="space-y-0.5">
+                        <FormLabel>Es un miembro activo</FormLabel>
+                        <FormDescription>
+                          Marque esta opción si es un miembro activo
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value ? true : false}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
                 />
               </div>
             </div>

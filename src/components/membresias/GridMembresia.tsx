@@ -2,14 +2,15 @@
 import { Membresia, People } from "@/interfaces";
 import { useEffect, useState } from "react";
 import { GridMembresiaItem } from "./GridMembresiaItem";
+import { getMembresias } from "@/actions";
 
 export const GridMembresia = () => {
   const [miembros, setMiembros] = useState<Membresia[]>([]);
 
   useEffect(() => {
     (async () => {
-        console.log("useEffect");
-        
+      const mebresias = await getMembresias();
+      setMiembros(mebresias);
     })();
   }, []);
 

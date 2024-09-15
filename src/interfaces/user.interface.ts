@@ -4,7 +4,8 @@ export interface User {
   id?: string;
   email: string;
   password: string;
+  iglesia_id: string;
   name: string;
-  UserHasRole: UserHasRole[];
-  churchId: string;
+  activo: boolean;
+  UserHasRole?: UserHasRole[];
 }
