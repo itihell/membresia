@@ -19,8 +19,8 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListFetchData } from "@/hooks";
-import { Sexos } from "@/interfaces";
-import { getListSexos } from "@/actions";
+import { Sexos, TipoMembresia } from "@/interfaces";
+import { getListTipoMembresia } from "@/actions";
 
 type Props = {
   form: any;
@@ -37,9 +37,9 @@ export const ListTipoMembresia = ({
   className = "flex flex-col flex-wrap",
   nameRelation,
 }: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<Sexos>(
-    getListSexos,
-    "list-sexos"
+  const { searchData, store, removeTilde } = useListFetchData<TipoMembresia>(
+    getListTipoMembresia,
+    "list-tipo-membresia"
   );
 
   const relation: Sexos = form.watch(nameRelation);
@@ -53,8 +53,8 @@ export const ListTipoMembresia = ({
       return relation.name;
     } else {
       return field.value
-        ? items.find((item) => item.id === parseInt(field.value))?.name
-        : "Seleccione el sexo";
+        ? items.find((item) => item.id === parseInt(field.value))?.tipo_mebresia
+        : "Seleccione el tipo membresia";
     }
   };
 
@@ -87,7 +87,7 @@ export const ListTipoMembresia = ({
                 <CommandList>
                   <CommandEmpty>No se encontro el registro</CommandEmpty>
                   <CommandGroup>
-                    {items.map((item: Sexos) => (
+                    {items.map((item: TipoMembresia) => (
                       <CommandItem
                         className={cn(
                           "transition-all duration-200 ",
@@ -95,7 +95,7 @@ export const ListTipoMembresia = ({
                             ? " text-white font-bold bg-blue-700"
                             : ""
                         )}
-                        value={removeTilde(item.name)}
+                        value={removeTilde(item.tipo_mebresia)}
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
@@ -103,7 +103,7 @@ export const ListTipoMembresia = ({
                           nameRelation && form.setValue(nameRelation, item);
                         }}
                       >
-                        {removeTilde(item.name)}
+                        {item.tipo_mebresia}
                         <CheckCircledIcon
                           className={cn(
                             "ml-auto h-4 w-4",

@@ -203,8 +203,8 @@ async function main() {
 
   await prisma.tipoMembresia.createMany({
     data: [
-      { id: 1, tipo_mebresia: "Pleno" },
-      { id: 2, tipo_mebresia: "Asociado" },
+      { id: 1, tipo_mebresia: "Bautismo" },
+      { id: 2, tipo_mebresia: "Reconcilio" },
       { id: 3, tipo_mebresia: "Traslado" },
     ],
   });

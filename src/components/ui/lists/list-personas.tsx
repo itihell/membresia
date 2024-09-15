@@ -106,7 +106,9 @@ export const ListPersonas = ({
                             ? " text-white font-bold bg-blue-700"
                             : ""
                         )}
-                        value={removeTilde(`${item.nombres} ${item.apellidos} ${item.cedula}`)}
+                        value={removeTilde(
+                          `${item.nombres} ${item.apellidos} ${item.cedula} ${item.telefono}`
+                        )}
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);

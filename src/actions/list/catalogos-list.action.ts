@@ -1,6 +1,12 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { Barrio, EstadoCivil, People, Sexos } from "@/interfaces";
+import {
+  Barrio,
+  EstadoCivil,
+  People,
+  Sexos,
+  TipoMembresia,
+} from "@/interfaces";
 
 export const getListPersonas = async (
   search: string = ""
@@ -11,6 +17,7 @@ export const getListPersonas = async (
       from personas
       where translate(nombres,'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') ILIKE '%' || translate(${search}, 'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') || '%' 
       or translate(apellidos,'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') ILIKE '%' || translate(${search}, 'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') || '%' 
+      or translate(telefono,'-','') ILIKE '%' || translate(${search}, '-','') || '%' 
       or cedula ILIKE '%' || ${search} || '%' limit 30`) as People[];
 
     return rows;
@@ -22,6 +29,15 @@ export const getListPersonas = async (
 export const getListSexos = async (): Promise<Sexos[]> => {
   try {
     const items = await prisma.sexo.findMany();
+    return items;
+  } catch (error) {
+    throw new Error("No se pueden cargar el listado de sexos");
+  }
+};
+
+export const getListTipoMembresia = async (): Promise<TipoMembresia[]> => {
+  try {
+    const items = await prisma.tipoMembresia.findMany();
     return items;
   } catch (error) {
     throw new Error("No se pueden cargar el listado de sexos");

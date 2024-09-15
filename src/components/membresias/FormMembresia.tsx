@@ -20,8 +20,14 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { Calendar } from "../ui/calendar";
 import { useState } from "react";
 import { ListPersonas } from "../ui/lists/list-personas";
+import { ListTipoMembresia } from "../ui/lists/list-tipo-membresia";
+import { FaBan, FaFloppyDisk } from "react-icons/fa6";
 
-export const FormMembresia = () => {
+interface Props {
+  id?: string;
+}
+
+export const FormMembresia = ({ id }: Props) => {
   const route = useRouter();
   const [openFecha, setOpenFecha] = useState(false);
 
@@ -38,12 +44,16 @@ export const FormMembresia = () => {
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid md:grid-cols-12 mt-1">
+            <div className="grid md:grid-cols-12 mt-1">
               <div className="col-span-3 md:justify-end mr-1 flex items-center">
                 <label className="font-bold">Persona</label>
               </div>
               <div className="col-span-9">
-                <ListPersonas form={form} campo="persona_id" nameRelation="persona" />
+                <ListPersonas
+                  form={form}
+                  campo="persona_id"
+                  nameRelation="persona"
+                />
               </div>
             </div>
             <div className="grid md:grid-cols-12 mt-1">
@@ -99,6 +109,38 @@ export const FormMembresia = () => {
                     </FormItem>
                   )}
                 />
+              </div>
+            </div>
+            <div className="grid md:grid-cols-12 mt-1">
+              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+                <label className="font-bold">Tipo Membresia</label>
+              </div>
+              <div className="col-span-9">
+                <ListTipoMembresia
+                  form={form}
+                  campo="tipo_id"
+                  nameRelation="tipoMembresia"
+                />
+              </div>
+            </div>
+
+            <div className="right-8 bottom-8 fixed">
+              <div>
+                <Button
+                  type="button"
+                  className="!rounded-r-none btn-warning"
+                  onClick={(e) => {
+                    history.back();
+                  }}
+                >
+                  <FaBan />
+                  <span className="ml-2">Cancelar</span>
+                </Button>
+                <Button type="submit" className="!rounded-l-none btn-primary">
+                  <FaFloppyDisk />
+                  {id && <span className="ml-2">Actualizar</span>}
+                  {!id && <span className="ml-2">Guardar</span>}
+                </Button>
               </div>
             </div>
           </form>
