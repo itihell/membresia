@@ -92,7 +92,7 @@ export const FormPeople = ({ id }: Props) => {
           },
         });
 
-        route.replace("/personas");
+        route.push(`/personas/${people.id}`);
       } else {
         const people = await savePeople(data);
         toast.success("Éxito", {
@@ -103,7 +103,7 @@ export const FormPeople = ({ id }: Props) => {
             description: "!text-green-600",
           },
         });
-        route.push("/personas");
+        route.push(`/personas/${people.id}`);
       }
     } catch (error) {
       console.error(error);

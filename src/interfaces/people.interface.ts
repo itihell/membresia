@@ -1,5 +1,7 @@
 import { EstadoCivil, Sexo } from "@prisma/client";
 import { Iglesia } from "./iglesia.interface";
+import { FamiliaHasPersona } from "./familia-has-persona.interface";
+import { Barrio } from "./sobre-barrio.interface";
 
 export interface People {
   id?: string;
@@ -22,6 +24,8 @@ export interface People {
   updated_at?: Date | null;
 
   sexo?: Sexo;
+  familia?: FamiliaHasPersona[];
   estadoCivil?: EstadoCivil;
   iglesia?: Iglesia;
+  barrio?: Barrio;
 }

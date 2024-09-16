@@ -12,19 +12,39 @@ export const testSession = async () => {
   console.log(response?.user);
 };
 
-export const getPeopleId = async (id: string) => {
+export const getPeopleId = async (id: string): Promise<People> => {
   try {
     const people = await prisma.persona.findUnique({
       where: {
         id: id,
       },
       include: {
+        membresia: true,
         sexo: true,
         estadoCivil: true,
+        barrio: {
+          include: {
+            zonaGeografica: true,
+            municipio: {
+              include: {
+                departamento: {
+                  include: {
+                    pais: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        familia: {
+          include: {
+            persona: true,
+          },
+        },
       },
     });
 
-    return people;
+    return people as People;
   } catch (error) {
     throw new Error("No se pudo cargar la persona");
   }

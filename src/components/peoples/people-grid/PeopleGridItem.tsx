@@ -16,7 +16,7 @@ export const PeopleGridItem = ({ people }: Props) => {
   //const [displayImage, setDisplayImage] = useState(product.images[0]);
 
   const onSelectedPeople = (id: string) => {
-    router.push(`/personas/edit/${id}`);
+    router.push(`/personas/${id}`);
   };
 
   return (

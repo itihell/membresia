@@ -187,7 +187,7 @@ model Persona {
   eventoHasAsistencia EventoHasAsistencia[]
   familia             FamiliaHasPersona[]
   membresia           Membresia[]
-  barrios             Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
+  barrio              Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
   editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
   estadoCivil         EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
   iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
