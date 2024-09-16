@@ -12,19 +12,46 @@ export const testSession = async () => {
   console.log(response?.user);
 };
 
-export const getPeopleId = async (id: string) => {
+export const getPeopleId = async (id: string): Promise<People> => {
   try {
     const people = await prisma.persona.findUnique({
       where: {
         id: id,
       },
       include: {
+        membresia: {
+          include: {
+            iglesia: true,
+            tipoMembresia: true,
+          },
+        },
         sexo: true,
         estadoCivil: true,
+        barrio: {
+          include: {
+            zonaGeografica: true,
+            municipio: {
+              include: {
+                departamento: {
+                  include: {
+                    pais: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        familia: {
+          include: {
+            persona: true,
+          },
+        },
       },
     });
 
-    return people;
+    console.log(JSON.stringify(people, null, 2));
+
+    return people as People;
   } catch (error) {
     throw new Error("No se pudo cargar la persona");
   }
@@ -94,8 +121,6 @@ export const savePeople = async (data: People) => {
 };
 
 export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
-  console.log("pedir personas");
-  
   try {
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;

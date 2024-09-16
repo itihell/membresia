@@ -5,7 +5,6 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("POSTGRES_PRISMA_URL")
-  //directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model Baja {
@@ -17,9 +16,9 @@ model Baja {
   editor_id String?
   people_id String
   user_id   String
+  editor    User?    @relation("baja_editor_user_id", fields: [editor_id], references: [id])
   persona   Persona  @relation("baja_persona_id", fields: [people_id], references: [id])
   autor     User     @relation("baja_autor_user_id", fields: [user_id], references: [id])
-  editor    User?    @relation("baja_editor_user_id", fields: [editor_id], references: [id])
 
   @@map("bajas")
 }
@@ -82,15 +81,15 @@ model Evento {
   user_edit_id           String
   iglesia_id             String
   tipo_evento_id         Int
-  iglesias               Iglesia               @relation("evento_iglesia_id", fields: [iglesia_id], references: [id])
-  tipos_evento           TipoEvento            @relation("evento_tipo_evento_id", fields: [tipo_evento_id], references: [id])
-  autor                  User                  @relation("evento_autor_id", fields: [user_id], references: [id])
-  editor                 User                  @relation("evento_editor_id", fields: [user_edit_id], references: [id])
-  eventos_has_asistencia EventoHasAsistencia[]
-  Iglesia                Iglesia?              @relation(fields: [iglesiaId], references: [id])
   iglesiaId              String?
-  TipoEvento             TipoEvento?           @relation(fields: [tipoEventoId], references: [id])
   tipoEventoId           Int?
+  Iglesia                Iglesia?              @relation(fields: [iglesiaId], references: [id])
+  iglesias               Iglesia               @relation("evento_iglesia_id", fields: [iglesia_id], references: [id])
+  TipoEvento             TipoEvento?           @relation(fields: [tipoEventoId], references: [id])
+  tipos_evento           TipoEvento            @relation("evento_tipo_evento_id", fields: [tipo_evento_id], references: [id])
+  editor                 User                  @relation("evento_editor_id", fields: [user_edit_id], references: [id])
+  autor                  User                  @relation("evento_autor_id", fields: [user_id], references: [id])
+  eventos_has_asistencia EventoHasAsistencia[]
 
   @@map("eventos")
 }
@@ -115,27 +114,35 @@ model Iglesia {
   email            String           @db.VarChar(200)
   direccion        String
   telefonos        String           @db.VarChar(100)
-  users            User[]
-  users_has_church UsersHasChurch[]
   created_at       DateTime         @default(now())
   updated_at       DateTime         @updatedAt
-  eventos          Evento[]         @relation("evento_iglesia_id")
   Evento           Evento[]
-  Persona          Persona[]
+  eventos          Evento[]         @relation("evento_iglesia_id")
+  Familia          Familia[]
+  membresia        Membresia[]
+  persona          Persona[]
+  users            User[]
+  users_has_church UsersHasChurch[]
 
   @@map("iglesias")
 }
 
 model Membresia {
   id            String        @id @default(uuid())
-  people_id     String
   fecha         DateTime
   tipo_id       Int
   created_at    DateTime      @default(now())
   updated_at    DateTime      @updatedAt
-  personas      Persona       @relation(fields: [people_id], references: [id])
+  persona_id    String
+  activo        Boolean       @default(false)
+  iglesia_id    String
+  user_id       String
+  iglesia       Iglesia       @relation(fields: [iglesia_id], references: [id])
+  persona       Persona       @relation(fields: [persona_id], references: [id])
   tipoMembresia TipoMembresia @relation(fields: [tipo_id], references: [id])
+  user          User          @relation(fields: [user_id], references: [id])
 
+  @@unique([persona_id, iglesia_id])
   @@map("membresias")
 }
 
@@ -173,19 +180,19 @@ model Persona {
   estado_civil_id     Int
   email               String?               @db.VarChar(100)
   barrio_id           Int
-  iglesia_id          String
   created_at          DateTime              @default(now())
   updated_at          DateTime?             @updatedAt
-  // Relaciones
+  iglesia_id          String
+  bajas               Baja[]                @relation("baja_persona_id")
   eventoHasAsistencia EventoHasAsistencia[]
+  familia             FamiliaHasPersona[]
   membresia           Membresia[]
-  barrios             Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
+  barrio              Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
+  editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
   estadoCivil         EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
+  iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
   sexo                Sexo                  @relation(fields: [sexo_id], references: [id])
   autor               User                  @relation("persona_autor_id", fields: [user_id], references: [id])
-  editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
-  bajas               Baja[]                @relation("baja_persona_id")
-  iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
 
   @@map("personas")
 }
@@ -200,11 +207,11 @@ model Post {
   created_at   DateTime       @default(now())
   updated_at   DateTime       @updatedAt
   categoria_id Int
+  userId       String?
   categoria    Categoria      @relation(fields: [categoria_id], references: [id])
+  User         User?          @relation(fields: [userId], references: [id])
   users        User           @relation("post_autor_id", fields: [user_id], references: [id])
   postHasImage PostHasImage[]
-  User         User?          @relation(fields: [userId], references: [id])
-  userId       String?
 
   @@map("posts")
 }
@@ -237,8 +244,8 @@ model Sexo {
 model TipoEvento {
   id      Int      @id @default(autoincrement())
   name    String   @unique @db.VarChar(60)
-  eventos Evento[] @relation("evento_tipo_evento_id")
   Evento  Evento[]
+  eventos Evento[] @relation("evento_tipo_evento_id")
 
   @@map("tipos_eventos")
 }
@@ -252,27 +259,29 @@ model TipoMembresia {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  email      String   @unique @db.VarChar(200)
-  password   String
-  name       String   @db.VarChar(100)
-  iglesia_id String?
-  activo     Boolean  @default(true)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  // Relaciones
-  userHasChurch UsersHasChurch[]
-  userHasRole   UsersHasRole[]
-  iglesias      Iglesia?         @relation(fields: [iglesia_id], references: [id])
-  bajaAutor     Baja[]           @relation("baja_autor_user_id")
-  bajaEditor    Baja[]           @relation("baja_editor_user_id")
-  eventoAutor   Evento[]         @relation("evento_autor_id")
-  eventoEditor  Evento[]         @relation("evento_editor_id")
-  personaAutor  Persona[]        @relation("persona_autor_id")
-  PersonaEditor Persona[]        @relation("persona_editor_id")
-  posts         Post[]           @relation("post_autor_id")
-  Post          Post[]
+  id                String              @id @default(uuid())
+  email             String              @unique @db.VarChar(200)
+  password          String
+  name              String              @db.VarChar(100)
+  iglesia_id        String
+  activo            Boolean             @default(true)
+  created_at        DateTime            @default(now())
+  updated_at        DateTime            @updatedAt
+  bajaEditor        Baja[]              @relation("baja_editor_user_id")
+  bajaAutor         Baja[]              @relation("baja_autor_user_id")
+  eventoEditor      Evento[]            @relation("evento_editor_id")
+  eventoAutor       Evento[]            @relation("evento_autor_id")
+  familia_editor    Familia[]           @relation("familia_user_edit_id")
+  familia_autor     Familia[]           @relation("familia_user_id")
+  FamiliaHasPersona FamiliaHasPersona[]
+  Membresia         Membresia[]
+  PersonaEditor     Persona[]           @relation("persona_editor_id")
+  personaAutor      Persona[]           @relation("persona_autor_id")
+  Post              Post[]
+  posts             Post[]              @relation("post_autor_id")
+  iglesias          Iglesia             @relation(fields: [iglesia_id], references: [id])
+  userHasChurch     UsersHasChurch[]
+  userHasRole       UsersHasRole[]
 
   @@map("users")
 }
@@ -288,14 +297,14 @@ model UsersHasChurch {
 }
 
 model UsersHasRole {
-  id         Int       @id @default(autoincrement())
   user_id    String
   role_id    Int
+  id         Int       @id @default(autoincrement())
+  created_at DateTime  @default(now())
+  deleted_at DateTime?
+  updated_at DateTime? @updatedAt
   roles      Roles     @relation(fields: [role_id], references: [id])
   users      User      @relation(fields: [user_id], references: [id])
-  created_at DateTime  @default(now())
-  updated_at DateTime? @updatedAt
-  deleted_at DateTime?
 
   @@map("users_has_roles")
 }
@@ -306,4 +315,35 @@ model ZonaGeografica {
   barrios Barrio[]
 
   @@map("zonas_geograficas")
+}
+
+model Familia {
+  id           String              @id @default(uuid())
+  name         String
+  iglesia_id   String
+  user_id      String
+  user_edit_id String
+  created_at   DateTime            @default(now())
+  updated_at   DateTime            @updatedAt
+  iglesia      Iglesia             @relation(fields: [iglesia_id], references: [id])
+  editor       User                @relation("familia_user_edit_id", fields: [user_edit_id], references: [id])
+  user         User                @relation("familia_user_id", fields: [user_id], references: [id])
+  miembros     FamiliaHasPersona[]
+
+  @@map("familias")
+}
+
+model FamiliaHasPersona {
+  id         String   @id @default(uuid())
+  familia_id String
+  persona_id String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user_id    String
+  familia    Familia  @relation(fields: [familia_id], references: [id])
+  persona    Persona  @relation(fields: [persona_id], references: [id])
+  user       User     @relation(fields: [user_id], references: [id])
+
+  @@unique([familia_id, persona_id])
+  @@map("familias_has_personas")
 }

@@ -1,14 +1,23 @@
-import { Title } from "@/components";
+import { GridMembresia, Title } from "@/components";
+import Link from "next/link";
+import { FaUserPlus } from "react-icons/fa6";
 
 export default function AdminPage() {
   return (
-    <>
-      <Title
-        title="Miembros"
-        subtitle="Miembros de tu iglesia"
-        className="mb-2"
-      />
-      <h1>Pagina de miembros</h1>
-    </>
+    <div className="mb-5">
+      <Title title="Membresia" className="mb-2" />
+      <div>
+        <GridMembresia />
+        <div className="fixed right-8 bottom-8">
+          <Link
+            href={`/membresias/add`}
+            className="p-3 btn-primary rounded-md flex gap-1 justify-center items-center"
+          >
+            <FaUserPlus size={30} />
+            Agregar
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

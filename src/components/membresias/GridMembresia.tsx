@@ -1,21 +1,16 @@
 "use client";
-import { People } from "@/interfaces";
-import { PeopleGridItem } from "./PeopleGridItem";
-import { getPaginatedPeoples } from "@/actions";
+import { Membresia, People } from "@/interfaces";
 import { useEffect, useState } from "react";
+import { GridMembresiaItem } from "./GridMembresiaItem";
+import { getMembresias } from "@/actions";
 
-// interface Props {
-//   peoples: People[];
-// }
+export const GridMembresia = () => {
+  const [miembros, setMiembros] = useState<Membresia[]>([]);
 
-export const PeopleGrid = () => {
-  const [peoples, setPeoples] = useState<People[]>([]);
   useEffect(() => {
     (async () => {
-      const { currentPage, totalPages, peoples } = await getPaginatedPeoples({
-        page: 1,
-      });
-      setPeoples(peoples);
+      const mebresias = await getMembresias();
+      setMiembros(mebresias);
     })();
   }, []);
 
@@ -27,8 +22,8 @@ export const PeopleGrid = () => {
           <div className="col-span-4">Teléfono</div>
         </div>
         <div className="bg-white p-2">
-          {peoples.map((people) => (
-            <PeopleGridItem key={people.id} people={people} />
+          {miembros.map((miembro) => (
+            <GridMembresiaItem key={miembro.id} miembro={miembro} />
           ))}
         </div>
       </div>

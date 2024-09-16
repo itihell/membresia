@@ -3,3 +3,5 @@ export * from "./auth/logout";
 
 export * from "./peoples/peoples-actions";
 export * from "./list/catalogos-list.action";
+
+export * from "./membresia/membresia.action";
