@@ -32,17 +32,33 @@ export const ContainerPersona = ({ id }: Props) => {
     <div className="mb-5">
       <Tabs defaultValue={tab ?? "general"}>
         <TabsList>
-          <TabsTrigger onClick={() => navegacionTab("general")} value="general">
+          <TabsTrigger
+            className=""
+            onClick={() => navegacionTab("general")}
+            value="general"
+          >
             General
           </TabsTrigger>
           <TabsTrigger
+            className=""
             onClick={() => navegacionTab("membresia")}
             value="membresia"
           >
             Membresia
           </TabsTrigger>
-          <TabsTrigger onClick={() => navegacionTab("familia")} value="familia">
+          <TabsTrigger
+            className=""
+            onClick={() => navegacionTab("familia")}
+            value="familia"
+          >
             Familia
+          </TabsTrigger>
+          <TabsTrigger
+            className=""
+            onClick={() => navegacionTab("familia")}
+            value="asistencia"
+          >
+            Asistencia
           </TabsTrigger>
         </TabsList>
         <TabsContent value="general">
@@ -63,6 +79,9 @@ export const ContainerPersona = ({ id }: Props) => {
               </div>
             ))}
           </div>
+        </TabsContent>
+        <TabsContent value="asistencia">
+          <div>Asistencia</div>
         </TabsContent>
       </Tabs>
     </div>

@@ -91,3 +91,7 @@
 .btn-warning:hover {
   @apply !bg-yellow-900;
 }
+
+.nav-tabs {
+  @apply !bg-blue-700 !text-white;
+}
