@@ -6,6 +6,7 @@ export * from "./postHasImage.interface";
 export * from "./user.interface";
 export * from "./userHasRoles.inteface";
 export * from "./userHasRoles.inteface";
+export * from "./errorApp.interface";
 
 export * from "./menu/menus.interface";
 export * from "./sexos";

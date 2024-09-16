@@ -52,7 +52,7 @@ export const ContainerPersona = ({ id }: Props) => {
         </TabsContent>
         <TabsContent value="membresia">
           <div className="mt-5">
-            <DataMembresia membresias={persona.membresia} />
+            <DataMembresia id={persona.id} membresias={persona.membresia} />
           </div>
         </TabsContent>
         <TabsContent value="familia">

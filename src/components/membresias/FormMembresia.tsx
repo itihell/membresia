@@ -25,8 +25,13 @@ import { ListPersonas } from "../ui/lists/list-personas";
 import { ListTipoMembresia } from "../ui/lists/list-tipo-membresia";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
 import { Switch } from "../ui/switch";
-import { createMembresia, getMembresiaById, updateMembresia } from "@/actions";
-import { Membresia } from "@/interfaces";
+import {
+  createMembresia,
+  getMembresiaById,
+  getPeopleId,
+  updateMembresia,
+} from "@/actions";
+import { ErrorApp, Membresia } from "@/interfaces";
 import { toast } from "sonner";
 
 interface Props {
@@ -35,6 +40,7 @@ interface Props {
 
 export const FormMembresia = ({ id }: Props) => {
   const params = useSearchParams();
+  const personaId = params.get("persona");
   const route = useRouter();
   const [openFecha, setOpenFecha] = useState(false);
 
@@ -42,6 +48,19 @@ export const FormMembresia = ({ id }: Props) => {
     resolver: zodResolver(MembresiaSchema),
     defaultValues: {},
   });
+
+  useEffect(() => {
+    if (personaId) {
+      (async () => {
+        const persona = await getPeopleId(personaId);
+        const data = {
+          persona_id: personaId,
+          persona: persona,
+        };
+        form.reset(data);
+      })();
+    }
+  }, [personaId, form]);
 
   useEffect(() => {
     if (id) {
@@ -87,7 +106,17 @@ export const FormMembresia = ({ id }: Props) => {
           );
         }
       }
-    } catch (error) {}
+    } catch (error: ErrorApp | any) {
+      const message = error?.message || "Error al guardar el registro";
+      return toast.error("ERROR", {
+        description: message,
+        classNames: {
+          toast: "!bg-red-100 border !border-red-300",
+          title: "text-red-800 text-xl border-b border-red-600",
+          description: "!text-red-600",
+        },
+      });
+    }
   };
   return (
     <div>
