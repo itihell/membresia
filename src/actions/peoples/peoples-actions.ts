@@ -49,8 +49,6 @@ export const getPeopleId = async (id: string): Promise<People> => {
       },
     });
 
-    console.log(JSON.stringify(people, null, 2));
-
     return people as People;
   } catch (error) {
     throw new Error("No se pudo cargar la persona");
@@ -84,8 +82,6 @@ export const updatePeople = async (id: string, data: People) => {
 
     return people;
   } catch (error) {
-    console.log({ error });
-
     throw new Error("No se pudo guardar la persona");
   }
 };
@@ -114,8 +110,6 @@ export const savePeople = async (data: People) => {
 
     return people;
   } catch (error) {
-    console.log({ error });
-
     throw new Error("No se pudo guardar la persona");
   }
 };
@@ -143,8 +137,6 @@ export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
       peoples: peoples,
     };
   } catch (error) {
-    console.log(error);
-
     throw new Error("No se pudo cargar el listado de personas");
   }
 };
