@@ -1,18 +1,20 @@
 "use client";
-import { DataPersonaGeneral } from "@/components";
+import { DataMembresia, DataPersonaGeneral } from "@/components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { People } from "@/interfaces";
 import { useEffect, useState } from "react";
 import { getPeopleId } from "@/actions";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 interface Props {
   id: string;
 }
 
 export const ContainerPersona = ({ id }: Props) => {
-  const route = useSearchParams();
-  const tab = route.get("tab");
+  const params = useSearchParams();
+  const route = useRouter();
+  const pathName = usePathname();
+  const tab = params.get("tab");
 
   const [persona, setPersona] = useState<People>({} as People);
   useEffect(() => {
@@ -22,13 +24,26 @@ export const ContainerPersona = ({ id }: Props) => {
     })();
   }, [id]);
 
+  const navegacionTab = (tab: string) => {
+    route.push(`${pathName}?tab=${tab}`);
+  };
+
   return (
     <div className="mb-5">
       <Tabs defaultValue={tab ?? "general"}>
         <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="membresia">Membresia</TabsTrigger>
-          <TabsTrigger value="familia">Familia</TabsTrigger>
+          <TabsTrigger onClick={() => navegacionTab("general")} value="general">
+            General
+          </TabsTrigger>
+          <TabsTrigger
+            onClick={() => navegacionTab("membresia")}
+            value="membresia"
+          >
+            Membresia
+          </TabsTrigger>
+          <TabsTrigger onClick={() => navegacionTab("familia")} value="familia">
+            Familia
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="general">
           <div className="mt-5">
@@ -36,7 +51,9 @@ export const ContainerPersona = ({ id }: Props) => {
           </div>
         </TabsContent>
         <TabsContent value="membresia">
-          <div className="mt-5">Membresia</div>
+          <div className="mt-5">
+            <DataMembresia membresias={persona.membresia} />
+          </div>
         </TabsContent>
         <TabsContent value="familia">
           <div>

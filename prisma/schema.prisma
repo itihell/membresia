@@ -119,8 +119,8 @@ model Iglesia {
   Evento           Evento[]
   eventos          Evento[]         @relation("evento_iglesia_id")
   Familia          Familia[]
-  Membresia        Membresia[]
-  Persona          Persona[]
+  membresia        Membresia[]
+  persona          Persona[]
   users            User[]
   users_has_church UsersHasChurch[]
 

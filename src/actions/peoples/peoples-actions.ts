@@ -19,7 +19,12 @@ export const getPeopleId = async (id: string): Promise<People> => {
         id: id,
       },
       include: {
-        membresia: true,
+        membresia: {
+          include: {
+            iglesia: true,
+            tipoMembresia: true,
+          },
+        },
         sexo: true,
         estadoCivil: true,
         barrio: {
@@ -43,6 +48,8 @@ export const getPeopleId = async (id: string): Promise<People> => {
         },
       },
     });
+
+    console.log(JSON.stringify(people, null, 2));
 
     return people as People;
   } catch (error) {

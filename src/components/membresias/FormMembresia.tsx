@@ -2,7 +2,7 @@
 
 import { MembresiaSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -34,6 +34,7 @@ interface Props {
 }
 
 export const FormMembresia = ({ id }: Props) => {
+  const params = useSearchParams();
   const route = useRouter();
   const [openFecha, setOpenFecha] = useState(false);
 
@@ -53,6 +54,10 @@ export const FormMembresia = ({ id }: Props) => {
 
   const onSubmit = async (data: z.infer<typeof MembresiaSchema>) => {
     try {
+      let tab = params.get("tab");
+      if (!tab) {
+        tab = "general";
+      }
       if (id) {
         const membresia = await updateMembresia(id, data as Membresia);
         if (membresia.id) {
@@ -64,7 +69,7 @@ export const FormMembresia = ({ id }: Props) => {
               description: "!text-green-600",
             },
           });
-          route.push(`/personas/${membresia.persona_id}`);
+          route.push(`/personas/${membresia.persona_id}?tab=${tab}&id=${id}`);
         }
       } else {
         const membresia = await createMembresia(data as Membresia);
@@ -77,7 +82,9 @@ export const FormMembresia = ({ id }: Props) => {
               description: "!text-green-600",
             },
           });
-          route.push(`/personas/${membresia.persona_id}`);
+          route.push(
+            `/personas/${membresia.persona_id}?tab=${tab}&id=${membresia.id}`
+          );
         }
       }
     } catch (error) {}

@@ -1,5 +1,6 @@
 import { inter, titleFont } from "@/config/fonts";
 import { People } from "@/interfaces";
+import { format } from "date-fns";
 
 interface Props {
   persona: People;
@@ -15,6 +16,12 @@ interface TitleSeparadorProps {
 }
 
 const safeValue = (value: string) => {
+  const isDate = new Date(value);
+  if (!isNaN(isDate.getTime())) {
+    return format(isDate, "dd - MM -yyyy");
+  }
+  //console.log({ fecha });
+
   if (value === null || value === undefined) {
     return "";
   } else if (value === "null" || value === "undefined") {

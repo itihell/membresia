@@ -1,6 +1,7 @@
 export * from "./peoples/people-grid/PeopleGrid";
 export * from "./peoples/people-grid/PeopleGridItem";
 export * from "./peoples/DataPersonaGeneral";
+export * from "./peoples/DataMembresia";
 
 export * from "./ui/footer/Footer";
 export * from "./ui/pagination/Pagination";
