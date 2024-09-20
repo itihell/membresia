@@ -34,6 +34,12 @@ export const getFamiliaById = async (id: string): Promise<Familia> => {
         user: true,
         editor: true,
         iglesia: true,
+        miembros: {
+          include: {
+            persona: true,
+            parentesco: true,
+          },
+        },
       },
     });
     return familia as Familia;

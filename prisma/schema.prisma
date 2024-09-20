@@ -354,7 +354,7 @@ model FamiliaHasPersona {
   familia       Familia     @relation(fields: [familia_id], references: [id])
   persona       Persona     @relation(fields: [persona_id], references: [id])
   user          User        @relation(fields: [user_id], references: [id])
-  Parentesco    Parentesco? @relation(fields: [parentesco_id], references: [id])
+  parentesco    Parentesco? @relation(fields: [parentesco_id], references: [id])
 
   @@unique([familia_id, persona_id])
   @@map("familias_has_personas")

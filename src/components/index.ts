@@ -22,6 +22,8 @@ export * from "./ui/lists/list-estado-civil";
 export * from "./ui/lists/list-barrios";
 export * from "./ui/lists/list-personas";
 export * from "./ui/lists/list-tipo-membresia";
+export * from "./ui/lists/list-parentesco";
+export * from "./ui/lists/list-familias";
 
 export * from "./membresias/GridMembresia";
 export * from "./membresias/GridMembresiaItem";
@@ -31,3 +33,4 @@ export * from "./familias/FormFamilia";
 export * from "./familias/GridFamilias";
 export * from "./familias/GridFamiliaRow";
 export * from "./familias/FormMiembroHasFamilia";
+export * from "./familias/MiembrosHasFamilia";

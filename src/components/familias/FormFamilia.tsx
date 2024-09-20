@@ -32,8 +32,6 @@ export const FormFamilia = ({ id }: Props) => {
   useEffect(() => {
     if (id) {
       (async () => {
-        console.log("id", id);
-
         const familia = await getFamiliaById(id);
         form.reset(familia);
       })();

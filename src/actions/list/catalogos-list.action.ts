@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import {
   Barrio,
   EstadoCivil,
+  Familia,
+  Parentesco,
   People,
   Sexos,
   TipoMembresia,
@@ -26,12 +28,38 @@ export const getListPersonas = async (
   }
 };
 
+export const getListFamilias = async (
+  search: string = ""
+): Promise<Familia[]> => {
+  try {
+    const rows = (await prisma.$queryRaw`
+      select *
+      from familias
+      where translate(name,'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') ILIKE '%' || translate(${search}, 'áéíóúÁÉÍÓÚäëïöüÄËÏÖÜ','aeiouAEIOUaeiouAEIOU') || '%' 
+      limit 30`) as Familia[];
+
+    return rows;
+  } catch (error) {
+    throw new Error("No se pueden cargar el listado de familias");
+  }
+};
+
 export const getListSexos = async (): Promise<Sexos[]> => {
   try {
     const items = await prisma.sexo.findMany();
     return items;
   } catch (error) {
     throw new Error("No se pueden cargar el listado de sexos");
+  }
+};
+
+export const getListParentesco = async (): Promise<Parentesco[]> => {
+  try {
+    const items = await prisma.parentesco.findMany();
+
+    return items;
+  } catch (error) {
+    throw new Error("No se pueden cargar el listado de parentesco");
   }
 };
 
