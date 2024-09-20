@@ -3,7 +3,6 @@
 import { useSession } from "next-auth/react";
 import { loginForm } from "@/actions";
 import clsx from "clsx";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
@@ -25,10 +24,10 @@ export const LoginForm = () => {
   useEffect(() => {
     if (message === "Success") {
       if (querysParams.get("callbackUrl")) {
-        const url = querysParams.get("callbackUrl") ?? "/perfil";
+        const url = querysParams.get("callbackUrl") ?? "/";
         window.location.replace(url);
       } else {
-        window.location.replace("/perfil");
+        window.location.replace("/");
       }
     }
   }, [message, querysParams]);

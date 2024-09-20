@@ -193,6 +193,7 @@ model Persona {
   iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
   sexo                Sexo                  @relation(fields: [sexo_id], references: [id])
   autor               User                  @relation("persona_autor_id", fields: [user_id], references: [id])
+  grupos_has_personas GrupoHasPersona[]
 
   @@map("personas")
 }
@@ -329,21 +330,59 @@ model Familia {
   editor       User                @relation("familia_user_edit_id", fields: [user_edit_id], references: [id])
   user         User                @relation("familia_user_id", fields: [user_id], references: [id])
   miembros     FamiliaHasPersona[]
+  parentescoId Int?
 
   @@map("familias")
 }
 
+model Parentesco {
+  id              Int                 @id @default(autoincrement())
+  parentesco      String              @unique @db.VarChar(60)
+  miembro_familia FamiliaHasPersona[]
+
+  @@map("parentescos")
+}
+
 model FamiliaHasPersona {
-  id         String   @id @default(uuid())
-  familia_id String
-  persona_id String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user_id    String
-  familia    Familia  @relation(fields: [familia_id], references: [id])
-  persona    Persona  @relation(fields: [persona_id], references: [id])
-  user       User     @relation(fields: [user_id], references: [id])
+  id            String      @id @default(uuid())
+  familia_id    String
+  persona_id    String
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  user_id       String
+  parentesco_id Int
+  familia       Familia     @relation(fields: [familia_id], references: [id])
+  persona       Persona     @relation(fields: [persona_id], references: [id])
+  user          User        @relation(fields: [user_id], references: [id])
+  Parentesco    Parentesco? @relation(fields: [parentesco_id], references: [id])
 
   @@unique([familia_id, persona_id])
   @@map("familias_has_personas")
+}
+
+model Grupo {
+  id         Int               @id @default(autoincrement())
+  grupo      String            @unique
+  lider_id   String
+  iglesia_id String
+  user_id    String
+  created_at DateTime          @default(now())
+  updated_at DateTime          @updatedAt
+  miembros   GrupoHasPersona[]
+
+  @@map("grupos")
+}
+
+model GrupoHasPersona {
+  id         String   @id @default(uuid())
+  grupo_id   Int
+  persona_id String
+  user_id    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  grupo      Grupo    @relation(fields: [grupo_id], references: [id])
+  persona    Persona  @relation(fields: [persona_id], references: [id])
+
+  @@unique([grupo_id, persona_id])
+  @@map("grupos_has_personas")
 }

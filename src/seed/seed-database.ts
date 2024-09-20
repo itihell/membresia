@@ -26,6 +26,7 @@ async function main() {
   await prisma.departamento.deleteMany();
   await prisma.pais.deleteMany();
   await prisma.zonaGeografica.deleteMany();
+  await prisma.parentesco.deleteMany();
   // ]);
 
   //  Categorias
@@ -37,6 +38,17 @@ async function main() {
     data: [
       { id: 1, name: "Masculino" },
       { id: 2, name: "Femenino" },
+    ],
+  });
+
+  await prisma.parentesco.createMany({
+    data: [
+      { id: 1, parentesco: "Papá" },
+      { id: 2, parentesco: "Mamá" },
+      { id: 3, parentesco: "Hijo" },
+      { id: 4, parentesco: "Hija" },
+      { id: 5, parentesco: "Abuela" },
+      { id: 6, parentesco: "Abuelo" },
     ],
   });
 

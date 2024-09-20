@@ -1,4 +1,5 @@
 import { FamiliaHasPersona } from "./familia-has-persona.interface";
+import { Iglesia } from "./iglesia.interface";
 import { User } from "./user.interface";
 
 export interface Familia {
@@ -9,8 +10,8 @@ export interface Familia {
   user_edit_id: string;
   created_at?: Date;
   updated_at?: Date | null;
-  iglesia: string;
-  editor: User;
-  user: User;
-  miembros: FamiliaHasPersona[];
+  iglesia?: Iglesia;
+  editor?: User;
+  user?: User;
+  miembros?: FamiliaHasPersona[];
 }

@@ -5,3 +5,5 @@ export * from "./peoples/peoples-actions";
 export * from "./list/catalogos-list.action";
 
 export * from "./membresia/membresia.action";
+
+export * from "./familias/familias.action";

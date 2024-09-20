@@ -72,6 +72,14 @@
   @apply bg-blue-700 text-white;
 }
 
+.btn-success {
+  @apply bg-green-700 text-white;
+}
+
+.btn-success:hover {
+  @apply !bg-green-900;
+}
+
 .btn-primary:hover {
   @apply !bg-blue-900;
 }

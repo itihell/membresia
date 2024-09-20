@@ -26,3 +26,8 @@ export * from "./ui/lists/list-tipo-membresia";
 export * from "./membresias/GridMembresia";
 export * from "./membresias/GridMembresiaItem";
 export * from "./membresias/FormMembresia";
+
+export * from "./familias/FormFamilia";
+export * from "./familias/GridFamilias";
+export * from "./familias/GridFamiliaRow";
+export * from "./familias/FormMiembroHasFamilia";

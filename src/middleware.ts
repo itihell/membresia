@@ -1,3 +1,6 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 
@@ -14,6 +17,9 @@ export const config = {
     "/iglesias/:path*",
     "/membresias/:path*",
     "/personas/:path*",
+    "/donaciones/:path*",
+    "/reportes/:path*",
+    "/familias/:path*",
     "/api/:path*",
   ],
 };
