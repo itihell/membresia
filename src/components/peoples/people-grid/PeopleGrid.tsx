@@ -15,6 +15,7 @@ export const PeopleGrid = () => {
       const { currentPage, totalPages, peoples } = await getPaginatedPeoples({
         page: 1,
       });
+
       setPeoples(peoples);
     })();
   }, []);

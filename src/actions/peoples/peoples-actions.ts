@@ -123,6 +123,7 @@ export const getPaginatedPeoples = async ({ page = 1, take = 100 }) => {
       take: take,
       skip: (page - 1) * take,
       include: {
+        membresia: true,
         sexo: true,
         estadoCivil: true,
       },

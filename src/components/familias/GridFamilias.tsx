@@ -13,8 +13,8 @@ export const GridFamilias = ({ familias }: Props) => {
           <div className="col-span-8">Nombre de la Familia</div>
         </div>
         <div className="bg-white p-2">
-          {familias.map((familia) => (
-            <GridFamiliaRow key={familia.id} familia={familia} />
+          {familias.map((familia, index) => (
+            <GridFamiliaRow index={index} key={familia.id} familia={familia} />
           ))}
         </div>
       </div>
