@@ -9,8 +9,9 @@ import { FaTrash } from "react-icons/fa6";
 
 interface Props {
   familiaId: string;
+  onDeleted?: (id: string) => void;
 }
-export const MiembrosHasFamilia = ({ familiaId }: Props) => {
+export const MiembrosHasFamilia = ({ familiaId, onDeleted }: Props) => {
   const route = useRouter();
   const [familia, setFamilia] = useState<Familia>({} as Familia);
 
@@ -23,6 +24,10 @@ export const MiembrosHasFamilia = ({ familiaId }: Props) => {
 
   const onDeletedMiembro = async (id: string) => {
     const deleted = await deleteMiembroHasFamilia(id);
+
+    if (onDeleted) {
+      onDeleted(deleted.id as string);
+    }
 
     const familia = await getFamiliaById(familiaId);
     setFamilia(familia);

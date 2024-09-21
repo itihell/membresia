@@ -185,7 +185,7 @@ model Persona {
   iglesia_id          String
   bajas               Baja[]                @relation("baja_persona_id")
   eventoHasAsistencia EventoHasAsistencia[]
-  familia             FamiliaHasPersona[]
+  familia             FamiliaHasPersona?
   membresia           Membresia[]
   barrio              Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
   editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
@@ -346,7 +346,7 @@ model Parentesco {
 model FamiliaHasPersona {
   id            String      @id @default(uuid())
   familia_id    String
-  persona_id    String
+  persona_id    String      @unique
   created_at    DateTime    @default(now())
   updated_at    DateTime    @updatedAt
   user_id       String
