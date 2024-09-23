@@ -49,8 +49,6 @@ export const getPeopleId = async (id: string): Promise<People> => {
       },
     });
 
-    console.log(JSON.stringify(people, null, 2));
-
     return people as People;
   } catch (error) {
     throw new Error("No se pudo cargar la persona");
@@ -84,8 +82,6 @@ export const updatePeople = async (id: string, data: People) => {
 
     return people;
   } catch (error) {
-    console.log({ error });
-
     throw new Error("No se pudo guardar la persona");
   }
 };
@@ -114,13 +110,11 @@ export const savePeople = async (data: People) => {
 
     return people;
   } catch (error) {
-    console.log({ error });
-
     throw new Error("No se pudo guardar la persona");
   }
 };
 
-export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
+export const getPaginatedPeoples = async ({ page = 1, take = 100 }) => {
   try {
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
@@ -129,6 +123,7 @@ export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
       take: take,
       skip: (page - 1) * take,
       include: {
+        membresia: true,
         sexo: true,
         estadoCivil: true,
       },
@@ -143,8 +138,6 @@ export const getPaginatedPeoples = async ({ page = 1, take = 12 }) => {
       peoples: peoples,
     };
   } catch (error) {
-    console.log(error);
-
     throw new Error("No se pudo cargar el listado de personas");
   }
 };

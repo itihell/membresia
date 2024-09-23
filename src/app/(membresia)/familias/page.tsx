@@ -1,17 +1,25 @@
+export const revalidate = 0;
+import { getFamilias } from "@/actions";
+import { GridFamilias, Title } from "@/components";
 import Link from "next/link";
-import { IoCartOutline } from "react-icons/io5";
+import { FaUserPlus } from "react-icons/fa6";
 
-export default function FamiliaPage() {
+export default async function FamiliaPage() {
+  const familias = await getFamilias();
   return (
-    <div className="flex justify-center items-center h-[800px]">
-      <IoCartOutline size={80} className="mx-5" />
-
-      <div className="flex flex-col items-center">
-        <h1 className="text-xl font-semibold">Familias </h1>
-
-        <Link href="/" className="text-blue-500 mt-2 text-4xl">
-          Regresar
-        </Link>
+    <div className="mb-5">
+      <Title title="Familias" className="mb-2" />
+      <div>
+        <GridFamilias familias={familias} />
+        <div className="fixed right-8 bottom-8">
+          <Link
+            href={`/familias/add`}
+            className="p-3 btn-primary rounded-md flex gap-1 justify-center items-center"
+          >
+            <FaUserPlus size={30} />
+            Agregar
+          </Link>
+        </div>
       </div>
     </div>
   );

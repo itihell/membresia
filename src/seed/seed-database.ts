@@ -26,6 +26,7 @@ async function main() {
   await prisma.departamento.deleteMany();
   await prisma.pais.deleteMany();
   await prisma.zonaGeografica.deleteMany();
+  await prisma.parentesco.deleteMany();
   // ]);
 
   //  Categorias
@@ -37,6 +38,19 @@ async function main() {
     data: [
       { id: 1, name: "Masculino" },
       { id: 2, name: "Femenino" },
+    ],
+  });
+
+  await prisma.parentesco.createMany({
+    data: [
+      { id: 1, parentesco: "Papá" },
+      { id: 2, parentesco: "Mamá" },
+      { id: 3, parentesco: "Hijo" },
+      { id: 4, parentesco: "Hija" },
+      { id: 5, parentesco: "Abuela" },
+      { id: 6, parentesco: "Abuelo" },
+      { id: 7, parentesco: "Sobrina" },
+      { id: 8, parentesco: "Sobrina" },
     ],
   });
 
@@ -90,6 +104,14 @@ async function main() {
       { id: 7, name: "Zona 7", municipio_id: 1, zona_geografica_id: 1 },
       { id: 8, name: "Zona 8", municipio_id: 1, zona_geografica_id: 1 },
       { id: 9, name: "Zona 9", municipio_id: 1, zona_geografica_id: 1 },
+      {
+        id: 10,
+        name: "Bo. Linda Vista",
+        municipio_id: 1,
+        zona_geografica_id: 1,
+      },
+      { id: 11, name: "Bo. 5 Marzo", municipio_id: 1, zona_geografica_id: 1 },
+      { id: 12, name: "Otro", municipio_id: 1, zona_geografica_id: 1 },
     ],
   });
 

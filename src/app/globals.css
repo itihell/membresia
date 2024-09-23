@@ -72,6 +72,14 @@
   @apply bg-blue-700 text-white;
 }
 
+.btn-success {
+  @apply bg-green-700 text-white;
+}
+
+.btn-success:hover {
+  @apply !bg-green-900;
+}
+
 .btn-primary:hover {
   @apply !bg-blue-900;
 }
@@ -92,6 +100,22 @@
   @apply !bg-yellow-900;
 }
 
+.btn-danger {
+  @apply bg-red-700 text-white;
+}
+
+.btn-danger:hover {
+  @apply !bg-red-900;
+}
+
 .nav-tabs {
   @apply !bg-blue-700 !text-white;
+}
+
+.btn-link {
+  @apply !text-blue-700;
+}
+
+.btn-link:hover {
+  @apply !text-blue-900;
 }

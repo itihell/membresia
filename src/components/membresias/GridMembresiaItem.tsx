@@ -5,9 +5,10 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   miembro: Membresia;
+  index: number;
 }
 
-export const GridMembresiaItem = ({ miembro }: Props) => {
+export const GridMembresiaItem = ({ miembro, index }: Props) => {
   const router = useRouter();
   const onSelectedPeople = (id: string) => {
     router.push(`/membresias/edit/${id}`);
@@ -19,7 +20,8 @@ export const GridMembresiaItem = ({ miembro }: Props) => {
       }}
       className="grid grid-cols-12 py-2 hover:bg-blue-300 hover:cursor-pointer border-b border-blue-500"
     >
-      <div className="col-span-8">
+      <div className="col-span-1">{index + 1}</div>
+      <div className="col-span-7">
         {miembro?.persona?.nombres} {miembro?.persona?.apellidos}
       </div>
       <div className="col-span-4">{miembro?.persona?.telefono}</div>

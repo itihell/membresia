@@ -18,3 +18,6 @@ export * from "./tipo-membresia.interface";
 export * from "./iglesia.interface";
 export * from "./familia-has-persona.interface";
 export * from "./familia.interface";
+
+export * from "./parentesco.interface";
+

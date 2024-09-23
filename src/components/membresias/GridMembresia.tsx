@@ -22,8 +22,12 @@ export const GridMembresia = () => {
           <div className="col-span-4">Teléfono</div>
         </div>
         <div className="bg-white p-2">
-          {miembros.map((miembro) => (
-            <GridMembresiaItem key={miembro.id} miembro={miembro} />
+          {miembros.map((miembro, index) => (
+            <GridMembresiaItem
+              index={index}
+              key={miembro.id}
+              miembro={miembro}
+            />
           ))}
         </div>
       </div>

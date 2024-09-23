@@ -26,7 +26,7 @@ export interface People {
 
   sexo?: Sexo;
   membresia?: Membresia[];
-  familia?: FamiliaHasPersona[];
+  familia?: FamiliaHasPersona;
   estadoCivil?: EstadoCivil;
   iglesia?: Iglesia;
   barrio?: Barrio;

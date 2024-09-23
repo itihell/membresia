@@ -44,11 +44,11 @@ const useListFetchData = <T,>(
 
   useEffect(() => {
     const loader = async () => {
-      const data = await fetchData();
+      const data = await getData("");
       setItems(data as T[]);
     };
     loader();
-  }, []);
+  }, [getData, setItems]);
 
   //e: KeyboardEvent<HTMLInputElement>
   // e.currentTarget.value;

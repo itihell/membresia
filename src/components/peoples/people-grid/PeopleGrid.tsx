@@ -15,6 +15,7 @@ export const PeopleGrid = () => {
       const { currentPage, totalPages, peoples } = await getPaginatedPeoples({
         page: 1,
       });
+
       setPeoples(peoples);
     })();
   }, []);
@@ -27,8 +28,8 @@ export const PeopleGrid = () => {
           <div className="col-span-4">Teléfono</div>
         </div>
         <div className="bg-white p-2">
-          {peoples.map((people) => (
-            <PeopleGridItem key={people.id} people={people} />
+          {peoples.map((people, index) => (
+            <PeopleGridItem index={index} key={people.id} people={people} />
           ))}
         </div>
       </div>

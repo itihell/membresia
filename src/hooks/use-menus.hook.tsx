@@ -1,6 +1,8 @@
 import {
   FaBagShopping,
   FaCalendarCheck,
+  FaChair,
+  FaChartPie,
   FaChurch,
   FaListCheck,
   FaMoneyBill1Wave,
@@ -9,6 +11,7 @@ import {
   FaPeopleLine,
   FaPerson,
   FaUserCheck,
+  FaUserGroup,
   FaUsers,
 } from "react-icons/fa6";
 import { Menu } from "@/interfaces";
@@ -17,11 +20,7 @@ import { useState } from "react";
 const useMenu = () => {
   const [menu, setMenu] = useState<Menu[]>([
     { name: "Personas", path: "/personas", icono: <FaUsers size={40} /> },
-    {
-      name: "Asistencia",
-      path: "/asistencias",
-      icono: <FaListCheck size={40} />,
-    },
+
     {
       name: "Membresia",
       path: "/membresias",
@@ -31,13 +30,24 @@ const useMenu = () => {
     { name: "Iglesia", path: "/iglesias", icono: <FaChurch size={40} /> },
     { name: "Familias", path: "/familias", icono: <FaPeopleGroup size={40} /> },
     {
-      name: "Donaciones",
-      path: "/donacion",
+      name: "Ofrendas",
+      path: "/donaciones",
       icono: <FaPeopleCarryBox size={40} />,
-    },{
+    },
+    {
       name: "Diezmos",
       path: "/diezmos",
       icono: <FaMoneyBill1Wave size={40} />,
+    },
+    {
+      name: "Grupos",
+      path: "/grupos",
+      icono: <FaUserGroup size={40} />,
+    },
+    {
+      name: "Reportes",
+      path: "/reportes",
+      icono: <FaChartPie size={40} />,
     },
   ]);
 

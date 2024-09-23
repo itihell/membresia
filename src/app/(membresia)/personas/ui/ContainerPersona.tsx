@@ -1,7 +1,12 @@
 "use client";
-import { DataMembresia, DataPersonaGeneral } from "@/components";
+import {
+  AddFamiliaPersona,
+  DataMembresia,
+  DataPersonaGeneral,
+  MiembrosHasFamilia,
+} from "@/components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { People } from "@/interfaces";
+import { FamiliaHasPersona, People } from "@/interfaces";
 import { useEffect, useState } from "react";
 import { getPeopleId } from "@/actions";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -26,6 +31,19 @@ export const ContainerPersona = ({ id }: Props) => {
 
   const navegacionTab = (tab: string) => {
     route.push(`${pathName}?tab=${tab}`);
+  };
+
+  const loadData = async () => {
+    const persona = await getPeopleId(id);
+    setPersona(persona);
+  };
+
+  const createdMiembroHasFamilia = async (miembro: FamiliaHasPersona) => {
+    loadData();
+  };
+
+  const deletedHundler = async (id: string) => {
+    loadData();
   };
 
   return (
@@ -73,11 +91,22 @@ export const ContainerPersona = ({ id }: Props) => {
         </TabsContent>
         <TabsContent value="familia">
           <div>
-            {persona?.familia?.map((familia) => (
-              <div key={familia.id}>
-                {`${familia?.persona?.nombres} ${familia?.persona?.apellidos}`}
-              </div>
-            ))}
+            {!persona.familia && (
+              <AddFamiliaPersona
+                created={(miembro: FamiliaHasPersona) => {
+                  const a = createdMiembroHasFamilia(miembro);
+                }}
+                personaId={persona.id as string}
+              />
+            )}
+            {persona.familia && (
+              <MiembrosHasFamilia
+                onDeleted={(id: string) => {
+                  const a = deletedHundler(id);
+                }}
+                familiaId={persona.familia.familia_id}
+              />
+            )}
           </div>
         </TabsContent>
         <TabsContent value="asistencia">

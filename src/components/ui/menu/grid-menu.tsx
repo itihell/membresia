@@ -4,7 +4,6 @@ import { useMenu } from "@/hooks";
 import { ItemGridMenu } from "./item-grid-menu";
 import Link from "next/link";
 
-const menus = [{ title: "Asistencia" }];
 const GridMenu = () => {
   const { menu } = useMenu();
   return (

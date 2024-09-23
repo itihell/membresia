@@ -8,7 +8,6 @@ import prisma from "@/lib/prisma";
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: "/auth/login",
-    newUser: "/auth/new-acount",
   },
 
   callbacks: {
@@ -20,7 +19,6 @@ export const authConfig: NextAuthConfig = {
     },
     session({ session, token, user }) {
       session.user = token.data as any;
-
       return session;
     },
 
