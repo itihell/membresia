@@ -33,8 +33,6 @@ export const FormMiembroHasFamilia = ({ familiaId, id }: Props) => {
   }, [familiaId, form]);
 
   const onSubmit = async (data: z.infer<typeof MiembrosHasFamiliaSchema>) => {
-    console.log(data);
-
     if (id) {
       // update
     } else {
