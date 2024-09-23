@@ -3,11 +3,12 @@ import {
   AddFamiliaPersona,
   DataMembresia,
   DataPersonaGeneral,
+  Loading,
   MiembrosHasFamilia,
 } from "@/components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FamiliaHasPersona, People } from "@/interfaces";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getPeopleId } from "@/actions";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
@@ -73,7 +74,7 @@ export const ContainerPersona = ({ id }: Props) => {
           </TabsTrigger>
           <TabsTrigger
             className=""
-            onClick={() => navegacionTab("familia")}
+            onClick={() => navegacionTab("asistencia")}
             value="asistencia"
           >
             Asistencia
@@ -81,7 +82,9 @@ export const ContainerPersona = ({ id }: Props) => {
         </TabsList>
         <TabsContent value="general">
           <div className="mt-5">
-            <DataPersonaGeneral persona={persona} />
+            <Suspense fallback={<Loading />}>
+              <DataPersonaGeneral persona={persona} />
+            </Suspense>
           </div>
         </TabsContent>
         <TabsContent value="membresia">
@@ -92,20 +95,24 @@ export const ContainerPersona = ({ id }: Props) => {
         <TabsContent value="familia">
           <div>
             {!persona.familia && (
-              <AddFamiliaPersona
-                created={(miembro: FamiliaHasPersona) => {
-                  const a = createdMiembroHasFamilia(miembro);
-                }}
-                personaId={persona.id as string}
-              />
+              <Suspense fallback={<Loading />}>
+                <AddFamiliaPersona
+                  created={(miembro: FamiliaHasPersona) => {
+                    const a = createdMiembroHasFamilia(miembro);
+                  }}
+                  personaId={persona.id as string}
+                />
+              </Suspense>
             )}
             {persona.familia && (
-              <MiembrosHasFamilia
-                onDeleted={(id: string) => {
-                  const a = deletedHundler(id);
-                }}
-                familiaId={persona.familia.familia_id}
-              />
+              <Suspense fallback={<Loading />}>
+                <MiembrosHasFamilia
+                  onDeleted={(id: string) => {
+                    const a = deletedHundler(id);
+                  }}
+                  familiaId={persona.familia.familia_id}
+                />
+              </Suspense>
             )}
           </div>
         </TabsContent>

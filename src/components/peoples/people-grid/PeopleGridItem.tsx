@@ -45,3 +45,5 @@ export const PeopleGridItem = ({ people, index }: Props) => {
     </div>
   );
 };
+
+

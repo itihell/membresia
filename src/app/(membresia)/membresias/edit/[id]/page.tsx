@@ -1,4 +1,5 @@
-import { FormMembresia, Title } from "@/components";
+import { FormMembresia, Loading, Title } from "@/components";
+import { Suspense } from "react";
 
 interface Props {
   params: {
@@ -12,7 +13,9 @@ const AgregarMiembroPage = ({ params: { id } }: Props) => {
       <Title title="Editar Membresia" className="mb-2" />
       <div>
         <div className="bg-gray-50 p-4">
-          <FormMembresia id={id} />
+          <Suspense fallback={<Loading />}>
+            <FormMembresia id={id} />
+          </Suspense>
         </div>
       </div>
     </div>

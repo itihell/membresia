@@ -1,8 +1,9 @@
 export const revalidate = 0;
-import { Title } from "@/components";
+import { Loading, Title } from "@/components";
 import { ContainerPersona } from "../ui/ContainerPersona";
 import Link from "next/link";
 import { FaPencil, FaPeopleGroup } from "react-icons/fa6";
+import { Suspense } from "react";
 
 interface Props {
   params: {
@@ -15,7 +16,9 @@ const ShowPersonaPage = async ({ params: { id } }: Props) => {
       <Title title="Datos de la persona" className="mb-2" />
       <div>
         <div className="bg-gray-50 p-4">
-          <ContainerPersona id={id} />
+          <Suspense fallback={<Loading />}>
+            <ContainerPersona id={id} />
+          </Suspense>
         </div>
       </div>
       <div className="right-8 bottom-8 fixed ">

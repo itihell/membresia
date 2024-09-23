@@ -24,6 +24,7 @@ export * from "./ui/lists/list-personas";
 export * from "./ui/lists/list-tipo-membresia";
 export * from "./ui/lists/list-parentesco";
 export * from "./ui/lists/list-familias";
+export * from "./ui/loading/loading";
 
 export * from "./membresias/GridMembresia";
 export * from "./membresias/GridMembresiaItem";

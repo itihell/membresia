@@ -1,7 +1,8 @@
 export const revalidate = 0;
 import { getFamilias } from "@/actions";
-import { GridFamilias, Title } from "@/components";
+import { GridFamilias, Loading, Title } from "@/components";
 import Link from "next/link";
+import { Suspense } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 
 export default async function FamiliaPage() {
@@ -10,7 +11,9 @@ export default async function FamiliaPage() {
     <div className="mb-5">
       <Title title="Familias" className="mb-2" />
       <div>
-        <GridFamilias familias={familias} />
+        <Suspense fallback={<Loading />}>
+          <GridFamilias familias={familias} />
+        </Suspense>
         <div className="fixed right-8 bottom-8">
           <Link
             href={`/familias/add`}

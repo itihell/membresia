@@ -1,5 +1,6 @@
-import { Title } from "@/components";
+import { Loading, Title } from "@/components";
 import { FormPeople } from "../../ui/FormPeople";
+import { Suspense } from "react";
 
 interface Prop {
   params: {
@@ -14,7 +15,9 @@ const EditPeoplePage = ({ params }: Prop) => {
       <Title title="Datos de la persona" className="mb-2" />
       <div>
         <div className="bg-gray-50 p-4">
-          <FormPeople id={id} />
+          <Suspense fallback={<Loading />}>
+            <FormPeople id={id} />
+          </Suspense>
         </div>
       </div>
     </div>
