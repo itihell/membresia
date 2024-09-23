@@ -145,6 +145,7 @@ export const FormPeople = ({ id }: Props) => {
                 />
               </div>
             </div>
+
             <div className="grid md:grid-cols-12 mt-3">
               <div className="col-span-3 md:justify-end mr-1 flex items-center">
                 <label className="font-bold">Apellidos</label>
@@ -193,6 +194,7 @@ export const FormPeople = ({ id }: Props) => {
                 <ListSexo form={form} campo="sexo_id" nameRelation="sexo" />
               </div>
             </div>
+
             <div className="grid md:grid-cols-12 mt-1">
               <div className="col-span-3 md:justify-end mr-1 flex items-center">
                 <label className="font-bold">Estado Civil</label>

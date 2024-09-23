@@ -31,7 +31,7 @@ export const PeopleGridItem = ({ people, index }: Props) => {
       <div className="col-span-1">{index + 1}</div>
       <div className="col-span-7 flex gap-3">
         <span>
-          {people.nombres} {people.apellidos}{" "}
+          {`${people.apellidos} ${people.nombres} `}
         </span>
         <span>
           {people.membresia && people.membresia.length > 0 && (

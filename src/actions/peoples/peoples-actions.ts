@@ -127,6 +127,9 @@ export const getPaginatedPeoples = async ({ page = 1, take = 100 }) => {
         sexo: true,
         estadoCivil: true,
       },
+      orderBy: {
+        apellidos: "asc",
+      },
     });
 
     const totalCount = await prisma.persona.count();

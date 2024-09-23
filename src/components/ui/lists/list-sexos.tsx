@@ -42,7 +42,7 @@ export const ListSexo = ({
     "list-sexos"
   );
 
-  const relation: Sexos = form.watch(nameRelation);
+  const relation: Sexos = {} as Sexos; //form.watch(nameRelation);
 
   const items = store((state) => state.items);
   const open = store((state) => state.open);
@@ -95,7 +95,7 @@ export const ListSexo = ({
                             ? " text-white font-bold bg-blue-700"
                             : ""
                         )}
-                        value={removeTilde(item.name)}
+                        value={item.name}
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
@@ -103,7 +103,7 @@ export const ListSexo = ({
                           nameRelation && form.setValue(nameRelation, item);
                         }}
                       >
-                        {removeTilde(item.name)}
+                        {item.name}
                         <CheckCircledIcon
                           className={cn(
                             "ml-auto h-4 w-4",
