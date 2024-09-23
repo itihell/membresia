@@ -1,4 +1,5 @@
 import { FormMembresia, Title } from "@/components";
+import { Suspense } from "react";
 
 const AgregarMiembroPage = () => {
   return (
@@ -6,7 +7,9 @@ const AgregarMiembroPage = () => {
       <Title title="Agregando Miembro" className="mb-2" />
       <div>
         <div className="bg-gray-50 p-4">
-          <FormMembresia />
+          <Suspense fallback={<div>Cargando...</div>}>
+            <FormMembresia />
+          </Suspense>
         </div>
       </div>
     </div>
