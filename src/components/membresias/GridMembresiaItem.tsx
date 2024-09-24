@@ -22,7 +22,7 @@ export const GridMembresiaItem = ({ miembro, index }: Props) => {
     >
       <div className="col-span-1">{index + 1}</div>
       <div className="col-span-7">
-        {miembro?.persona?.nombres} {miembro?.persona?.apellidos}
+        {` ${miembro?.persona?.apellidos} ${miembro?.persona?.nombres} `}
       </div>
       <div className="col-span-4">{miembro?.persona?.telefono}</div>
     </div>
