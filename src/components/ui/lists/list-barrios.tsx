@@ -72,7 +72,7 @@ export const ListBarrios = ({
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-full justify-between",
+                    "w-full justify-between border-list",
                     !field.value && "text-muted-foreground"
                   )}
                 >
@@ -83,7 +83,11 @@ export const ListBarrios = ({
             </PopoverTrigger>
             <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
               <Command className="w-full">
-                <CommandInput placeholder="Buscar..." className="h-9 w-full" />
+                <CommandInput
+                  placeholder="Buscar..."
+                  onKeyUp={(e) => searchData(e.currentTarget.value)}
+                  className="h-9 w-full"
+                />
                 <CommandList>
                   <CommandEmpty>No se encontro el registro</CommandEmpty>
                   <CommandGroup>

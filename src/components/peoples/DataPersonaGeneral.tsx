@@ -1,6 +1,9 @@
 import { inter, titleFont } from "@/config/fonts";
 import { People } from "@/interfaces";
 import { format } from "date-fns";
+import { Inter } from "next/font/google";
+import React from "react";
+import { Input } from "../ui/input";
 
 interface Props {
   persona: People;
@@ -9,6 +12,7 @@ interface Props {
 interface RowsProps {
   title: string;
   value: string;
+  isDate?: boolean;
 }
 
 interface TitleSeparadorProps {
@@ -17,10 +21,10 @@ interface TitleSeparadorProps {
 
 const safeValue = (value: string) => {
   const isDate = new Date(value);
-  if (!isNaN(isDate.getTime())) {
+
+  if (!isNaN(isDate.getDate()) && isDate instanceof Date) {
     return format(isDate, "dd - MM -yyyy");
   }
-  //console.log({ fecha });
 
   if (value === null || value === undefined) {
     return "";
@@ -33,7 +37,7 @@ const safeValue = (value: string) => {
 const DataPersonaGeneral = ({ persona }: Props) => {
   return (
     <div className="">
-      <div className="grid md:grid-cols-2 gap-3">
+      <GroupRowsPersona>
         <RowsPersona
           title="Nombre"
           value={`${persona.nombres} ${persona.apellidos}`}
@@ -45,21 +49,23 @@ const DataPersonaGeneral = ({ persona }: Props) => {
           title="Estado Civil"
           value={`${persona.estadoCivil?.estado_civil}`}
         />
-      </div>
+      </GroupRowsPersona>
       <TitleSeparator title="Fechas" />
-      <div className="grid md:grid-cols-2 gap-3">
+      <GroupRowsPersona>
         <RowsPersona
           title="Fecha de Nacimiento"
+          isDate
           value={`${persona.fecha_nacimiento}`}
         />
-        <RowsPersona title="Fecha de Fe" value={`${persona.fecha_fe}`} />
+        <RowsPersona title="Fecha de Fe" isDate value={`${persona.fecha_fe}`} />
         <RowsPersona
           title="Fecha de Bautismo"
+          isDate
           value={`${persona.fecha_bautizo}`}
         />
-      </div>
+      </GroupRowsPersona>
       <TitleSeparator title="Ubicación" />
-      <div className="grid md:grid-cols-2 gap-3">
+      <GroupRowsPersona>
         <RowsPersona
           title="Pais"
           value={`${persona.barrio?.municipio?.departamento?.pais?.name}`}
@@ -76,24 +82,35 @@ const DataPersonaGeneral = ({ persona }: Props) => {
           title="Área"
           value={`${persona.barrio?.zonaGeografica?.name}`}
         />
-        <RowsPersona title="Barrio" value={`${persona.barrio?.name}`} />
+        <RowsPersona title="Barrio" value={`${persona.barrio?.name} `} />
         <RowsPersona title="Dirección" value={`${persona.direccion}`} />
-      </div>
+      </GroupRowsPersona>
 
       <TitleSeparator title="Contacto" />
-      <div className="grid md:grid-cols-2 gap-3">
+      <GroupRowsPersona>
         <RowsPersona title="Teléfono" value={`${persona.telefono}`} />
         <RowsPersona title="Correo" value={`${persona.email}`} />
-      </div>
+      </GroupRowsPersona>
     </div>
   );
 };
 
-const RowsPersona = ({ title, value }: RowsProps) => {
+interface PropGroupPerson {
+  children: React.ReactNode;
+}
+const GroupRowsPersona = ({ children }: PropGroupPerson) => {
   return (
-    <div className="flex gap-5">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-y-1 gap-x-5">
+      {children}
+    </div>
+  );
+};
+
+const RowsPersona = ({ title, value, isDate }: RowsProps) => {
+  return (
+    <div className="grid grid-cols-2 gap-x-6 ">
       <div className="font-bold">{title}:</div>
-      <div className="text-gray-600">{safeValue(value)}</div>
+      <div className="text-gray-600 ">{isDate ? safeValue(value) : value}</div>
     </div>
   );
 };

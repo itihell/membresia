@@ -1,8 +1,9 @@
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
-import { PeopleGrid, Title } from "@/components";
+import { Loading, PeopleGrid, Title } from "@/components";
 //import { getPaginatedPeoples } from "@/actions";
 import Link from "next/link";
+import { Suspense } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 
 export default async function PeoplePage() {
@@ -14,7 +15,10 @@ export default async function PeoplePage() {
     <div className="mb-5">
       <Title title="Personas" className="mb-2" />
       <div>
-        <PeopleGrid />
+        <Suspense fallback={<Loading />}>
+          <PeopleGrid />
+        </Suspense>
+
         <div className="fixed right-8 bottom-8">
           <Link
             href={`/personas/add`}

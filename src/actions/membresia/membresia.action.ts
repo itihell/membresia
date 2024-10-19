@@ -35,7 +35,9 @@ export const getMembresias = async (): Promise<Membresia[]> => {
         user: true,
       },
       orderBy: {
-        created_at: "desc",
+        persona: {
+          apellidos: "asc",
+        },
       },
     });
 

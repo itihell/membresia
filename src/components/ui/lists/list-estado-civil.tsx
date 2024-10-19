@@ -72,8 +72,8 @@ export const ListEstadoCivil = ({
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-full justify-between",
-                    !field.value && "text-muted-foreground"
+                    "w-full justify-between border-list",
+                    !field.value && "text-muted-foreground "
                   )}
                 >
                   {setDefaultData(field)}

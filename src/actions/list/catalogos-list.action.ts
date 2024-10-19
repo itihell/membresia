@@ -47,6 +47,7 @@ export const getListFamilias = async (
 export const getListSexos = async (): Promise<Sexos[]> => {
   try {
     const items = await prisma.sexo.findMany();
+
     return items;
   } catch (error) {
     throw new Error("No se pueden cargar el listado de sexos");
@@ -81,9 +82,10 @@ export const getListEstadoCivil = async (): Promise<EstadoCivil[]> => {
   }
 };
 
-export const getListBarrios = async (): Promise<Barrio[]> => {
+export const getListBarrios = async (search: string): Promise<Barrio[]> => {
   try {
     const items = await prisma.barrio.findMany({
+      take: 30,
       include: {
         municipio: {
           include: {
@@ -95,6 +97,12 @@ export const getListBarrios = async (): Promise<Barrio[]> => {
           },
         },
         zonaGeografica: true,
+      },
+      where: {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
       },
     });
     return items;

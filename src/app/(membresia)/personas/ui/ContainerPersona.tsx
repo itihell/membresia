@@ -3,13 +3,20 @@ import {
   AddFamiliaPersona,
   DataMembresia,
   DataPersonaGeneral,
+  Loading,
   MiembrosHasFamilia,
 } from "@/components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FamiliaHasPersona, People } from "@/interfaces";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { getPeopleId } from "@/actions";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import {
+  FaCalendarCheck,
+  FaCircleUser,
+  FaPeopleGroup,
+  FaPersonShelter,
+} from "react-icons/fa6";
 
 interface Props {
   id: string;
@@ -51,37 +58,43 @@ export const ContainerPersona = ({ id }: Props) => {
       <Tabs defaultValue={tab ?? "general"}>
         <TabsList>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("general")}
             value="general"
           >
+            <FaCircleUser size={15} />
             General
           </TabsTrigger>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("membresia")}
             value="membresia"
           >
+            <FaPersonShelter />
             Membresia
           </TabsTrigger>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("familia")}
             value="familia"
           >
+            <FaPeopleGroup size={15} />
             Familia
           </TabsTrigger>
           <TabsTrigger
-            className=""
-            onClick={() => navegacionTab("familia")}
+            className="flex gap-2"
+            onClick={() => navegacionTab("asistencia")}
             value="asistencia"
           >
+            <FaCalendarCheck />
             Asistencia
           </TabsTrigger>
         </TabsList>
         <TabsContent value="general">
           <div className="mt-5">
-            <DataPersonaGeneral persona={persona} />
+            <Suspense fallback={<Loading />}>
+              <DataPersonaGeneral persona={persona} />
+            </Suspense>
           </div>
         </TabsContent>
         <TabsContent value="membresia">
@@ -92,20 +105,24 @@ export const ContainerPersona = ({ id }: Props) => {
         <TabsContent value="familia">
           <div>
             {!persona.familia && (
-              <AddFamiliaPersona
-                created={(miembro: FamiliaHasPersona) => {
-                  const a = createdMiembroHasFamilia(miembro);
-                }}
-                personaId={persona.id as string}
-              />
+              <Suspense fallback={<Loading />}>
+                <AddFamiliaPersona
+                  created={(miembro: FamiliaHasPersona) => {
+                    const a = createdMiembroHasFamilia(miembro);
+                  }}
+                  personaId={persona.id as string}
+                />
+              </Suspense>
             )}
             {persona.familia && (
-              <MiembrosHasFamilia
-                onDeleted={(id: string) => {
-                  const a = deletedHundler(id);
-                }}
-                familiaId={persona.familia.familia_id}
-              />
+              <Suspense fallback={<Loading />}>
+                <MiembrosHasFamilia
+                  onDeleted={(id: string) => {
+                    const a = deletedHundler(id);
+                  }}
+                  familiaId={persona.familia.familia_id}
+                />
+              </Suspense>
             )}
           </div>
         </TabsContent>

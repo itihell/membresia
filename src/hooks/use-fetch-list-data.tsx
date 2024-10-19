@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { KeyboardEvent, useEffect } from "react";
+import { KeyboardEvent, useEffect, useRef } from "react";
 import { getListSexos } from "@/actions";
 
 type BoleanOrUndefined = boolean | undefined;
@@ -21,6 +21,7 @@ const useListFetchData = <T,>(
   getData: (search: string) => Promise<T[]>,
   keyStore: string
 ) => {
+  const hasFetchedData = useRef(false);
   const store = create<State<T>>()(
     persist(
       (set, get) => ({
@@ -43,11 +44,13 @@ const useListFetchData = <T,>(
   };
 
   useEffect(() => {
-    const loader = async () => {
-      const data = await getData("");
-      setItems(data as T[]);
-    };
-    loader();
+    if (!hasFetchedData.current) {
+      (async () => {
+        const data = await getData("");
+        setItems(data as T[]);
+        hasFetchedData.current = true;
+      })();
+    }
   }, [getData, setItems]);
 
   //e: KeyboardEvent<HTMLInputElement>

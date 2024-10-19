@@ -1,7 +1,8 @@
 export const revalidate = 0;
 import { getFamiliaById } from "@/actions";
-import { MiembrosHasFamilia, Title } from "@/components";
+import { Loading, MiembrosHasFamilia, Title } from "@/components";
 import Link from "next/link";
+import { Suspense } from "react";
 import { FaPencil, FaPeopleGroup, FaUserPlus } from "react-icons/fa6";
 interface Props {
   params: {
@@ -14,7 +15,9 @@ export default function ShowFamiliaPage({ params: { id } }: Props) {
       <Title title={`Datos de la familia`} className="mb-2" />
       <div className="bg-gray-50 p-4">
         <div className="flex gap-5">
-          <MiembrosHasFamilia familiaId={id} />
+          <Suspense fallback={<Loading />}>
+            <MiembrosHasFamilia familiaId={id} />
+          </Suspense>
         </div>
       </div>
       <div className="fixed right-8 bottom-8 flex flex-row">

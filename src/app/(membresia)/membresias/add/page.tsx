@@ -1,4 +1,4 @@
-import { FormMembresia, Title } from "@/components";
+import { FormMembresia, Loading, Title } from "@/components";
 import { Suspense } from "react";
 
 const AgregarMiembroPage = () => {
@@ -7,7 +7,7 @@ const AgregarMiembroPage = () => {
       <Title title="Agregando Miembro" className="mb-2" />
       <div>
         <div className="bg-gray-50 p-4">
-          <Suspense fallback={<div>Cargando...</div>}>
+          <Suspense fallback={<Loading />}>
             <FormMembresia />
           </Suspense>
         </div>
