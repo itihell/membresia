@@ -127,7 +127,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Nombres</label>
               </div>
               <div className="col-span-9">
@@ -147,7 +147,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-3">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Apellidos</label>
               </div>
               <div className="col-span-9">
@@ -167,7 +167,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-3">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Identidad</label>
               </div>
               <div className="col-span-9">
@@ -187,7 +187,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Sexo</label>
               </div>
               <div className="col-span-9">
@@ -196,7 +196,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Estado Civil</label>
               </div>
               <div className="col-span-9">
@@ -220,7 +220,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Fecha de nacimiento</label>
               </div>
               <div className="col-span-9">
@@ -238,7 +238,7 @@ export const FormPeople = ({ id }: Props) => {
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-full pl-3 text-left font-normal",
+                                "w-full pl-3 text-left font-normal border-list",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -279,7 +279,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Fecha de Fe</label>
               </div>
               <div className="col-span-9">
@@ -294,7 +294,7 @@ export const FormPeople = ({ id }: Props) => {
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-full pl-3 text-left font-normal",
+                                "w-full pl-3 text-left font-normal border-list",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -335,7 +335,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Fecha de Bautismo</label>
               </div>
               <div className="col-span-9">
@@ -353,7 +353,7 @@ export const FormPeople = ({ id }: Props) => {
                             <Button
                               variant={"outline"}
                               className={cn(
-                                "w-full pl-3 text-left font-normal",
+                                "w-full pl-3 text-left font-normal border-list",
                                 !field.value && "text-muted-foreground"
                               )}
                             >
@@ -405,7 +405,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Barrio</label>
               </div>
               <div className="col-span-9">
@@ -417,7 +417,7 @@ export const FormPeople = ({ id }: Props) => {
               </div>
             </div>
             <div className="grid md:grid-cols-12 mt-1">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Dirección</label>
               </div>
               <div className="col-span-9">
@@ -448,7 +448,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-3">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Teléfono</label>
               </div>
               <div className="col-span-9">
@@ -468,7 +468,7 @@ export const FormPeople = ({ id }: Props) => {
             </div>
 
             <div className="grid md:grid-cols-12 mt-3">
-              <div className="col-span-3 md:justify-end mr-1 flex items-center">
+              <div className="col-span-3 md:justify-end mr-3 flex items-center">
                 <label className="font-bold">Email</label>
               </div>
               <div className="col-span-9">

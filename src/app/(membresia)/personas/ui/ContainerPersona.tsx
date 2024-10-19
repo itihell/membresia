@@ -11,6 +11,12 @@ import { FamiliaHasPersona, People } from "@/interfaces";
 import { Suspense, useEffect, useState } from "react";
 import { getPeopleId } from "@/actions";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import {
+  FaCalendarCheck,
+  FaCircleUser,
+  FaPeopleGroup,
+  FaPersonShelter,
+} from "react-icons/fa6";
 
 interface Props {
   id: string;
@@ -52,31 +58,35 @@ export const ContainerPersona = ({ id }: Props) => {
       <Tabs defaultValue={tab ?? "general"}>
         <TabsList>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("general")}
             value="general"
           >
+            <FaCircleUser size={15} />
             General
           </TabsTrigger>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("membresia")}
             value="membresia"
           >
+            <FaPersonShelter />
             Membresia
           </TabsTrigger>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("familia")}
             value="familia"
           >
+            <FaPeopleGroup size={15} />
             Familia
           </TabsTrigger>
           <TabsTrigger
-            className=""
+            className="flex gap-2"
             onClick={() => navegacionTab("asistencia")}
             value="asistencia"
           >
+            <FaCalendarCheck />
             Asistencia
           </TabsTrigger>
         </TabsList>

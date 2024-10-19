@@ -72,7 +72,7 @@ export const ListSexo = ({
                   variant="outline"
                   role="combobox"
                   className={cn(
-                    "w-full justify-between",
+                    "w-full justify-between border-list",
                     !field.value && "text-muted-foreground"
                   )}
                 >
