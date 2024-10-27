@@ -73,22 +73,18 @@ model Evento {
   title                  String
   description            String?
   date                   DateTime
-  location               String
-  created_at             DateTime              @default(now())
-  updated_at             DateTime              @updatedAt
-  deleted_at             DateTime?
+  tipo_evento_id         Int
   user_id                String
   user_edit_id           String
   iglesia_id             String
-  tipo_evento_id         Int
-  iglesiaId              String?
-  tipoEventoId           Int?
-  Iglesia                Iglesia?              @relation(fields: [iglesiaId], references: [id])
-  iglesias               Iglesia               @relation("evento_iglesia_id", fields: [iglesia_id], references: [id])
-  TipoEvento             TipoEvento?           @relation(fields: [tipoEventoId], references: [id])
-  tipos_evento           TipoEvento            @relation("evento_tipo_evento_id", fields: [tipo_evento_id], references: [id])
-  editor                 User                  @relation("evento_editor_id", fields: [user_edit_id], references: [id])
-  autor                  User                  @relation("evento_autor_id", fields: [user_id], references: [id])
+  created_at             DateTime?             @default(now())
+  updated_at             DateTime?             @updatedAt
+  deleted_at             DateTime?
+  // Relaciones
+  iglesias               Iglesia?              @relation("evento_iglesia_id", fields: [iglesia_id], references: [id])
+  tipos_evento           TipoEvento?           @relation("evento_tipo_evento_id", fields: [tipo_evento_id], references: [id])
+  editor                 User?                 @relation("evento_editor_id", fields: [user_edit_id], references: [id])
+  autor                  User?                 @relation("evento_autor_id", fields: [user_id], references: [id])
   eventos_has_asistencia EventoHasAsistencia[]
 
   @@map("eventos")
@@ -97,13 +93,13 @@ model Evento {
 model EventoHasAsistencia {
   id         String    @id @default(uuid())
   asistio    Boolean
-  created_at DateTime  @default(now())
-  deleted_at DateTime?
   evento_id  String
   people_id  String
-  updated_at DateTime
-  evento     Evento    @relation(fields: [evento_id], references: [id])
-  persona    Persona   @relation(fields: [people_id], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime? @updatedAt
+  deleted_at DateTime?
+  evento     Evento?   @relation(fields: [evento_id], references: [id])
+  persona    Persona?  @relation(fields: [people_id], references: [id])
 
   @@map("eventos_has_asistencias")
 }
@@ -116,7 +112,6 @@ model Iglesia {
   telefonos        String           @db.VarChar(100)
   created_at       DateTime         @default(now())
   updated_at       DateTime         @updatedAt
-  Evento           Evento[]
   eventos          Evento[]         @relation("evento_iglesia_id")
   Familia          Familia[]
   membresia        Membresia[]
@@ -245,7 +240,6 @@ model Sexo {
 model TipoEvento {
   id      Int      @id @default(autoincrement())
   name    String   @unique @db.VarChar(60)
-  Evento  Evento[]
   eventos Evento[] @relation("evento_tipo_evento_id")
 
   @@map("tipos_eventos")

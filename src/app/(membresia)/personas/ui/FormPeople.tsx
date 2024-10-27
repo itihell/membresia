@@ -1,4 +1,5 @@
 "use client";
+import { useForm } from "react-hook-form";
 import { getPeopleId, savePeople, updatePeople } from "@/actions";
 import { ListBarrios, ListEstadoCivil, ListSexo } from "@/components";
 import { Button } from "@/components/ui/button";
@@ -27,7 +28,6 @@ import { format } from "date-fns";
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import {
   FaAddressBook,
   FaBan,
@@ -497,12 +497,14 @@ export const FormPeople = ({ id }: Props) => {
                   }}
                 >
                   <FaBan />
-                  <span className="ml-2">Cancelar</span>
+                  <span className="ml-2 md:block hidden">Cancelar</span>
                 </Button>
                 <Button type="submit" className="!rounded-l-none btn-primary">
                   <FaFloppyDisk />
-                  {id && <span className="ml-2">Actualizar</span>}
-                  {!id && <span className="ml-2">Guardar</span>}
+                  <span className="md:block hidden">
+                    {id && <span className="ml-2">Actualizar</span>}
+                    {!id && <span className="ml-2">Guardar</span>}
+                  </span>
                 </Button>
               </div>
             </div>

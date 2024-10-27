@@ -9,6 +9,7 @@ import {
   Sexos,
   TipoMembresia,
 } from "@/interfaces";
+import { TipoEvento } from "@prisma/client";
 
 export const getListPersonas = async (
   search: string = ""
@@ -79,6 +80,15 @@ export const getListEstadoCivil = async (): Promise<EstadoCivil[]> => {
     return items;
   } catch (error) {
     throw new Error("no se pudo cargar el listado de estado civil");
+  }
+};
+
+export const getListTipoEvento = async (): Promise<TipoEvento[]> => {
+  try {
+    const items = await prisma.tipoEvento.findMany();
+    return items;
+  } catch (error) {
+    throw new Error("no se pudo cargar el listado de tipo de evento");
   }
 };
 
