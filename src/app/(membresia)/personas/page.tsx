@@ -25,7 +25,7 @@ export default async function PeoplePage() {
             className="p-3 btn-primary rounded-md flex gap-1 justify-center items-center"
           >
             <FaUserPlus />
-            Agregar
+            <span className="md:block hidden">Agregar</span>
           </Link>
         </div>
       </div>

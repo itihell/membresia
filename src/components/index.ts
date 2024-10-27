@@ -36,3 +36,5 @@ export * from "./familias/GridFamiliaRow";
 export * from "./familias/FormMiembroHasFamilia";
 export * from "./familias/MiembrosHasFamilia";
 export * from "./familias/AddFamiliaPersona";
+
+export * from "./events/FormEvents";
