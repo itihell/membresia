@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { loginForm } from "@/actions";
+import { createLogin } from "@/actions";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
@@ -10,64 +10,84 @@ import { useFormState, useFormStatus } from "react-dom";
 import { IoInformationOutline } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui";
+import { useForm } from "react-hook-form";
+import { loginFormSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 export const LoginForm = () => {
-  const [message, dispatch] = useFormState(loginForm, undefined);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const searchParams = useSearchParams();
+  const arrayPath = searchParams.get("callbackUrl")?.split("/");
 
-  const querysParams = useSearchParams();
+  arrayPath?.splice(0, 3);
+  const callbackUrl = arrayPath ? "/" + arrayPath?.join("/") : "/";
 
   if (session?.user) {
     window.location.replace("/");
   }
 
-  useEffect(() => {
-    if (message === "Success") {
-      if (querysParams.get("callbackUrl")) {
-        const url = querysParams.get("callbackUrl") ?? "/";
-        window.location.replace(url);
-      } else {
-        window.location.replace("/");
-      }
-    }
-  }, [message, querysParams]);
+  const form = useForm<z.infer<typeof loginFormSchema>>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
+    createLogin(values, callbackUrl);
+  };
+
   return (
-    <form action={dispatch} className="flex flex-col">
-      <label htmlFor="email">Correo electrónico</label>
-      <Input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
-        type="email"
-        name="email"
-      />
-
-      <label htmlFor="email">Contraseña</label>
-      <Input
-        className="px-5 py-2 border bg-gray-200 rounded mb-5"
-        type="password"
-        name="password"
-      />
-
-      <div
-        className="flex h-8 items-end space-x-1"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {message && (
-          <div className="flex flex-row mb-2">
-            <IoInformationOutline className="h-5 w-5 text-red-500" />
-            {message === "Success" ? (
-              <p className="text-sm text-green-600">{message}</p>
-            ) : (
-              <p className="text-sm text-red-500">{message}</p>
+    <div>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="your_email@domain.com"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input type="password" placeholder="Password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="">
+            <div className="grid space-x-0 mt-6">
+              <Button type="submit" className="">
+                Entrar
+              </Button>
+            </div>
           </div>
-        )}
-      </div>
-
-      <Suspense>
-        <LoginButton />
-      </Suspense>
-    </form>
+        </form>
+      </Form>
+    </div>
   );
 };
 

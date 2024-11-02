@@ -23,3 +23,4 @@ export * from "./parentesco.interface";
 export * from "./tipo-eventos.interface";
 export * from "./eventos.interface";
 export * from "./eventos_has_asistencia.interface";
+export * from "./credentials.interface";

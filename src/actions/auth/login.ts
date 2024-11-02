@@ -1,18 +1,23 @@
 "use server";
+import { z } from "zod";
 import { signIn } from "@/auth.config";
 import { AuthError } from "next-auth";
+import { loginFormSchema } from "@/schemas";
 
 // ...
 
-export async function loginForm(
-  prevState: string | undefined,
-  formData: FormData
+export async function createLogin(
+  payload: z.infer<typeof loginFormSchema>,
+  callbackUrl: string
 ) {
   try {
-    await signIn("credentials", {
-      ...Object.fromEntries(formData),
-      redirect: false,
+    const data = await signIn("credentials", {
+      ...payload,
+      redirectTo: callbackUrl,
+      redirect: true,
     });
+
+    console.log("DAta", data);
 
     return "Success";
   } catch (error) {
