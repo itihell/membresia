@@ -6,8 +6,4 @@ export interface TipoEventos {
   id?: number;
   name: string;
   eventos?: Evento[];
-  iglesia?: Iglesia;
-  tipo_evento?: TipoEventos;
-  editor?: User;
-  autor?: User;
 }

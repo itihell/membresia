@@ -38,3 +38,5 @@ export * from "./familias/MiembrosHasFamilia";
 export * from "./familias/AddFamiliaPersona";
 
 export * from "./events/FormEvents";
+export * from "./events/GridEventos";
+export * from "./events/GridAsistencia";

@@ -6,6 +6,7 @@ import Link from "next/link";
 
 const GridMenu = () => {
   const { menu } = useMenu();
+
   return (
     <div>
       <div className="grid grid-cols-3 gap-4">
