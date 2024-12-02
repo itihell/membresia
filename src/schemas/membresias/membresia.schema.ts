@@ -5,4 +5,5 @@ export const MembresiaSchema = z.object({
   fecha: z.date({ message: "Debe seleccionar la fecha de la membresía" }),
   tipo_id: z.number({ message: "Debe seleccionar el tipo de membresia" }),
   activo: z.boolean(),
+  tipoMembresia: z.object({}).nullable().nullish(),
 });
