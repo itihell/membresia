@@ -1,15 +1,10 @@
 import {
-  FaBagShopping,
   FaCalendarCheck,
-  FaChair,
   FaChartPie,
   FaChurch,
-  FaListCheck,
   FaMoneyBill1Wave,
   FaPeopleCarryBox,
   FaPeopleGroup,
-  FaPeopleLine,
-  FaPerson,
   FaUserCheck,
   FaUserGroup,
   FaUsers,
@@ -18,7 +13,7 @@ import { Menu } from "@/interfaces";
 import { useState } from "react";
 
 const useMenu = () => {
-  const [menu, setMenu] = useState<Menu[]>([
+  const [menu] = useState<Menu[]>([
     { name: "Personas", path: "/personas", icono: <FaUsers size={40} /> },
 
     {

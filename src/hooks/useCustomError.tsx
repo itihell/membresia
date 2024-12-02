@@ -1,3 +1,4 @@
+import { FieldErrors } from "react-hook-form";
 import { toast } from "sonner";
 
 export interface ErrorRenders {
@@ -12,22 +13,25 @@ export interface Proi {
   statusCode: number;
 }
 export const useCustomError = () => {
-  const handlerValidaError = (errors: any[]) => {
-    return errors.map((element, index) =>
-      toast.error("ERROR", {
-        descriptionClassName: "text-red-600",
-        classNames: {
-          title: "text-red-600",
-          description: "text-red-600",
-          error: "bg-red-600",
-          icon: "text-red-600",
-          toast: "bg-red-600 text-red-600",
-          default: "bg-red-700",
-        },
-        position: "top-right",
-        description: element.message,
-      })
-    );
+  const handlerValidaError = (errors: FieldErrors) => {
+    for (const key in errors) {
+      if (Object.prototype.hasOwnProperty.call(errors, key)) {
+        const element = errors[key];
+        toast.error("ERROR", {
+          descriptionClassName: "text-red-600",
+          classNames: {
+            title: "text-red-600",
+            description: "text-red-600",
+            error: "bg-red-600",
+            icon: "text-red-600",
+            toast: "bg-red-600 text-red-600",
+            default: "bg-red-700",
+          },
+          position: "top-right",
+          description: element?.message?.toString(),
+        });
+      }
+    }
   };
   const handlerMessage = (message: string) => {
     toast.info("INFO", {
@@ -41,7 +45,7 @@ export const useCustomError = () => {
     });
   };
 
-  const handlerSuccess = (data: any) => {
+  const handlerSuccess = (data: { message: string }) => {
     toast.success("Éxito", {
       classNames: {
         title: "text-blue-600",
@@ -94,7 +98,7 @@ export const useCustomError = () => {
       });
     }
 
-    return errors.errors.map((element, index) =>
+    return errors.errors.map((element) =>
       toast.error("ERROR", {
         descriptionClassName: "text-red-600",
         classNames: {
