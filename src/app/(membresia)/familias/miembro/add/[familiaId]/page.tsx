@@ -2,14 +2,18 @@ import { FormMiembroHasFamilia, Loading, Title } from "@/components";
 import { Suspense } from "react";
 
 interface Props {
-  params: {
+  params: Promise<{
     familiaId: string;
-  };
+  }>;
 }
 
-export default function FamiliaHasPersonaPage({
-  params: { familiaId },
-}: Props) {
+export default async function FamiliaHasPersonaPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    familiaId
+  } = params;
+
   return (
     <div className="mb-5">
       <Title title="Agregar miembro a la familia" className="mb-2" />

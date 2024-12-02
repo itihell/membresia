@@ -6,11 +6,17 @@ import { FaPencil, FaPeopleGroup } from "react-icons/fa6";
 import { Suspense } from "react";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
-const ShowPersonaPage = async ({ params: { id } }: Props) => {
+const ShowPersonaPage = async (props: Props) => {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   return (
     <div className="mb-5">
       <Title title="Datos de la persona" className="mb-2" />

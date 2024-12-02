@@ -2,12 +2,18 @@ import { GridAsistencia, Loading, Title } from "@/components";
 import React, { Suspense } from "react";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function ShowAsistenciaPage({ params: { id } }: Props) {
+export default async function ShowAsistenciaPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   return (
     <div className="mb-5">
       <Title title="Asistencia del Evento" className="mb-2" />
