@@ -1,5 +1,3 @@
-import { create } from "zustand";
-
 import prisma from "../lib/prisma";
 
 import bcryptjs from "bcryptjs";
@@ -339,14 +337,12 @@ async function main() {
       },
     ],
   });
-
-  // Productos
-
-  console.log("Seed ejecutado correctamente");
 }
 
 (() => {
-  if (process.env.NODE_ENV === "production") return;
+  if (process.env.NODE_ENV === "production") {
+    return;
+  }
 
   main();
 })();

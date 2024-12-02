@@ -26,7 +26,8 @@
     "**/.eslintrc.json",
     "**/.package.json",
     "**/.package-lock.json",
-    "README.md"
+    "README.md",
+    "!**/.husky/**"
   ],
   "rules": {
     "no-console": ["error", { "allow": ["warn", "error"] }],
