@@ -3,12 +3,13 @@ import { FormPeople } from "../../ui/FormPeople";
 import { Suspense } from "react";
 
 interface Prop {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const EditPeoplePage = ({ params }: Prop) => {
+const EditPeoplePage = async (props: Prop) => {
+  const params = await props.params;
   const { id } = params;
   return (
     <div className="mb-5">

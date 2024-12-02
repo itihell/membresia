@@ -2,12 +2,18 @@ import { FormMembresia, Loading, Title } from "@/components";
 import { Suspense } from "react";
 
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const AgregarMiembroPage = ({ params: { id } }: Props) => {
+const AgregarMiembroPage = async (props: Props) => {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   return (
     <div className="mb-5">
       <Title title="Editar Membresia" className="mb-2" />

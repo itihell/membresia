@@ -1,11 +1,17 @@
 import { FormFamilia, Loading, Title } from "@/components";
 import { Suspense } from "react";
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
-export default function EditarFamiliaPage({ params: { id } }: Props) {
+export default async function EditarFamiliaPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   return (
     <div className="mb-5">
       <Title title="Editar Familia" className="mb-2" />

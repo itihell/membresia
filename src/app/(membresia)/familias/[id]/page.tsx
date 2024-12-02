@@ -5,11 +5,17 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { FaPencil, FaPeopleGroup, FaUserPlus } from "react-icons/fa6";
 interface Props {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
-export default function ShowFamiliaPage({ params: { id } }: Props) {
+export default async function ShowFamiliaPage(props: Props) {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   return (
     <div>
       <Title title={`Datos de la familia`} className="mb-2" />
