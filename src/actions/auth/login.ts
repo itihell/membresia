@@ -11,17 +11,15 @@ export async function createLogin(
   callbackUrl: string
 ) {
   try {
-    const data = await signIn("credentials", {
+    await signIn("credentials", {
       ...payload,
       redirectTo: callbackUrl,
       redirect: true,
     });
 
-    console.log("DAta", data);
-
     return "Success";
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     if (error instanceof AuthError) {
       switch (error.type) {
