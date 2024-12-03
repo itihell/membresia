@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth.config";
-import { ErrorApp, Familia } from "@/interfaces";
+import { Familia } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export const getFamilias = async (): Promise<Familia[]> => {
@@ -19,8 +19,9 @@ export const getFamilias = async (): Promise<Familia[]> => {
     });
 
     return familias as Familia[];
-  } catch (e: ErrorApp | any) {
-    throw new Error(e.message);
+  } catch (e) {
+    console.error({ e });
+    throw new Error("No se pueden cargar el listado de familias");
   }
 };
 
@@ -43,8 +44,9 @@ export const getFamiliaById = async (id: string): Promise<Familia> => {
       },
     });
     return familia as Familia;
-  } catch (e: ErrorApp | any) {
-    throw new Error(e.message);
+  } catch (e) {
+    console.error({ e });
+    throw new Error("Error inesperado");
   }
 };
 
@@ -61,8 +63,9 @@ export const createFamilia = async (data: Familia): Promise<Familia> => {
     });
 
     return familia as Familia;
-  } catch (e: ErrorApp | any) {
-    throw new Error(e.message);
+  } catch (e) {
+    console.error({ e });
+    throw new Error("Error inesperado");
   }
 };
 
@@ -81,7 +84,8 @@ export const updateFamilia = async (
     });
 
     return familia as Familia;
-  } catch (e: ErrorApp | any) {
-    throw new Error(e.message);
+  } catch (e) {
+    console.error({ e });
+    throw new Error("Error inesperado");
   }
 };

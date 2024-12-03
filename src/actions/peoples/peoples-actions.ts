@@ -5,13 +5,6 @@ import prisma from "@/lib/prisma";
 import { People } from "@/interfaces";
 import { auth } from "@/auth.config";
 
-export const testSession = async () => {
-  const url = "/api/session";
-  const response = await auth();
-
-  console.log(response?.user);
-};
-
 export const getPeopleId = async (id: string): Promise<People> => {
   try {
     const people = await prisma.persona.findUnique({
@@ -51,6 +44,8 @@ export const getPeopleId = async (id: string): Promise<People> => {
 
     return people as People;
   } catch (error) {
+    console.error({ error });
+
     throw new Error("No se pudo cargar la persona");
   }
 };
@@ -82,6 +77,7 @@ export const updatePeople = async (id: string, data: People) => {
 
     return people;
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pudo guardar la persona");
   }
 };
@@ -110,14 +106,19 @@ export const savePeople = async (data: People) => {
 
     return people;
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pudo guardar la persona");
   }
 };
 
 export const getPaginatedPeoples = async ({ page = 1, take = 100 }) => {
   try {
-    if (isNaN(Number(page))) page = 1;
-    if (page < 1) page = 1;
+    if (isNaN(Number(page))) {
+      page = 1;
+    }
+    if (page < 1) {
+      page = 1;
+    }
 
     const peoples = await prisma.persona.findMany({
       take: take,
@@ -141,6 +142,7 @@ export const getPaginatedPeoples = async ({ page = 1, take = 100 }) => {
       peoples: peoples,
     };
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pudo cargar el listado de personas");
   }
 };
