@@ -17,6 +17,5 @@ export const config = {
     "/donaciones/:path*",
     "/reportes/:path*",
     "/familias/:path*",
-    "/api/:path*",
   ],
 };

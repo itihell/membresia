@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Autenticación',
+  description: 'Aplicacion de membresia de FIEMCA'
+};
+
 export default function LoginLayout({
   children,
 }: {
