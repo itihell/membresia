@@ -25,6 +25,8 @@ export const getListPersonas = async (
 
     return rows;
   } catch (error) {
+    console.error({ error });
+
     throw new Error("No se pueden cargar el listado de personas");
   }
 };
@@ -41,6 +43,7 @@ export const getListFamilias = async (
 
     return rows;
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pueden cargar el listado de familias");
   }
 };
@@ -51,6 +54,7 @@ export const getListSexos = async (): Promise<Sexos[]> => {
 
     return items;
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pueden cargar el listado de sexos");
   }
 };
@@ -61,6 +65,7 @@ export const getListParentesco = async (): Promise<Parentesco[]> => {
 
     return items;
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pueden cargar el listado de parentesco");
   }
 };
@@ -70,6 +75,7 @@ export const getListTipoMembresia = async (): Promise<TipoMembresia[]> => {
     const items = await prisma.tipoMembresia.findMany();
     return items;
   } catch (error) {
+    console.error({ error });
     throw new Error("No se pueden cargar el listado de sexos");
   }
 };
@@ -79,6 +85,7 @@ export const getListEstadoCivil = async (): Promise<EstadoCivil[]> => {
     const items = await prisma.estadoCivil.findMany();
     return items;
   } catch (error) {
+    console.error({ error });
     throw new Error("no se pudo cargar el listado de estado civil");
   }
 };
@@ -88,6 +95,7 @@ export const getListTipoEvento = async (): Promise<TipoEvento[]> => {
     const items = await prisma.tipoEvento.findMany();
     return items;
   } catch (error) {
+    console.error({ error });
     throw new Error("no se pudo cargar el listado de tipo de evento");
   }
 };
@@ -117,6 +125,7 @@ export const getListBarrios = async (search: string): Promise<Barrio[]> => {
     });
     return items;
   } catch (error) {
+    console.error({ error });
     throw new Error("no se pudo cargar el listado barrios");
   }
 };

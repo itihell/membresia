@@ -1,13 +1,11 @@
 "use client";
 import { titleFont } from "@/config/fonts";
-import { useUiStore } from "@/store";
 import Link from "next/link";
 import { Input } from "../input";
 import { AvatarUser } from "./avatar-user";
 
 
 export const TopMenu = () => {
-  const openMenu = useUiStore((state) => state.openSideMenu);
 
   return (
     <nav className="bg-gradient-to-b to-blue-800 from-blue-600 border-b border-b-blue-400 h-16 flex items-center  justify-between">

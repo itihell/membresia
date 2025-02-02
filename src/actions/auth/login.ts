@@ -11,22 +11,29 @@ export async function createLogin(
   callbackUrl: string
 ) {
   try {
-    await signIn("credentials", {
+    //const a = await signIn("oauth", {
+    return await signIn("credentials", {
       ...payload,
       redirectTo: callbackUrl,
       redirect: true,
     });
 
-    return "Success";
+    //console.error({ a });
   } catch (error) {
-    console.error(error);
+    // console.log({ error });
 
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Las credenciales no son correctas.";
+          return {
+            error: true,
+            message: "Credenciales incorrectas. Por favor intenta de nuevo.",
+          };
         default:
-          return "Algo salió mal. Por favor intenta de nuevo.";
+          return {
+            error: true,
+            message: "Credenciales incorrectas. Por favor intenta de nuevo.",
+          };
       }
     }
 

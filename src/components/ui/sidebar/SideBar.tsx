@@ -3,7 +3,6 @@ import { useUiStore } from "@/store";
 import clsx from "clsx";
 import Link from "next/link";
 import {
-  IoBan,
   IoBusiness,
   IoCloseOutline,
   IoLogInOutline,
@@ -13,7 +12,6 @@ import {
   IoPeopleOutline,
   IoPersonOutline,
   IoSearchOutline,
-  IoShirtOutline,
   IoTicketOutline,
 } from "react-icons/io5";
 

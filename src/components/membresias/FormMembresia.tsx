@@ -31,7 +31,7 @@ import {
   getPeopleId,
   updateMembresia,
 } from "@/actions";
-import { ErrorApp, Membresia } from "@/interfaces";
+import { Membresia } from "@/interfaces";
 import { toast } from "sonner";
 
 interface Props {
@@ -106,16 +106,8 @@ export const FormMembresia = ({ id }: Props) => {
           );
         }
       }
-    } catch (error: ErrorApp | any) {
-      const message = error?.message || "Error al guardar el registro";
-      return toast.error("ERROR", {
-        description: message,
-        classNames: {
-          toast: "!bg-red-100 border !border-red-300",
-          title: "text-red-800 text-xl border-b border-red-600",
-          description: "!text-red-600",
-        },
-      });
+    } catch (error) {
+      console.error({ error });
     }
   };
   return (
@@ -166,7 +158,7 @@ export const FormMembresia = ({ id }: Props) => {
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            onDayClick={(e) => {
+                            onDayClick={() => {
                               setOpenFecha(false);
                             }}
                             captionLayout="dropdown-buttons"
@@ -219,7 +211,7 @@ export const FormMembresia = ({ id }: Props) => {
                       </div>
                       <FormControl>
                         <Switch
-                          checked={field.value ? true : false}
+                          checked={!!field.value}
                           onCheckedChange={field.onChange}
                         />
                       </FormControl>
@@ -234,7 +226,7 @@ export const FormMembresia = ({ id }: Props) => {
                 <Button
                   type="button"
                   className="!rounded-r-none btn-warning"
-                  onClick={(e) => {
+                  onClick={() => {
                     history.back();
                   }}
                 >

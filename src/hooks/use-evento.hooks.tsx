@@ -2,7 +2,6 @@
 import {
   countAsistencia,
   EventoHasAsistencia,
-  ListaEventos,
 } from "@/interfaces";
 
 export const useEvento = () => {

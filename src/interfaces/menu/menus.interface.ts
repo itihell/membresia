@@ -1,5 +1,7 @@
+import React from "react";
+
 export interface Menu {
   name: string;
   path: string;
-  icono: any;
+  icono: React.ReactNode;
 }

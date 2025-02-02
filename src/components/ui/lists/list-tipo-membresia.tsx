@@ -19,43 +19,58 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListFetchData } from "@/hooks";
-import { Sexos, TipoMembresia } from "@/interfaces";
+import { TipoMembresia } from "@/interfaces";
 import { getListTipoMembresia } from "@/actions";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from "react-hook-form";
 
-type Props = {
-  form: any;
-  campo: string;
+interface Items {
+  id: string;
+  tipo_mebresia: string;
+}
+
+type Props<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  campo: Path<T>;
   label?: string | undefined;
   className?: string | undefined;
-  nameRelation?: string;
+  nameRelation?: Path<T>;
 };
 
-export const ListTipoMembresia = ({
+export const ListTipoMembresia = <T extends FieldValues>({
   form,
   campo,
   label,
   className = "flex flex-col flex-wrap",
   nameRelation,
-}: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<TipoMembresia>(
+}: Props<T>) => {
+  const { store, removeTilde } = useListFetchData<TipoMembresia>(
     getListTipoMembresia,
     "list-tipo-membresia"
   );
 
-  const relation: Sexos = form.watch(nameRelation);
+  const relation: Items = nameRelation
+    ? form.watch(nameRelation)
+    : ({} as Items);
 
   const items = store((state) => state.items);
   const open = store((state) => state.open);
   const setOpen = store((state) => state.setOpen);
 
-  const setDefaultData = (field: any): string | undefined => {
-    if (relation?.name) {
-      return relation.name;
-    } else {
-      return field.value
-        ? items.find((item) => item.id === parseInt(field.value))?.tipo_mebresia
-        : "Seleccione el tipo membresia";
+  const setDefaultData = (
+    field: ControllerRenderProps<T, Path<T>>
+  ): string | undefined => {
+    if (relation?.tipo_mebresia) {
+      return relation.tipo_mebresia;
     }
+    return field.value
+      ? items.find((item) => item.id === parseInt(field.value))?.tipo_mebresia
+      : "Seleccione el tipo membresia";
   };
 
   return (
@@ -99,8 +114,17 @@ export const ListTipoMembresia = ({
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
-                          form.setValue(campo, item.id);
-                          nameRelation && form.setValue(nameRelation, item);
+                          form.setValue(
+                            campo,
+                            item.id as PathValue<T, Path<T>>
+                          );
+
+                          if (nameRelation) {
+                            form.setValue(
+                              nameRelation,
+                              item as PathValue<T, Path<T>>
+                            );
+                          }
                         }}
                       >
                         {item.tipo_mebresia}

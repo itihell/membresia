@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 
 import bcryptjs from "bcryptjs";
 import prisma from "@/lib/prisma";
+import { CustomAdapterUser } from "./modules/auth/interface";
 
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -11,7 +12,10 @@ export const authConfig: NextAuthConfig = {
 
   callbacks: {
     async signIn({ user }) {
-      if (user) return true;
+      if (user) {
+        return true;
+      }
+
       return false;
     },
     jwt({ token, user }) {
@@ -20,11 +24,15 @@ export const authConfig: NextAuthConfig = {
       }
       return token;
     },
-    session({ session, token, user }) {
-      session.user = token.data as any;
+    session({ session, token }) {
+      const adapter = token.data as CustomAdapterUser;
+      session.user = {
+        ...adapter,
+        emailVerified: null,
+      };
       return session;
     },
-    authorized({ auth, request: { nextUrl } }) {
+    authorized: async ({ auth }) => {
       return !!auth?.user;
     },
   },
@@ -38,10 +46,13 @@ export const authConfig: NextAuthConfig = {
           where: { email: email as string },
         });
         // Si no existe el usuario
-        if (!user) return null;
-        // comparar la contraseña
-        if (!bcryptjs.compareSync(password as string, user.password))
+        if (!user) {
           return null;
+        }
+        // comparar la contraseña
+        if (!bcryptjs.compareSync(password as string, user.password)) {
+          return null;
+        }
         // si todo esta bien regresar el usuario
 
         const { password: _, ...rest } = user;

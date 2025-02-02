@@ -2,8 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { KeyboardEvent, useEffect, useRef } from "react";
-import { getListSexos } from "@/actions";
+import { useEffect, useRef } from "react";
 
 type BoleanOrUndefined = boolean | undefined;
 interface State<T> {
@@ -11,10 +10,6 @@ interface State<T> {
   open: boolean | undefined;
   setItems: (items: T[]) => void;
   setOpen: (open: boolean) => void;
-}
-interface Props<T> {
-  getData: (search: string) => T[];
-  keyStore: string;
 }
 
 const useListFetchData = <T,>(
@@ -24,7 +19,7 @@ const useListFetchData = <T,>(
   const hasFetchedData = useRef(false);
   const store = create<State<T>>()(
     persist(
-      (set, get) => ({
+      (set) => ({
         items: [] as T[],
         open: false,
         setItems: (items: T[]) => set({ items }),

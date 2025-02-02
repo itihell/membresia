@@ -1,5 +1,4 @@
 export const revalidate = 0;
-import { getFamiliaById } from "@/actions";
 import { Loading, MiembrosHasFamilia, Title } from "@/components";
 import Link from "next/link";
 import { Suspense } from "react";

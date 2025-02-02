@@ -44,7 +44,7 @@ export const FormEvents = ({ id }: Props) => {
   useEffect(() => {
     if (form?.formState?.errors) {
       const errors = form?.formState?.errors;
-      useErrors.handlerValidaError(Object.values(errors));
+      useErrors.handlerValidaError(errors);
     }
   }, [form.formState.errors, useErrors]);
 
@@ -59,8 +59,8 @@ export const FormEvents = ({ id }: Props) => {
 
         router.push(`/eventos/${evento.id}`);
       }
-    } catch (error: any) {
-      useErrors.handlerSingleError("Error", error.message as string);
+    } catch (error) {
+      console.error({ error });
     }
   };
   return (
@@ -99,7 +99,7 @@ export const FormEvents = ({ id }: Props) => {
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            onDayClick={(e) => {
+                            onDayClick={() => {
                               setOpenDate(false);
                             }}
                             captionLayout="dropdown-buttons"
@@ -182,7 +182,7 @@ export const FormEvents = ({ id }: Props) => {
                 <Button
                   type="button"
                   className="!rounded-r-none btn-warning"
-                  onClick={(e) => {
+                  onClick={() => {
                     history.back();
                   }}
                 >

@@ -44,11 +44,9 @@ async function main() {
       { id: 1, parentesco: "Papá" },
       { id: 2, parentesco: "Mamá" },
       { id: 3, parentesco: "Hijo" },
-      { id: 4, parentesco: "Hija" },
-      { id: 5, parentesco: "Abuela" },
-      { id: 6, parentesco: "Abuelo" },
-      { id: 7, parentesco: "Sobrina" },
-      { id: 8, parentesco: "Sobrina" },
+      { id: 4, parentesco: "Abuelo" },
+      { id: 5, parentesco: "Sobrino" },
+      { id: 6, parentesco: "Primo" },
     ],
   });
 
