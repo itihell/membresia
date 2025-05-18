@@ -161,7 +161,6 @@ export const FormMembresia = ({ id }: Props) => {
                             onDayClick={() => {
                               setOpenFecha(false);
                             }}
-                            captionLayout="dropdown-buttons"
                             fromYear={1940}
                             toYear={new Date().getFullYear()}
                             mode="single"

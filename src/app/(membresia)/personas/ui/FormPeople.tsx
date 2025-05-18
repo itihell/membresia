@@ -253,10 +253,10 @@ export const FormPeople = ({ id }: Props) => {
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            onDayClick={(e) => {
+                            onDayClick={() => {
                               setOpenNacimiento(false);
                             }}
-                            captionLayout="dropdown-buttons"
+                            //captionLayout="dropdown-buttons"
                             fromYear={1940}
                             toYear={new Date().getFullYear()}
                             mode="single"
@@ -309,10 +309,10 @@ export const FormPeople = ({ id }: Props) => {
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            onDayClick={(e) => {
+                            onDayClick={() => {
                               setOpenFe(false);
                             }}
-                            captionLayout="dropdown-buttons"
+                            //captionLayout="dropdown-buttons"
                             fromYear={1970}
                             toYear={new Date().getFullYear()}
                             mode="single"
@@ -368,10 +368,9 @@ export const FormPeople = ({ id }: Props) => {
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                           <Calendar
-                            onDayClick={(e) => {
+                            onDayClick={() => {
                               setOpenBautismo(false);
                             }}
-                            captionLayout="dropdown-buttons"
                             fromYear={1970}
                             toYear={new Date().getFullYear()}
                             mode="single"
@@ -492,7 +491,7 @@ export const FormPeople = ({ id }: Props) => {
                 <Button
                   type="button"
                   className="!rounded-r-none btn-warning"
-                  onClick={(e) => {
+                  onClick={() => {
                     history.back();
                   }}
                 >
