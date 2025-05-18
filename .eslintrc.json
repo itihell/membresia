@@ -14,7 +14,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react", "prettier", "@tanstack/query"],
   "ignorePatterns": [
     "node_modules/",
     ".next/",
@@ -48,6 +48,7 @@
     "react/prop-types": 0,
     "react/display-name": 0,
     "react/no-deprecated": "error",
+    "@tanstack/query/exhaustive-deps": "error",
     "react/no-unsafe": [
       "error",
       {

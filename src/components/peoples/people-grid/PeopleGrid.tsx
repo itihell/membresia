@@ -1,24 +1,24 @@
 "use client";
 import { People } from "@/interfaces";
 import { PeopleGridItem } from "./PeopleGridItem";
-import { getPaginatedPeoples } from "@/actions";
-import { useEffect, useState } from "react";
+import { useQueryPeoples } from "@/modules/peoples/hooks";
 
 // interface Props {
 //   peoples: People[];
 // }
 
 export const PeopleGrid = () => {
-  const [peoples, setPeoples] = useState<People[]>([]);
-  useEffect(() => {
-    (async () => {
-      const { currentPage, totalPages, peoples } = await getPaginatedPeoples({
-        page: 1,
-      });
+  const { data, isPending } = useQueryPeoples();
 
-      setPeoples(peoples);
-    })();
-  }, []);
+  const peoples: People[] = data?.peoples || [];
+
+  if (isPending) {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-700"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-auto    rounded-md w-full shadow-lg">
