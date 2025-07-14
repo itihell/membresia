@@ -1,6 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { getPeopleId, savePeople } from "@/actions";
+import { getPeopleId } from "@/actions";
 import { ListBarrios, ListEstadoCivil, ListSexo } from "@/components";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -36,9 +36,11 @@ import {
   FaMapLocation,
   FaUser,
 } from "react-icons/fa6";
-import { toast } from "sonner";
 import { z } from "zod";
-import { useMutationUpdatePeople } from "@/modules/peoples/hooks";
+import {
+  useMutationsCreatePeople,
+  useMutationUpdatePeople,
+} from "@/modules/peoples/hooks";
 
 interface Props {
   id?: string;
@@ -50,6 +52,7 @@ export const FormPeople = ({ id }: Props) => {
   const [openBautismo, setOpenBautismo] = useState(false);
 
   const updatePeopleMutation = useMutationUpdatePeople();
+  const createPeopleMutation = useMutationsCreatePeople();
   const route = useRouter();
   const form = useForm<z.infer<typeof PeopleSchema>>({
     resolver: zodResolver(PeopleSchema),
@@ -90,15 +93,8 @@ export const FormPeople = ({ id }: Props) => {
 
         route.push(`/personas/${people.id}`);
       } else {
-        const people = await savePeople(data);
-        toast.success("Éxito", {
-          description: "Registro creado con éxito",
-          classNames: {
-            toast: "!bg-green-100 border !border-green-300",
-            title: "text-green-800 text-xl border-b border-green-600",
-            description: "!text-green-600",
-          },
-        });
+        const people = await createPeopleMutation.mutateAsync(data);
+
         route.push(`/personas/${people.id}`);
       }
     } catch (error) {
