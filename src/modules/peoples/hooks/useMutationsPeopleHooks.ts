@@ -3,14 +3,14 @@
 import { updatePeople } from "@/actions"; // Tu server action de actualización
 import { TagsTanstack } from "@/modules/common/enum";
 import { toast } from "sonner";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { People } from "@/interfaces"; // Asegúrate de importar tu interfaz People
+import { useMutation, useQueryClient } from "@tanstack/react-query"; // Asegúrate de importar tu interfaz People
+import { PeopleType } from "@/schemas";
 
 export const useMutationUpdatePeople = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (updatedPeopleData: People) => {
+    mutationFn: async (updatedPeopleData: PeopleType) => {
       // Llama a tu server action para actualizar la persona
       // Asegúrate de que tu `updatePeople` action reciba el ID y los datos
       const result = await updatePeople(

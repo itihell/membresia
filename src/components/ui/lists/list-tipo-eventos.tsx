@@ -18,44 +18,52 @@ import {
   CommandItem,
 } from "../command";
 import { CommandList } from "cmdk";
-import { useListFetchData } from "@/hooks";
+import { useListData } from "@/hooks";
 import { Sexos, TipoEventos } from "@/interfaces";
 import { getListTipoEvento } from "@/actions";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from "react-hook-form";
+import { useState } from "react";
 
-type Props = {
-  form: any;
-  campo: string;
+type Props<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  campo: Path<T>;
   label?: string | undefined;
   className?: string | undefined;
-  nameRelation?: string;
+  nameRelation?: Path<T>;
 };
 
-export const ListTipoEventos = ({
+export const ListTipoEventos = <T extends FieldValues>({
   form,
   campo,
   label,
   className = "flex flex-col flex-wrap",
   nameRelation,
-}: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<TipoEventos>(
+}: Props<T>) => {
+  const [open, setOpen] = useState(false);
+  const { items } = useListData<TipoEventos>(
     getListTipoEvento,
     "list-tipo-eventos"
   );
 
-  const relation: TipoEventos = {} as TipoEventos; //form.watch(nameRelation);
+  const relation: TipoEventos = nameRelation
+    ? form.watch(nameRelation)
+    : ({} as TipoEventos);
 
-  const items = store((state) => state.items);
-  const open = store((state) => state.open);
-  const setOpen = store((state) => state.setOpen);
-
-  const setDefaultData = (field: any): string | undefined => {
+  const setDefaultData = (
+    field: ControllerRenderProps<T, Path<T>>
+  ): string | undefined => {
     if (relation?.name) {
       return relation.name;
-    } else {
-      return field.value
-        ? items.find((item) => item.id === parseInt(field.value))?.name
-        : "Seleccione el tipo de evento";
     }
+    return field.value
+      ? items.find((item) => item.id === parseInt(field.value.toString()))?.name
+      : "Barrios";
   };
 
   return (
@@ -99,8 +107,16 @@ export const ListTipoEventos = ({
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
-                          form.setValue(campo, item.id);
-                          nameRelation && form.setValue(nameRelation, item);
+                          form.setValue(
+                            campo,
+                            item.id as PathValue<T, Path<T>>
+                          );
+                          if (nameRelation) {
+                            form.setValue(
+                              nameRelation,
+                              item as PathValue<T, Path<T>>
+                            );
+                          }
                         }}
                       >
                         {item.name}

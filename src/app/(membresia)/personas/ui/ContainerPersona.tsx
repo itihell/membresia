@@ -40,17 +40,17 @@ export const ContainerPersona = ({ id }: Props) => {
     route.push(`${pathName}?tab=${tab}`);
   };
 
-  const loadData = async () => {
-    const persona = await getPeopleId(id);
+  const loadData = async (personaId:string) => {
+    const persona = await getPeopleId(personaId);
     setPersona(persona);
   };
 
   const createdMiembroHasFamilia = async (miembro: FamiliaHasPersona) => {
-    loadData();
+    loadData(miembro.persona_id);
   };
 
-  const deletedHundler = async (id: string) => {
-    loadData();
+  const deletedHundler = async (personaId: string) => {
+    loadData(personaId);
   };
 
   return (
@@ -108,7 +108,7 @@ export const ContainerPersona = ({ id }: Props) => {
               <Suspense fallback={<Loading />}>
                 <AddFamiliaPersona
                   created={(miembro: FamiliaHasPersona) => {
-                    const a = createdMiembroHasFamilia(miembro);
+                    createdMiembroHasFamilia(miembro);
                   }}
                   personaId={persona.id as string}
                 />
@@ -118,7 +118,7 @@ export const ContainerPersona = ({ id }: Props) => {
               <Suspense fallback={<Loading />}>
                 <MiembrosHasFamilia
                   onDeleted={(id: string) => {
-                    const a = deletedHundler(id);
+                    deletedHundler(id);
                   }}
                   familiaId={persona.familia.familia_id}
                 />

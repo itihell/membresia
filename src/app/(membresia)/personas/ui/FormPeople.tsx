@@ -21,7 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { titleFont } from "@/config/fonts";
 import { People } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import { PeopleSchema } from "@/schemas";
+import { PeopleSchema, PeopleType } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -36,7 +36,6 @@ import {
   FaMapLocation,
   FaUser,
 } from "react-icons/fa6";
-import { z } from "zod";
 import {
   useMutationsCreatePeople,
   useMutationUpdatePeople,
@@ -54,7 +53,7 @@ export const FormPeople = ({ id }: Props) => {
   const updatePeopleMutation = useMutationUpdatePeople();
   const createPeopleMutation = useMutationsCreatePeople();
   const route = useRouter();
-  const form = useForm<z.infer<typeof PeopleSchema>>({
+  const form = useForm<PeopleType>({
     resolver: zodResolver(PeopleSchema),
     defaultValues: {
       nombres: "",
@@ -63,6 +62,10 @@ export const FormPeople = ({ id }: Props) => {
       telefono: "",
       direccion: "",
       email: "",
+
+      sexo_id: 0,
+      estado_civil_id: 0,
+      barrio_id: 0,
     },
   });
 
@@ -84,7 +87,7 @@ export const FormPeople = ({ id }: Props) => {
     })();
   }, [form, id]);
 
-  const onSubmit = async (data: z.infer<typeof PeopleSchema>) => {
+  const onSubmit = async (data: PeopleType) => {
     try {
       if (id) {
         //const people = await updatePeople(id as string, data);

@@ -16,7 +16,7 @@ export const GridFamiliaRow = ({ familia, index }: Props) => {
   };
   return (
     <div
-      onClick={(e) => {
+      onClick={() => {
         onSelectedPeople(familia.id as string);
       }}
       className={cn(

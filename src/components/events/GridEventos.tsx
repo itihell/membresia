@@ -1,7 +1,7 @@
 "use client";
 
 import { getEventos } from "@/actions";
-import { Evento, ListaEventos } from "@/interfaces";
+import { ListaEventos } from "@/interfaces";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
@@ -31,7 +31,7 @@ export function GridEventos() {
       </div>
       <div className="p-2">
         <Suspense fallback={<Loading />}>
-          {eventos.map((evento, index) => {
+          {eventos.map((evento) => {
             return (
               <div
                 onClick={() => hundlerSelectedClick(evento.id as string)}

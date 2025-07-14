@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 
-import { ErrorApp, Membresia } from "@/interfaces";
+import { Membresia } from "@/interfaces";
 import { auth } from "@/auth.config";
 
 export const getMembresiaById = async (id: string): Promise<Membresia> => {
@@ -21,6 +21,8 @@ export const getMembresiaById = async (id: string): Promise<Membresia> => {
 
     return membresia as Membresia;
   } catch (error) {
+    console.error(error);
+
     throw new Error("No se pudo cargar la membresia");
   }
 };
@@ -43,6 +45,7 @@ export const getMembresias = async (): Promise<Membresia[]> => {
 
     return membresias as Membresia[];
   } catch (error) {
+    console.error(error);
     throw new Error("No se pudo cargar las membresias");
   }
 };
@@ -63,12 +66,10 @@ export const createMembresia = async (data: Membresia): Promise<Membresia> => {
     });
 
     return membresia;
-  } catch (e: ErrorApp | any) {
-    if (e.code === "P2002") {
-      throw new Error("Esta persona ya tiene una membresia registrada");
-    }
+  } catch (error) {
+    console.error(error);
 
-    throw new Error(`Code: ${e.code} - ${e.message}`);
+    throw new Error(`No se pudo crear la membresia: ${error instanceof Error ? error.message : "Error desconocido"}`);
   }
 };
 

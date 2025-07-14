@@ -2,12 +2,9 @@
 
 import { useSession } from "next-auth/react";
 import { createLogin } from "@/actions";
-import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useActionState } from "react";
 
-import { useFormStatus } from "react-dom";
-import { IoInformationOutline } from "react-icons/io5";
+import { useSearchParams } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -23,7 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 export const LoginForm = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const searchParams = useSearchParams();
   const arrayPath = searchParams.get("callbackUrl")?.split("/");
 
@@ -90,18 +87,3 @@ export const LoginForm = () => {
     </div>
   );
 };
-
-function LoginButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button
-      variant={"default"}
-      type="submit"
-      className={clsx({ "btn-primary": !pending, "btn-disabled": pending })}
-      disabled={pending}
-    >
-      Entrar
-    </Button>
-  );
-}

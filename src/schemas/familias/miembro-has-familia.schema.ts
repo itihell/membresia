@@ -5,3 +5,5 @@ export const MiembrosHasFamiliaSchema = z.object({
   familia_id: z.string({ message: "Debe seleccionar una familia" }),
   parentesco_id: z.number({ message: "Debe seleccionar el parentesco" }),
 });
+
+export type MiembrosHasFamiliaTypes = z.infer<typeof MiembrosHasFamiliaSchema>;

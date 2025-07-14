@@ -14,7 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
 import { createFamilia, getFamiliaById, updateFamilia } from "@/actions";
-import { ErrorApp, Familia } from "@/interfaces";
+import { Familia } from "@/interfaces";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -67,8 +67,9 @@ export const FormFamilia = ({ id }: Props) => {
           route.push(`/familias/${familia.id}`);
         }
       }
-    } catch (error: ErrorApp | any) {
-      const message = error?.message || "Error al guardar el registro";
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Error al guardar el registro";
       return toast.error("ERROR", {
         description: message,
         classNames: {
@@ -108,7 +109,7 @@ export const FormFamilia = ({ id }: Props) => {
               <Button
                 type="button"
                 className="!rounded-r-none btn-warning"
-                onClick={(e) => {
+                onClick={() => {
                   history.back();
                 }}
               >

@@ -43,17 +43,7 @@ export function GridAsistencia({ eventoId }: Prop) {
       );
       setCount(count);
     })();
-  }, [eventoId]);
-
-  const getCount = (rows: EventoHasAsistencia[]) => {
-    const count = rows.reduce((acc, row) => {
-      if (row.asistio) {
-        return acc + 1;
-      }
-      return acc;
-    }, 0);
-    return count;
-  };
+  }, [eventoId, useEvent]);
 
   const hundlerAsistio = async (id: string, status: boolean) => {
     await updateAsistencia(id, status);

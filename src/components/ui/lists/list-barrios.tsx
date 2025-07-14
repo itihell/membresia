@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, removeTilde } from "@/lib/utils";
 import { Button } from "../button";
 import {
   FormControl,
@@ -18,44 +18,59 @@ import {
   CommandItem,
 } from "../command";
 import { CommandList } from "cmdk";
-import { useListFetchData } from "@/hooks";
-import { Barrio, EstadoCivil } from "@/interfaces";
-import { getListBarrios, getListEstadoCivil } from "@/actions";
+import { useListData } from "@/hooks";
+import { Barrio } from "@/interfaces";
+import { getListBarrios } from "@/actions";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from "react-hook-form";
+import { useState } from "react";
 
-type Props = {
-  form: any;
-  campo: string;
+interface Campos {
+  id?: number;
+  name: string;
+  municipio_id: number;
+  zona_geografica_id: number;
+}
+
+type Props<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  campo: Path<T>;
   label?: string | undefined;
   className?: string | undefined;
-  nameRelation?: string;
+  nameRelation?: Path<T>;
 };
 
-export const ListBarrios = ({
+export const ListBarrios = <T extends FieldValues>({
   form,
   campo,
   label,
   className = "flex flex-col flex-wrap",
   nameRelation,
-}: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<Barrio>(
+}: Props<T>) => {
+  const [open, setOpen] = useState(false);
+  const { searchData, items } = useListData<Campos>(
     getListBarrios,
     "list-barrios"
   );
 
-  const relation: Barrio = form.watch(nameRelation);
+  const relation: Campos = nameRelation
+    ? form.watch(nameRelation)
+    : ({} as Campos);
 
-  const items = store((state) => state.items);
-  const open = store((state) => state.open);
-  const setOpen = store((state) => state.setOpen);
-
-  const setDefaultData = (field: any): string | undefined => {
+  const setDefaultData = (
+    field: ControllerRenderProps<T, Path<T>>
+  ): string | undefined => {
     if (relation?.name) {
       return relation.name;
-    } else {
-      return field.value
-        ? items.find((item) => item.id === parseInt(field.value))?.name
-        : "Seleccione el barrio";
     }
+    return field.value
+      ? items.find((item) => item.id === parseInt(field.value.toString()))?.name
+      : "Barrios";
   };
 
   return (
@@ -103,8 +118,16 @@ export const ListBarrios = ({
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
-                          form.setValue(campo, item.id);
-                          nameRelation && form.setValue(nameRelation, item);
+                          form.setValue(
+                            campo,
+                            item.id as PathValue<T, Path<T>>
+                          );
+                          if (nameRelation) {
+                            form.setValue(
+                              nameRelation,
+                              item as PathValue<T, Path<T>>
+                            );
+                          }
                         }}
                       >
                         <div className="flex flex-col">

@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 
 import { People } from "@/interfaces";
 import { auth } from "@/auth.config";
+import { PeopleType } from "@/schemas";
 
 export const getPeopleId = async (id: string): Promise<People> => {
   try {
@@ -50,7 +51,7 @@ export const getPeopleId = async (id: string): Promise<People> => {
   }
 };
 
-export const updatePeople = async (id: string, data: People) => {
+export const updatePeople = async (id: string, data: PeopleType) => {
   try {
     const session = await auth();
     const people = await prisma.persona.update({
@@ -82,7 +83,7 @@ export const updatePeople = async (id: string, data: People) => {
   }
 };
 
-export const savePeople = async (data: People) => {
+export const savePeople = async (data: PeopleType) => {
   try {
     const session = await auth();
     const people = await prisma.persona.create({
