@@ -11,9 +11,7 @@ export default function Error({
     <div className="flex items-center justify-center content-center">
       <div className="mt-32">
         <h2 className="text-3xl">Algo salio mal 😢!</h2>
-        <p className="mb-4">
-          <pre>{error.message}</pre>
-        </p>
+        <p className="mb-4">{error.message}</p>
         <button onClick={() => reset()}>Intenta nuevamente</button>
       </div>
     </div>
