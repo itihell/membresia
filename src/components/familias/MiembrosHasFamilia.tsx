@@ -23,10 +23,10 @@ export const MiembrosHasFamilia = ({ familiaId, onDeleted }: Props) => {
   }, [familiaId]);
 
   const onDeletedMiembro = async (id: string) => {
-    const deleted = await deleteMiembroHasFamilia(id);
+    await deleteMiembroHasFamilia(id);
 
     if (onDeleted) {
-      onDeleted(deleted.id as string);
+      onDeleted(id);
     }
 
     const familia = await getFamiliaById(familiaId);
