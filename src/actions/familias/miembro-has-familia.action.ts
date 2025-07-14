@@ -20,7 +20,7 @@ export const createMiembroHasFamilia = async (
   return miembro;
 };
 
-export const deleteMiembroHasFamilia = async (id: string): Promise<any> => {
+export const deleteMiembroHasFamilia = async (id: string) => {
   const deleted = await prisma.familiaHasPersona.deleteMany({
     where: { id: id },
   });
