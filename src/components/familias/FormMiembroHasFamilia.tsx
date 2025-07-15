@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
+import { FamiliaHasPersonaSchema, FamiliaHasPersonaType } from "@/modules/peoples/schemas";
 
 interface Props {
   id?: string;
@@ -21,8 +22,8 @@ interface Props {
 
 export const FormMiembroHasFamilia = ({ familiaId, id }: Props) => {
   const route = useRouter();
-  const form = useForm<z.infer<typeof MiembrosHasFamiliaSchema>>({
-    resolver: zodResolver(MiembrosHasFamiliaSchema),
+  const form = useForm<FamiliaHasPersonaType>({
+    resolver: zodResolver(FamiliaHasPersonaSchema),
     defaultValues: {},
   });
 
@@ -94,7 +95,7 @@ export const FormMiembroHasFamilia = ({ familiaId, id }: Props) => {
               <Button
                 type="button"
                 className="!rounded-r-none btn-warning"
-                onClick={(e) => {
+                onClick={() => {
                   history.back();
                 }}
               >

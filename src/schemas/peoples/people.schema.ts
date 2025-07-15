@@ -1,6 +1,9 @@
 import { literal, z } from "zod";
+import { Sexos } from "../../interfaces/sexos";
+import { Barrio, EstadoCivil } from "@prisma/client";
 
 export const PeopleSchema = z.object({
+  id: z.string().optional(),
   nombres: z
     .string({ message: "Debe escribir el nombre de la persona" })
     .min(3)
@@ -47,4 +50,9 @@ export const PeopleSchema = z.object({
     .optional()
     .or(z.literal(""))
     .transform((v) => v ?? ""),
+  sexo: z.custom<Sexos>().optional(), // Usa z.custom para tipar sin validar la estructura completa
+  EstadoCivil: z.custom<EstadoCivil>().optional(),
+  barrios: z.custom<Barrio>().optional(),
 });
+
+export type PeopleType = z.infer<typeof PeopleSchema>;

@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, removeTilde } from "@/lib/utils";
 import { Button } from "../button";
 import {
   FormControl,
@@ -18,51 +18,52 @@ import {
   CommandItem,
 } from "../command";
 import { CommandList } from "cmdk";
-import { useListFetchData } from "@/hooks";
-import { People, Sexos } from "@/interfaces";
-import { getListPersonas, getListSexos } from "@/actions";
+import { useListData } from "@/hooks";
+import { People } from "@/interfaces";
+import { getListPersonas } from "@/actions";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from "react-hook-form";
+import { useState } from "react";
 
-type Props = {
-  form: any;
-  campo: string;
+type Props<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  campo: Path<T>;
   label?: string | undefined;
   className?: string | undefined;
-  nameRelation?: string;
+  nameRelation?: Path<T>;
 };
 
-export const ListPersonas = ({
+export const ListPersonas = <T extends FieldValues>({
   form,
   campo,
   label,
   className = "flex flex-col flex-wrap",
   nameRelation,
-}: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<People>(
+}: Props<T>) => {
+  const [open, setOpen] = useState(false);
+  const { searchData, items } = useListData<People>(
     getListPersonas,
     "list-personas"
   );
 
-  const relation: Sexos = form.watch(nameRelation);
+  const relation: People = nameRelation
+    ? form.watch(nameRelation)
+    : ({} as People);
 
-  const items = store((state) => state.items);
-  const open = store((state) => state.open);
-  const setOpen = store((state) => state.setOpen);
-
-  const setDefaultData = (field: any): string | undefined => {
-    if (relation?.name) {
-      return relation.name;
-    } else {
-      return field.value
-        ? items
-            .filter((item) => item.id === field.value)
-            .map((item) => {
-              const full_name = `${item.nombres} ${item.apellidos}`;
-
-              return { ...item, full_name };
-            })
-            .find((item) => item.id === field.value)?.full_name
-        : "Seleccione la persona";
+  const setDefaultData = (
+    field: ControllerRenderProps<T, Path<T>>
+  ): string | undefined => {
+    if (relation?.full_name) {
+      return relation.full_name;
     }
+    return field.value
+      ? items.find((item) => item.id === field.value)?.full_name
+      : "Persona";
   };
 
   return (
@@ -112,8 +113,16 @@ export const ListPersonas = ({
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
-                          form.setValue(campo, item.id);
-                          nameRelation && form.setValue(nameRelation, item);
+                          form.setValue(
+                            campo,
+                            item.id as PathValue<T, Path<T>>
+                          );
+                          if (nameRelation) {
+                            form.setValue(
+                              nameRelation,
+                              item as PathValue<T, Path<T>>
+                            );
+                          }
                         }}
                       >
                         <div className="flex flex-col">

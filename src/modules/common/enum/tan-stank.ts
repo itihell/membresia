@@ -3,4 +3,5 @@ export enum TagsTanstack {
   GROUP = "group",
   FAMILY = "family",
   MEMBERS = "members",
+  EVENTOS = "eventos",
 }

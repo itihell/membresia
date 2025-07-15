@@ -1,5 +1,5 @@
 "use client";
-import { Membresia, People } from "@/interfaces";
+import { Membresia } from "@/interfaces";
 import { useEffect, useState } from "react";
 import { GridMembresiaItem } from "./GridMembresiaItem";
 import { getMembresias } from "@/actions";

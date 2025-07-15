@@ -1,9 +1,8 @@
-import { inter, titleFont } from "@/config/fonts";
+import {  titleFont } from "@/config/fonts";
 import { People } from "@/interfaces";
 import { format } from "date-fns";
-import { Inter } from "next/font/google";
+
 import React from "react";
-import { Input } from "../ui/input";
 
 interface Props {
   persona: People;

@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, removeTilde } from "@/lib/utils";
 import { Button } from "../button";
 import {
   FormControl,
@@ -18,44 +18,58 @@ import {
   CommandItem,
 } from "../command";
 import { CommandList } from "cmdk";
-import { useListFetchData } from "@/hooks";
+import { useListData } from "@/hooks";
 import { EstadoCivil } from "@/interfaces";
 import { getListEstadoCivil } from "@/actions";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from "react-hook-form";
+import { useState } from "react";
+interface Campos {
+  id?: number;
+  estado_civil: string;
+}
 
-type Props = {
-  form: any;
-  campo: string;
+type Props<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  campo: Path<T>;
   label?: string | undefined;
   className?: string | undefined;
-  nameRelation?: string;
+  nameRelation?: Path<T>;
 };
 
-export const ListEstadoCivil = ({
+export const ListEstadoCivil = <T extends FieldValues>({
   form,
   campo,
   label,
   className = "flex flex-col flex-wrap",
   nameRelation,
-}: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<EstadoCivil>(
+}: Props<T>) => {
+  const [open, setOpen] = useState(false);
+  const { items } = useListData<Campos>(
     getListEstadoCivil,
     "list-estado-civil"
   );
 
-  const relation: EstadoCivil = form.watch(nameRelation);
+  const relation: Campos = nameRelation
+    ? form.watch(nameRelation)
+    : ({} as Campos);
 
-  const items = store((state) => state.items);
-  const open = store((state) => state.open);
-  const setOpen = store((state) => state.setOpen);
 
-  const setDefaultData = (field: any): string | undefined => {
+  const setDefaultData = (
+    field: ControllerRenderProps<T, Path<T>>
+  ): string | undefined => {
     if (relation?.estado_civil) {
       return relation.estado_civil;
-    } else {
-      return field.value
-        ? items.find((item) => item.id === parseInt(field.value))?.estado_civil
-        : "Seleccione el estado civil";
     }
+    return field.value
+      ? items.find((item) => item.id === parseInt(field.value.toString()))
+          ?.estado_civil
+      : "Estado Civil";
   };
 
   return (
@@ -99,8 +113,16 @@ export const ListEstadoCivil = ({
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
-                          form.setValue(campo, item.id);
-                          nameRelation && form.setValue(nameRelation, item);
+                          form.setValue(
+                            campo,
+                            item.id as PathValue<T, Path<T>>
+                          );
+                          if (nameRelation) {
+                            form.setValue(
+                              nameRelation,
+                              item as PathValue<T, Path<T>>
+                            );
+                          }
                         }}
                       >
                         {removeTilde(item.estado_civil)}

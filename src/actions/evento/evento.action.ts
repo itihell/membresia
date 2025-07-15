@@ -7,7 +7,8 @@ export const getEventos = async (): Promise<ListaEventos[]> => {
   try {
     const session = await auth();
     const eventos = (await prisma.$queryRaw`
-      select eventos.id, eventos.title,eventos."date", COUNT(personas.sexo_id)::text as asistencia
+      select eventos.id, eventos.title,eventos."date",
+      sum( case when eventos_has_asistencias.asistio=true then 1 else 0 end) as asistencia
       from eventos
       left join eventos_has_asistencias
       on eventos_has_asistencias.evento_id = eventos.id
@@ -17,7 +18,7 @@ export const getEventos = async (): Promise<ListaEventos[]> => {
       on personas.id = eventos_has_asistencias.people_id
       inner join sexos
       on sexos.id = personas.sexo_id 
-      where eventos.iglesia_id = ${session?.user?.iglesia_id} and eventos_has_asistencias.asistio=true
+      where eventos.iglesia_id = ${session?.user?.iglesia_id}
       GROUP by eventos.id, eventos."date", eventos.title
     `) as ListaEventos[];
 

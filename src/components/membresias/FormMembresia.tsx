@@ -1,6 +1,6 @@
 "use client";
 
-import { MembresiaSchema } from "@/schemas";
+import { MembresiaSchema, MembresiaType } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -44,7 +44,7 @@ export const FormMembresia = ({ id }: Props) => {
   const route = useRouter();
   const [openFecha, setOpenFecha] = useState(false);
 
-  const form = useForm<z.infer<typeof MembresiaSchema>>({
+  const form = useForm<MembresiaType>({
     resolver: zodResolver(MembresiaSchema),
     defaultValues: {},
   });

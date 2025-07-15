@@ -1,5 +1,5 @@
 "use client";
-import { cn } from "@/lib/utils";
+import { cn, removeTilde } from "@/lib/utils";
 import { Button } from "../button";
 import {
   FormControl,
@@ -18,44 +18,53 @@ import {
   CommandItem,
 } from "../command";
 import { CommandList } from "cmdk";
-import { useListFetchData } from "@/hooks";
+import { useListData } from "@/hooks";
 import { Parentesco } from "@/interfaces";
 import { getListParentesco } from "@/actions";
+import {
+  ControllerRenderProps,
+  FieldValues,
+  Path,
+  PathValue,
+  UseFormReturn,
+} from "react-hook-form";
+import { useState } from "react";
 
-type Props = {
-  form: any;
-  campo: string;
+type Props<T extends FieldValues> = {
+  form: UseFormReturn<T>;
+  campo: Path<T>;
   label?: string | undefined;
   className?: string | undefined;
-  nameRelation?: string;
+  nameRelation?: Path<T>;
 };
 
-export const ListParentesco = ({
+export const ListParentesco = <T extends FieldValues>({
   form,
   campo,
   label,
   className = "flex flex-col flex-wrap",
   nameRelation,
-}: Props) => {
-  const { searchData, store, removeTilde } = useListFetchData<Parentesco>(
+}: Props<T>) => {
+  const [open, setOpen] = useState(false);
+  const { items } = useListData<Parentesco>(
     getListParentesco,
     "list-parentesco"
   );
 
-  const relation: Parentesco = form.watch(nameRelation);
+  const relation: Parentesco = nameRelation
+    ? form.watch(nameRelation)
+    : ({} as Parentesco);
 
-  const items = store((state) => state.items);
-  const open = store((state) => state.open);
-  const setOpen = store((state) => state.setOpen);
-
-  const setDefaultData = (field: any): string | undefined => {
+  const setDefaultData = (
+    field: ControllerRenderProps<T, Path<T>>
+  ): string | undefined => {
     if (relation?.parentesco) {
       return relation.parentesco;
-    } else {
-      return field.value
-        ? items.find((item) => item.id === parseInt(field.value))?.parentesco
-        : "Seleccione el parentesco";
     }
+    return field.value
+      ? items.find((item) => item.id === parseInt(field.value.toString()))
+          ?.parentesco
+      : "Parentesco";
   };
 
   return (
@@ -99,8 +108,16 @@ export const ListParentesco = ({
                         key={item.id}
                         onSelect={() => {
                           setOpen(false);
-                          form.setValue(campo, item.id);
-                          nameRelation && form.setValue(nameRelation, item);
+                          form.setValue(
+                            campo,
+                            item.id as PathValue<T, Path<T>>
+                          );
+                          if (nameRelation) {
+                            form.setValue(
+                              nameRelation,
+                              item as PathValue<T, Path<T>>
+                            );
+                          }
                         }}
                       >
                         {item.parentesco}

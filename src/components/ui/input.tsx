@@ -1,9 +1,16 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  // Añade una propiedad propia aquí, incluso si es opcional y no la usas aún.
+  // Por ejemplo, para futuras extensiones o para satisfacer el linter.
+  // Si no tienes una propiedad específica, puedes usar una dummy como 'customProp?'.
+  // customProp?: string; // Ejemplo de una propiedad personalizada futura
+
+  // O una propiedad que Shadcn usa a veces para componentes componibles
+  asChild?: boolean;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
@@ -17,9 +24,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         ref={ref}
         {...props}
       />
-    )
+    );
   }
-)
-Input.displayName = "Input"
+);
+Input.displayName = "Input";
 
-export { Input }
+export { Input };

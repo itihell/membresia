@@ -1,7 +1,8 @@
 import { auth } from "@/auth.config";
 
-import { NextRequest, NextResponse } from "next/server";
-export async function GET(request: NextRequest) {
+import {  NextResponse } from "next/server";
+//request: NextRequest
+export async function GET() {
   const session = await auth();
   return NextResponse.json(session);
 }
