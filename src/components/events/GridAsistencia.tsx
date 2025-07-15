@@ -1,8 +1,8 @@
 "use client";
-import { getEventosByIdWhithAsistencia, updateAsistencia } from "@/actions";
-import { useEvento } from "@/hooks";
+import { updateAsistencia } from "@/actions";
 import { countAsistencia, Evento, EventoHasAsistencia } from "@/interfaces";
 import { cn } from "@/lib/utils";
+import { useQueryAsistencia } from "@/modules/eventos/hooks";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,48 +19,72 @@ import {
 interface Prop {
   eventoId: string;
 }
+
 export function GridAsistencia({ eventoId }: Prop) {
-  const rounter = useRouter();
-  const useEvent = useEvento();
-  const [evento, setEvento] = useState({} as Evento);
-  const [count, setCount] = useState({
+  const { data, isPending, refetch } = useQueryAsistencia(eventoId);
+
+  const asistencias = data?.eventos_has_asistencia;
+  const evento = data ? { ...data } : ({} as Evento); // Asegúrate de que 'evento' siempre sea un objeto Evento o similar
+
+  const router = useRouter();
+
+  const [count, setCount] = useState<countAsistencia>({
     hombres: 0,
     mujeres: 0,
     total: 0,
-  } as countAsistencia);
-  const [asistencias, setAsistencias] = useState(
-    [] as EventoHasAsistencia[] | null | undefined
-  );
+  });
+
+  const groupAsistenciaBySex = (events: EventoHasAsistencia[]) => {
+    return events.reduce(
+      (acc, row) => {
+        if (row.persona?.sexo_id === 1 && row.asistio) {
+          acc.hombres += 1;
+        }
+        if (row.persona?.sexo_id === 2 && row.asistio) {
+          acc.mujeres += 1;
+        }
+
+        return acc;
+      },
+      { hombres: 0, mujeres: 0, total: 0 } as countAsistencia
+    );
+  };
 
   useEffect(() => {
-    (async () => {
-      const { eventos_has_asistencia, ...evento } =
-        await getEventosByIdWhithAsistencia(eventoId);
-      setEvento(evento);
-      setAsistencias(eventos_has_asistencia);
-      const count = useEvent.groupAsistenciaBySex(
-        eventos_has_asistencia as EventoHasAsistencia[]
+    if (asistencias && asistencias.length > 0) {
+      const cantidad = groupAsistenciaBySex(
+        asistencias as EventoHasAsistencia[]
       );
-      setCount(count);
-    })();
-  }, [eventoId, useEvent]);
+      setCount(cantidad);
+    } else if (asistencias && asistencias.length === 0) {
+      setCount({ hombres: 0, mujeres: 0, total: 0 });
+    }
+  }, [asistencias]);
 
   const hundlerAsistio = async (id: string, status: boolean) => {
     await updateAsistencia(id, status);
-    const { eventos_has_asistencia, ...evento } =
-      await getEventosByIdWhithAsistencia(eventoId);
-    setEvento(evento);
-    setAsistencias(eventos_has_asistencia);
-
-    const count = useEvent.groupAsistenciaBySex(
-      eventos_has_asistencia as EventoHasAsistencia[]
-    );
-    setCount(count);
+    await refetch();
   };
 
   const hundleToPersona = (id: string) => {
-    rounter.push(`/personas/${id}`);
+    router.push(`/personas/${id}`);
   };
+
+  if (isPending) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Cargando asistencia...
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        Error al cargar los datos del evento o no se encontraron.
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -68,25 +92,23 @@ export function GridAsistencia({ eventoId }: Prop) {
         <button
           type="button"
           className="flex gap-1 items-center rounded-l-sm border border-red-400 bg-gradient-to-t from-red-600 to-red-500 hover:bg-gradient-to-b text-white p-3 shadow-sm shadow-red-800 "
-          onClick={() => rounter.back()}
+          onClick={() => router.back()}
         >
           <FaListCheck size={20} />
-
           <span className="md:block hidden"> Regresar</span>
         </button>
         <button
           type="button"
           className="flex gap-1 items-center rounded-r-sm border border-green-400 bg-gradient-to-t from-green-600 to-green-500 hover:bg-gradient-to-br text-white p-3 shadow-sm shadow-red-800 "
-          onClick={() => rounter.back()}
+          onClick={() => router.push(`/eventos/${eventoId}/agregar-asistencia`)}
         >
           <FaCirclePlus size={20} />
-
           <span className="md:block hidden"> Agregar</span>
         </button>
       </div>
 
       <div className="flex justify-between bg-gradient-to-t from-blue-500 to-blue-700 py-2 rounded-t-lg text-white">
-        <div className="px-5  text-white rounded-t-lg">
+        <div className="px-5 text-white rounded-t-lg">
           {`${evento.date && format(new Date(evento.date), "dd/MM/yyyy")} | ${
             evento.title
           }`}
@@ -101,7 +123,7 @@ export function GridAsistencia({ eventoId }: Prop) {
       <div className="grid grid-cols-7 place-content-between bg-gradient-to-t bg-blue-500 py-2 text-white">
         <div className="px-5 flex gap-2 col-span-2 ">
           <FaPersonHalfDress size={22} />
-          <span className="">{count.hombres + count.mujeres}</span>
+          <span className="">{count.total}</span>
         </div>
         <div className="px-5 flex gap-2 col-span-2">
           <FaPerson size={22} />
