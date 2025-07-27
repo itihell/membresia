@@ -19,9 +19,9 @@ import {
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { titleFont } from "@/config/fonts";
-import { People } from "@/interfaces";
+import type { People } from "@/interfaces";
 import { cn } from "@/lib/utils";
-import { PeopleSchema, PeopleType } from "@/schemas";
+import { PeopleSchema, type PeopleType } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
@@ -259,7 +259,7 @@ export const FormPeople = ({ id }: Props) => {
                               field.value ? new Date(field.value) : undefined
                             }
                             onSelect={field.onChange}
-                            disabled={(date) =>
+                            disabled={date =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
                             initialFocus
@@ -315,7 +315,7 @@ export const FormPeople = ({ id }: Props) => {
                               field.value ? new Date(field.value) : undefined
                             }
                             onSelect={field.onChange}
-                            disabled={(date) =>
+                            disabled={date =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
                             initialFocus
@@ -373,7 +373,7 @@ export const FormPeople = ({ id }: Props) => {
                               field.value ? new Date(field.value) : undefined
                             }
                             onSelect={field.onChange}
-                            disabled={(date) =>
+                            disabled={date =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
                             initialFocus
