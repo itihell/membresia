@@ -1,12 +1,12 @@
-import { GridEventos, Loading, Title } from "@/components";
+import { GridEventos, Loading } from "@/components";
+import { BodyPage } from "@/modules/common/components";
 import Link from "next/link";
 import { Suspense } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 
 const EventosPages = () => {
   return (
-    <div className="mb-5">
-      <Title title="Eventos" className="mb-2" />
+    <BodyPage title="Eventos">
       <div>
         <div className="bg-gray-50 p-4 border border-blue-200">
           <Suspense fallback={<Loading />}>
@@ -23,7 +23,7 @@ const EventosPages = () => {
           <span className="md:block hidden">Agregar</span>
         </Link>
       </div>
-    </div>
+    </BodyPage>
   );
 };
 

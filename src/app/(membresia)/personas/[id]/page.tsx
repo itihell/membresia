@@ -1,9 +1,10 @@
 export const revalidate = 0;
-import { Loading, Title } from "@/components";
+import { Loading } from "@/components";
 import { ContainerPersona } from "../ui/ContainerPersona";
 import Link from "next/link";
 import { FaPencil, FaPeopleGroup } from "react-icons/fa6";
 import { Suspense } from "react";
+import { BodyPage } from "@/modules/common/components";
 
 interface Props {
   params: Promise<{
@@ -13,13 +14,10 @@ interface Props {
 const ShowPersonaPage = async (props: Props) => {
   const params = await props.params;
 
-  const {
-    id
-  } = params;
+  const { id } = params;
 
   return (
-    <div className="mb-5">
-      <Title title="Datos de la persona" className="mb-2" />
+    <BodyPage title="Datos de la persona">
       <div>
         <div className="bg-gray-50 p-3 border border-blue-300">
           <Suspense fallback={<Loading />}>
@@ -45,7 +43,7 @@ const ShowPersonaPage = async (props: Props) => {
           </Link>
         </div>
       </div>
-    </div>
+    </BodyPage>
   );
 };
 

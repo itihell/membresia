@@ -1,18 +1,18 @@
 import { Footer, SideBar, TopMenu } from "@/components";
 import { Toaster } from "@/components/ui/sonner";
+import { MainPage, ContainerPage } from "@/modules/common/components";
 
-export default function ShopLayout({
-  children,
-}: {
+interface Props {
   children: React.ReactNode;
-}) {
+}
+export default function ShopLayout({ children }: Props) {
   return (
-    <main className="min-h-screen">
+    <MainPage className="min-h-screen">
       <Toaster position="top-right" expand />
       <TopMenu />
       <SideBar />
-      <div className="px-3 sm:px-10">{children}</div>
+      <ContainerPage>{children}</ContainerPage>
       <Footer />
-    </main>
+    </MainPage>
   );
 }

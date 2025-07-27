@@ -1,12 +1,12 @@
-import { GridMembresia, Loading, Title } from "@/components";
+import { GridMembresia, Loading } from "@/components";
+import { BodyPage } from "@/modules/common/components";
 import Link from "next/link";
 import { Suspense } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 
 export default function AdminPage() {
   return (
-    <div className="mb-5">
-      <Title title="Membresia" className="mb-2" />
+    <BodyPage title="Membresia">
       <div>
         <Suspense fallback={<Loading />}>
           <GridMembresia />
@@ -21,6 +21,6 @@ export default function AdminPage() {
           </Link>
         </div>
       </div>
-    </div>
+    </BodyPage>
   );
 }

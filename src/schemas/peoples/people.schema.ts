@@ -1,6 +1,6 @@
 import { literal, z } from "zod";
-import { Sexos } from "../../interfaces/sexos";
-import { Barrio, EstadoCivil } from "@prisma/client";
+import type { Sexos } from "../../interfaces/sexos";
+import type { Barrio, EstadoCivil } from "@prisma/client";
 
 export const PeopleSchema = z.object({
   id: z.string().optional(),
@@ -18,7 +18,7 @@ export const PeopleSchema = z.object({
     .max(20)
     .nullable()
     .optional()
-    .transform((v) => v ?? "")
+    .transform(v => v ?? "")
     .or(literal("")),
   fecha_nacimiento: z.date().nullable().optional(),
   fecha_fe: z
@@ -42,14 +42,14 @@ export const PeopleSchema = z.object({
     .nullable()
     .optional()
     .or(z.literal(""))
-    .transform((v) => v ?? ""),
+    .transform(v => v ?? ""),
   email: z
     .string({ message: "Debe escribir el correo electrónico" })
     .email({ message: "Dirección de correo electrónico no válida" })
     .nullable()
     .optional()
     .or(z.literal(""))
-    .transform((v) => v ?? ""),
+    .transform(v => v ?? ""),
   sexo: z.custom<Sexos>().optional(), // Usa z.custom para tipar sin validar la estructura completa
   EstadoCivil: z.custom<EstadoCivil>().optional(),
   barrios: z.custom<Barrio>().optional(),

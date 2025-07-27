@@ -1,19 +1,15 @@
 export const revalidate = 0;
 export const dynamic = "force-dynamic";
-import { Loading, PeopleGrid, Title } from "@/components";
-//import { getPaginatedPeoples } from "@/actions";
+import { Loading, PeopleGrid } from "@/components";
+import { BodyPage } from "@/modules/common/components";
+
 import Link from "next/link";
 import { Suspense } from "react";
 import { FaUserPlus } from "react-icons/fa6";
 
 export default async function PeoplePage() {
-  // const { currentPage, totalPages, peoples } = await getPaginatedPeoples({
-  //   page: 1,
-  // });
-
   return (
-    <div className="mb-5">
-      <Title title="Personas" className="mb-2" />
+    <BodyPage title="Personas">
       <div>
         <Suspense fallback={<Loading />}>
           <PeopleGrid />
@@ -29,6 +25,6 @@ export default async function PeoplePage() {
           </Link>
         </div>
       </div>
-    </div>
+    </BodyPage>
   );
 }
