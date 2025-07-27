@@ -37,7 +37,7 @@ export const DataPicker = ({ date, setDate }: Props) => {
             selected={date}
             captionLayout="dropdown"
             onSelect={date => {
-              setDate(date);
+              setDate?.(date);
               setOpen(false);
             }}
           />
