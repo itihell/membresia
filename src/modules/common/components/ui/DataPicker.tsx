@@ -9,17 +9,16 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 interface Props {
+  label: string;
   date?: Date;
   setDate?: (date: Date | undefined) => void;
 }
-export const DataPicker = ({ date, setDate }: Props) => {
+export const DataPicker = ({ label, date, setDate }: Props) => {
   const [open, setOpen] = useState(false);
   //const [date, setDate] = useState<Date | undefined>(undefined);
   return (
     <div className="flex flex-col gap-3">
-      <Label htmlFor="date" className="px-1">
-        Date of birth
-      </Label>
+      {label && <Label className="text-sm">{label}</Label>}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
