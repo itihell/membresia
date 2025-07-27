@@ -8,9 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "lint:check": "next lint --max-warnings 0",
     "seed": "ts-node src/seed/seed-database.ts",
     "prepare": "husky",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "lint:staged": "lint-staged",
+    "pre-commit": "lint-staged",
+    "commit-check": "npm run check-types && npm run lint:check",
+    "fix-all": "npm run lint:fix && prettier --write ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -104,7 +109,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+      "eslint --fix --max-warnings 0",
       "prettier --write"
     ],
     "*.{json,css,md,mdx}": [
