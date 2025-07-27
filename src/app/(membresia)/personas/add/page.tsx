@@ -1,11 +1,11 @@
-import { Loading, Title } from "@/components";
+import { Loading } from "@/components";
 import { FormPeople } from "../ui/FormPeople";
 import { Suspense } from "react";
+import { BodyPage } from "@/modules/common/components";
 
 const AddPersonaPage = () => {
   return (
-    <div className="mb-5">
-      <Title title="Datos de la persona" className="mb-2" />
+    <BodyPage title="Agregar Persona">
       <div>
         <div className="bg-gray-50 p-4">
           <Suspense fallback={<Loading />}>
@@ -13,7 +13,7 @@ const AddPersonaPage = () => {
           </Suspense>
         </div>
       </div>
-    </div>
+    </BodyPage>
   );
 };
 

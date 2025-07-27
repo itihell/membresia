@@ -1,14 +1,12 @@
 export const revalidate = 60;
 
-import { GridMenu, Title } from "@/components";
+import { GridMenu } from "@/components";
+import { BodyPage } from "@/modules/common/components";
 
 export default async function Home() {
   return (
-    <>
-      <Title title="Home" subtitle="Operaciones" className="mb-2" />
-      <div className="mb-5">
-        <GridMenu />
-      </div>
-    </>
+    <BodyPage title="Home" className="">
+      <GridMenu />
+    </BodyPage>
   );
 }

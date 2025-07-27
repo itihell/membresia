@@ -1,6 +1,10 @@
 "use client";
 import { updateAsistencia } from "@/actions";
-import { countAsistencia, Evento, EventoHasAsistencia } from "@/interfaces";
+import type {
+  countAsistencia,
+  Evento,
+  EventoHasAsistencia,
+} from "@/interfaces";
 import { cn } from "@/lib/utils";
 import { useQueryAsistencia } from "@/modules/eventos/hooks";
 import { format } from "date-fns";
@@ -100,7 +104,7 @@ export function GridAsistencia({ eventoId }: Prop) {
         <button
           type="button"
           className="flex gap-1 items-center rounded-r-sm border border-green-400 bg-gradient-to-t from-green-600 to-green-500 hover:bg-gradient-to-br text-white p-3 shadow-sm shadow-red-800 "
-          onClick={() => router.push(`/eventos/${eventoId}/agregar-asistencia`)}
+          onClick={() => router.push(`/eventos/${eventoId}/agregar-persona`)}
         >
           <FaCirclePlus size={20} />
           <span className="md:block hidden"> Agregar</span>
