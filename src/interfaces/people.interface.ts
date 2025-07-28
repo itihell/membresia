@@ -1,8 +1,8 @@
-import { EstadoCivil, Sexo } from "@prisma/client";
-import { Iglesia } from "./iglesia.interface";
-import { FamiliaHasPersona } from "./familia-has-persona.interface";
-import { Barrio } from "./sobre-barrio.interface";
-import { Membresia } from "./membresia.interface";
+import type { EstadoCivil, Sexo } from "@prisma/client";
+import type { Iglesia } from "./iglesia.interface";
+import type { FamiliaHasPersona } from "./familia-has-persona.interface";
+import type { Barrio } from "./sobre-barrio.interface";
+import type { Membresia } from "./membresia.interface";
 
 export interface People {
   id?: string;

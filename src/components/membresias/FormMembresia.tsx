@@ -1,10 +1,11 @@
 "use client";
 
-import { MembresiaSchema, MembresiaType } from "@/schemas";
+import type { MembresiaType } from "@/schemas";
+import { MembresiaSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import {
   Form,
   FormControl,
@@ -31,7 +32,7 @@ import {
   getPeopleId,
   updateMembresia,
 } from "@/actions";
-import { Membresia } from "@/interfaces";
+import type { Membresia } from "@/interfaces";
 import { toast } from "sonner";
 
 interface Props {
@@ -168,7 +169,7 @@ export const FormMembresia = ({ id }: Props) => {
                               field.value ? new Date(field.value) : undefined
                             }
                             onSelect={field.onChange}
-                            disabled={(date) =>
+                            disabled={date =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
                             initialFocus

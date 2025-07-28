@@ -9,12 +9,10 @@ import { Button } from "../ui/button";
 import { FaFloppyDisk } from "react-icons/fa6";
 import { createMiembroHasFamilia } from "@/actions";
 import { toast } from "sonner";
-import { FamiliaHasPersona } from "@/interfaces";
+import type { FamiliaHasPersona } from "@/interfaces";
 import { useEffect } from "react";
-import {
-  FamiliaHasPersonaSchema,
-  FamiliaHasPersonaType,
-} from "@/modules/peoples/schemas";
+import type { FamiliaHasPersonaType } from "@/modules/peoples/schemas";
+import { FamiliaHasPersonaSchema } from "@/modules/peoples/schemas";
 
 interface Props {
   personaId: string;
@@ -42,7 +40,7 @@ export const AddFamiliaPersona = ({ personaId, created }: Props) => {
 
     if (errorKeys.length > 0) {
       // Verifica si el objeto 'errors' tiene propiedades
-      errorKeys.forEach((key) => {
+      errorKeys.forEach(key => {
         // Ahora 'key' tiene el tipo correcto (ej. 'persona_id' | 'familia_id' | 'parentesco_id')
         const errorForField = errors[key];
 

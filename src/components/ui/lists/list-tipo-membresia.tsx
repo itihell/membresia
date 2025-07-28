@@ -19,9 +19,9 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListFetchData } from "@/hooks";
-import { TipoMembresia } from "@/interfaces";
+import type { TipoMembresia } from "@/interfaces";
 import { getListTipoMembresia } from "@/actions";
-import {
+import type {
   ControllerRenderProps,
   FieldValues,
   Path,
@@ -58,9 +58,9 @@ export const ListTipoMembresia = <T extends FieldValues>({
     ? form.watch(nameRelation)
     : ({} as Items);
 
-  const items = store((state) => state.items);
-  const open = store((state) => state.open);
-  const setOpen = store((state) => state.setOpen);
+  const items = store(state => state.items);
+  const open = store(state => state.open);
+  const setOpen = store(state => state.setOpen);
 
   const setDefaultData = (
     field: ControllerRenderProps<T, Path<T>>
@@ -69,7 +69,7 @@ export const ListTipoMembresia = <T extends FieldValues>({
       return relation.tipo_mebresia;
     }
     return field.value
-      ? items.find((item) => item.id === parseInt(field.value))?.tipo_mebresia
+      ? items.find(item => item.id === parseInt(field.value))?.tipo_mebresia
       : "Seleccione el tipo membresia";
   };
 

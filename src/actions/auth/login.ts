@@ -1,8 +1,8 @@
 "use server";
-import { z } from "zod";
+import type { z } from "zod";
 import { signIn } from "@/auth.config";
 import { AuthError } from "next-auth";
-import { loginFormSchema } from "@/schemas";
+import type { loginFormSchema } from "@/schemas";
 
 // ...
 

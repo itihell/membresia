@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth.config";
-import { FamiliaHasPersona } from "@/interfaces";
+import type { FamiliaHasPersona } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export const createMiembroHasFamilia = async (

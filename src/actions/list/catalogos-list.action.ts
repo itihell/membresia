@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
-import {
+import type {
   Barrio,
   EstadoCivil,
   Familia,
@@ -9,7 +9,7 @@ import {
   Sexos,
   TipoMembresia,
 } from "@/interfaces";
-import { TipoEvento } from "@prisma/client";
+import type { TipoEvento } from "@prisma/client";
 
 export const getListPersonas = async (
   search: string = ""

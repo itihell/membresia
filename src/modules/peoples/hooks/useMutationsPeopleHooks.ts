@@ -4,7 +4,7 @@ import { updatePeople } from "@/actions"; // Tu server action de actualización
 import { TagsTanstack } from "@/modules/common/enum";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query"; // Asegúrate de importar tu interfaz People
-import { PeopleType } from "@/schemas";
+import type { PeopleType } from "@/schemas";
 
 export const useMutationUpdatePeople = () => {
   const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export const useMutationUpdatePeople = () => {
         },
       });
     },
-    onError: (error) => {
+    onError: error => {
       console.error("Error al actualizar la persona:", error);
       // Aquí podrías mostrar un mensaje de error al usuario
     },

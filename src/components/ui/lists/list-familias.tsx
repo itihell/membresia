@@ -19,9 +19,9 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListData } from "@/hooks";
-import { Familia } from "@/interfaces";
+import type { Familia } from "@/interfaces";
 import { getFamilias } from "@/actions";
-import {
+import type {
   ControllerRenderProps,
   FieldValues,
   Path,
@@ -70,7 +70,7 @@ export const ListFamilias = <T extends FieldValues>({
       return relation.name;
     }
     return field.value
-      ? items.find((item) => item.id === field.value.toString())?.name
+      ? items.find(item => item.id === field.value.toString())?.name
       : "Familias";
   };
 
@@ -102,7 +102,7 @@ export const ListFamilias = <T extends FieldValues>({
                 <CommandInput
                   placeholder="Buscar..."
                   className="h-9 w-full"
-                  onKeyUp={(e) => searchData(e.currentTarget.value)}
+                  onKeyUp={e => searchData(e.currentTarget.value)}
                 />
                 <CommandList>
                   <CommandEmpty>No se encontro el registro</CommandEmpty>

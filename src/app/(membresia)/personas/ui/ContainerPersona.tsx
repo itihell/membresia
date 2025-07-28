@@ -7,7 +7,7 @@ import {
   MiembrosHasFamilia,
 } from "@/components";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FamiliaHasPersona, People } from "@/interfaces";
+import type { FamiliaHasPersona, People } from "@/interfaces";
 import { Suspense, useEffect, useState } from "react";
 import { getPeopleId } from "@/actions";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -40,7 +40,7 @@ export const ContainerPersona = ({ id }: Props) => {
     route.push(`${pathName}?tab=${tab}`);
   };
 
-  const loadData = async (personaId:string) => {
+  const loadData = async (personaId: string) => {
     const persona = await getPeopleId(personaId);
     setPersona(persona);
   };

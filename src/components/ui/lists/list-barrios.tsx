@@ -19,9 +19,9 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListData } from "@/hooks";
-import { Barrio } from "@/interfaces";
+import type { Barrio } from "@/interfaces";
 import { getListBarrios } from "@/actions";
-import {
+import type {
   ControllerRenderProps,
   FieldValues,
   Path,
@@ -69,7 +69,7 @@ export const ListBarrios = <T extends FieldValues>({
       return relation.name;
     }
     return field.value
-      ? items.find((item) => item.id === parseInt(field.value.toString()))?.name
+      ? items.find(item => item.id === parseInt(field.value.toString()))?.name
       : "Barrios";
   };
 
@@ -100,7 +100,7 @@ export const ListBarrios = <T extends FieldValues>({
               <Command className="w-full">
                 <CommandInput
                   placeholder="Buscar..."
-                  onKeyUp={(e) => searchData(e.currentTarget.value)}
+                  onKeyUp={e => searchData(e.currentTarget.value)}
                   className="h-9 w-full"
                 />
                 <CommandList>

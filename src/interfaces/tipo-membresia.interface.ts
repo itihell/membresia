@@ -1,4 +1,4 @@
-import { Membresia } from "./membresia.interface";
+import type { Membresia } from "./membresia.interface";
 
 export interface TipoMembresia {
   id?: number;

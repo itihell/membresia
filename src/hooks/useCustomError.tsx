@@ -1,4 +1,4 @@
-import { FieldErrors } from "react-hook-form";
+import type { FieldErrors } from "react-hook-form";
 import { toast } from "sonner";
 
 export interface ErrorRenders {
@@ -98,7 +98,7 @@ export const useCustomError = () => {
       });
     }
 
-    return errors.errors.map((element) =>
+    return errors.errors.map(element =>
       toast.error("ERROR", {
         descriptionClassName: "text-red-600",
         classNames: {

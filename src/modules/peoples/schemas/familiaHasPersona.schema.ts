@@ -1,4 +1,4 @@
-import { Familia, Parentesco, Persona } from "@prisma/client";
+import type { Familia, Parentesco, Persona } from "@prisma/client";
 import { z } from "zod";
 
 export const FamiliaHasPersonaSchema = z.object({

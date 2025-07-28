@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 
 import bcryptjs from "bcryptjs";
 import prisma from "@/lib/prisma";
-import { CustomAdapterUser } from "./modules/auth/interface";
+import type { CustomAdapterUser } from "./modules/auth/interface";
 
 export const authConfig: NextAuthConfig = {
   pages: {

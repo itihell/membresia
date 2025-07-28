@@ -1,5 +1,5 @@
-import { EventoHasAsistencia } from "./eventos_has_asistencia.interface";
-import { TipoEventos } from "./tipo-eventos.interface";
+import type { EventoHasAsistencia } from "./eventos_has_asistencia.interface";
+import type { TipoEventos } from "./tipo-eventos.interface";
 
 export interface Evento {
   id?: string;

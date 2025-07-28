@@ -1,6 +1,6 @@
-import { Category } from "./category.interface";
-import { PostHasImage } from "./postHasImage.interface";
-import { User } from "./user.interface";
+import type { Category } from "./category.interface";
+import type { PostHasImage } from "./postHasImage.interface";
+import type { User } from "./user.interface";
 
 export interface Post {
   id?: string;

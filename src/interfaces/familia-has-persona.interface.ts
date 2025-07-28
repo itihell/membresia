@@ -1,6 +1,6 @@
-import { Familia } from "./familia.interface";
-import { Parentesco } from "./parentesco.interface";
-import { People } from "./people.interface";
+import type { Familia } from "./familia.interface";
+import type { Parentesco } from "./parentesco.interface";
+import type { People } from "./people.interface";
 
 export interface FamiliaHasPersona {
   id?: string;

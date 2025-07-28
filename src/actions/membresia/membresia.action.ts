@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 
-import { Membresia } from "@/interfaces";
+import type { Membresia } from "@/interfaces";
 import { auth } from "@/auth.config";
 
 export const getMembresiaById = async (id: string): Promise<Membresia> => {
@@ -69,7 +69,9 @@ export const createMembresia = async (data: Membresia): Promise<Membresia> => {
   } catch (error) {
     console.error(error);
 
-    throw new Error(`No se pudo crear la membresia: ${error instanceof Error ? error.message : "Error desconocido"}`);
+    throw new Error(
+      `No se pudo crear la membresia: ${error instanceof Error ? error.message : "Error desconocido"}`
+    );
   }
 };
 

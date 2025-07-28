@@ -1,4 +1,4 @@
-import { Menu } from "@/interfaces";
+import type { Menu } from "@/interfaces";
 
 interface Prop {
   menu: Menu;

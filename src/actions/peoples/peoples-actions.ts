@@ -2,9 +2,9 @@
 
 import prisma from "@/lib/prisma";
 
-import { People } from "@/interfaces";
+import type { People } from "@/interfaces";
 import { auth } from "@/auth.config";
-import { PeopleType } from "@/schemas";
+import type { PeopleType } from "@/schemas";
 
 export const getPeopleId = async (id: string): Promise<People> => {
   try {
