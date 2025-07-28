@@ -35,10 +35,11 @@ import {
 import { DataPicker } from "@/modules/common";
 
 interface Props {
-  id?: string;
+  id?: string | null;
+  eventoId?: string;
 }
 
-export const FormPeople = ({ id }: Props) => {
+export const FormPeople = ({ id, eventoId }: Props) => {
   const updatePeopleMutation = useMutationUpdatePeople();
   const createPeopleMutation = useMutationsCreatePeople();
   const route = useRouter();
@@ -83,9 +84,19 @@ export const FormPeople = ({ id }: Props) => {
         const dataToUpdate = { ...data, id };
         const people = await updatePeopleMutation.mutateAsync(dataToUpdate);
 
+        if (eventoId) {
+          route.push(`/eventos/${eventoId}`);
+          return;
+        }
+
         route.push(`/personas/${people.id}`);
       } else {
         const people = await createPeopleMutation.mutateAsync(data);
+
+        if (eventoId) {
+          route.push(`/eventos/${eventoId}`);
+          return;
+        }
 
         route.push(`/personas/${people.id}`);
       }
