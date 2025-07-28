@@ -9,11 +9,13 @@ import {
 } from "@/components/ui/popover";
 import { useState } from "react";
 interface Props {
-  label: string;
-  date?: Date;
-  setDate?: (date: Date | undefined) => void;
+  placeholder?: string;
+  className?: string;
+  label?: string;
+  date?: Date | undefined | null;
+  setDate?: (date: Date | undefined | null) => void;
 }
-export const DataPicker = ({ label, date, setDate }: Props) => {
+export const DataPicker = ({ placeholder, label, date, setDate }: Props) => {
   const [open, setOpen] = useState(false);
   //const [date, setDate] = useState<Date | undefined>(undefined);
   return (
@@ -24,16 +26,21 @@ export const DataPicker = ({ label, date, setDate }: Props) => {
           <Button
             variant="outline"
             id="date"
-            className="w-48 justify-between font-normal"
+            className="w-full justify-between font-normal border-list"
           >
-            {date ? date.toLocaleDateString() : "Select date"}
+            {date
+              ? date.toLocaleDateString()
+              : placeholder || "Seleccionar fecha"}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+        <PopoverContent
+          className="w-auto overflow-hidden p-0 border-list"
+          align="start"
+        >
           <Calendar
             mode="single"
-            selected={date}
+            selected={date ? date : undefined}
             captionLayout="dropdown"
             onSelect={date => {
               setDate?.(date);

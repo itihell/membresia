@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { getPeopleId } from "@/actions";
 import { ListBarrios, ListEstadoCivil, ListSexo } from "@/components";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -12,22 +11,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Textarea } from "@/components/ui/textarea";
 import { titleFont } from "@/config/fonts";
 import type { People } from "@/interfaces";
-import { cn } from "@/lib/utils";
 import { PeopleSchema, type PeopleType } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   FaAddressBook,
   FaBan,
@@ -40,16 +32,13 @@ import {
   useMutationsCreatePeople,
   useMutationUpdatePeople,
 } from "@/modules/peoples/hooks";
+import { DataPicker } from "@/modules/common";
 
 interface Props {
   id?: string;
 }
 
 export const FormPeople = ({ id }: Props) => {
-  const [openNacimiento, setOpenNacimiento] = useState(false);
-  const [openFe, setOpenFe] = useState(false);
-  const [openBautismo, setOpenBautismo] = useState(false);
-
   const updatePeopleMutation = useMutationUpdatePeople();
   const createPeopleMutation = useMutationsCreatePeople();
   const route = useRouter();
@@ -224,48 +213,11 @@ export const FormPeople = ({ id }: Props) => {
                   name="fecha_nacimiento"
                   render={({ field }) => (
                     <FormItem>
-                      <Popover
-                        open={openNacimiento}
-                        onOpenChange={setOpenNacimiento}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal border-list",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "d-MM-yyyy")
-                              ) : (
-                                <span>Fecha de nacimiento</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            onDayClick={() => {
-                              setOpenNacimiento(false);
-                            }}
-                            //captionLayout="dropdown-buttons"
-                            fromYear={1940}
-                            toYear={new Date().getFullYear()}
-                            mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={field.onChange}
-                            disabled={date =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <DataPicker
+                        date={field.value}
+                        setDate={field.onChange}
+                        placeholder="Seleccionar fecha de nacimiento"
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -283,45 +235,11 @@ export const FormPeople = ({ id }: Props) => {
                   name="fecha_fe"
                   render={({ field }) => (
                     <FormItem>
-                      <Popover open={openFe} onOpenChange={setOpenFe}>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal border-list",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "d-MM-yyyy")
-                              ) : (
-                                <span>Fecha de Fe</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            onDayClick={() => {
-                              setOpenFe(false);
-                            }}
-                            //captionLayout="dropdown-buttons"
-                            fromYear={1970}
-                            toYear={new Date().getFullYear()}
-                            mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={field.onChange}
-                            disabled={date =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <DataPicker
+                        date={field.value}
+                        setDate={field.onChange}
+                        placeholder="Seleccionar fecha de Fe"
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
@@ -339,47 +257,11 @@ export const FormPeople = ({ id }: Props) => {
                   name="fecha_bautizo"
                   render={({ field }) => (
                     <FormItem>
-                      <Popover
-                        open={openBautismo}
-                        onOpenChange={setOpenBautismo}
-                      >
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal border-list",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "d-MM-yyyy")
-                              ) : (
-                                <span>Fecha de Bautismo</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            onDayClick={() => {
-                              setOpenBautismo(false);
-                            }}
-                            fromYear={1970}
-                            toYear={new Date().getFullYear()}
-                            mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={field.onChange}
-                            disabled={date =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <DataPicker
+                        date={field.value}
+                        setDate={field.onChange}
+                        placeholder="Seleccionar fecha de Bautismo"
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
