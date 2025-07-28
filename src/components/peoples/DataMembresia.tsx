@@ -1,4 +1,4 @@
-import { Membresia } from "@/interfaces";
+import type { Membresia } from "@/interfaces";
 import { format } from "date-fns";
 import Link from "next/link";
 import { FaPencil, FaPlus } from "react-icons/fa6";
@@ -22,7 +22,7 @@ const DataMembresia = ({ id, membresias }: Props) => {
           )}
         </div>
       </div>
-      {membresias?.map((membresia) => (
+      {membresias?.map(membresia => (
         <div key={membresia.id}>
           <div className="flex gap-4">
             <div className="font-bold">Fecha:</div>

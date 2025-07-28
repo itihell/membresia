@@ -1,5 +1,5 @@
 "use client";
-import { People } from "@/interfaces";
+import type { People } from "@/interfaces";
 import { PeopleGridItem } from "./PeopleGridItem";
 import { useQueryPeoples } from "@/modules/peoples/hooks";
 

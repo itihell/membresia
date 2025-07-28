@@ -1,6 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { EventoSchema } from "@/schemas";
 import {
   Form,
@@ -109,7 +109,7 @@ export const FormEvents = ({ id }: Props) => {
                               field.value ? new Date(field.value) : undefined
                             }
                             onSelect={field.onChange}
-                            disabled={(date) =>
+                            disabled={date =>
                               date > new Date() || date < new Date("1900-01-01")
                             }
                             initialFocus

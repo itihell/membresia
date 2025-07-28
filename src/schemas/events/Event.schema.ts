@@ -1,4 +1,4 @@
-import { TipoEvento } from "@prisma/client";
+import type { TipoEvento } from "@prisma/client";
 import { z } from "zod";
 
 export const EventoSchema = z.object({

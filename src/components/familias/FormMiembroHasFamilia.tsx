@@ -1,8 +1,8 @@
 "use client";
-import { MiembrosHasFamiliaSchema } from "@/schemas";
+import type { MiembrosHasFamiliaSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "../ui/button";
 import { Form } from "../ui/form";
 import { FaBan, FaFloppyDisk, FaUserPlus } from "react-icons/fa6";
@@ -13,7 +13,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import Link from "next/link";
-import { FamiliaHasPersonaSchema, FamiliaHasPersonaType } from "@/modules/peoples/schemas";
+import type { FamiliaHasPersonaType } from "@/modules/peoples/schemas";
+import { FamiliaHasPersonaSchema } from "@/modules/peoples/schemas";
 
 interface Props {
   id?: string;

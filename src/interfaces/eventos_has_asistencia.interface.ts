@@ -1,5 +1,5 @@
-import { Evento } from "./eventos.interface";
-import { People } from "./people.interface";
+import type { Evento } from "./eventos.interface";
+import type { People } from "./people.interface";
 
 export interface EventoHasAsistencia {
   id?: string;

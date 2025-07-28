@@ -1,5 +1,5 @@
-import {  titleFont } from "@/config/fonts";
-import { People } from "@/interfaces";
+import { titleFont } from "@/config/fonts";
+import type { People } from "@/interfaces";
 import { format } from "date-fns";
 
 import React from "react";

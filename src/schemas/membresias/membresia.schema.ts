@@ -1,4 +1,4 @@
-import { Persona, TipoMembresia } from "@prisma/client";
+import type { Persona, TipoMembresia } from "@prisma/client";
 import { z } from "zod";
 
 export const MembresiaSchema = z.object({

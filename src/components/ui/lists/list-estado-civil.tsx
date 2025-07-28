@@ -19,9 +19,9 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListData } from "@/hooks";
-import { EstadoCivil } from "@/interfaces";
+import type { EstadoCivil } from "@/interfaces";
 import { getListEstadoCivil } from "@/actions";
-import {
+import type {
   ControllerRenderProps,
   FieldValues,
   Path,
@@ -59,7 +59,6 @@ export const ListEstadoCivil = <T extends FieldValues>({
     ? form.watch(nameRelation)
     : ({} as Campos);
 
-
   const setDefaultData = (
     field: ControllerRenderProps<T, Path<T>>
   ): string | undefined => {
@@ -67,7 +66,7 @@ export const ListEstadoCivil = <T extends FieldValues>({
       return relation.estado_civil;
     }
     return field.value
-      ? items.find((item) => item.id === parseInt(field.value.toString()))
+      ? items.find(item => item.id === parseInt(field.value.toString()))
           ?.estado_civil
       : "Estado Civil";
   };

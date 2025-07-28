@@ -19,9 +19,9 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListData } from "@/hooks";
-import { Parentesco } from "@/interfaces";
+import type { Parentesco } from "@/interfaces";
 import { getListParentesco } from "@/actions";
-import {
+import type {
   ControllerRenderProps,
   FieldValues,
   Path,
@@ -62,7 +62,7 @@ export const ListParentesco = <T extends FieldValues>({
       return relation.parentesco;
     }
     return field.value
-      ? items.find((item) => item.id === parseInt(field.value.toString()))
+      ? items.find(item => item.id === parseInt(field.value.toString()))
           ?.parentesco
       : "Parentesco";
   };

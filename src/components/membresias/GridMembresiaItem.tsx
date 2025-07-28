@@ -1,6 +1,6 @@
 "use client";
 
-import { Membresia } from "@/interfaces";
+import type { Membresia } from "@/interfaces";
 import { useRouter } from "next/navigation";
 
 interface Props {

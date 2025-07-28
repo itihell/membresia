@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth.config";
-import { Evento, ListaEventos } from "@/interfaces";
+import type { Evento, ListaEventos } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export const getEventos = async (): Promise<ListaEventos[]> => {
@@ -31,7 +31,7 @@ export const getEventos = async (): Promise<ListaEventos[]> => {
 
 export const createEvent = async (payload: Evento) => {
   try {
-    return await prisma.$transaction(async (prisma) => {
+    return await prisma.$transaction(async prisma => {
       const session = await auth();
       const evento = await prisma.evento.create({
         data: {
@@ -52,7 +52,7 @@ export const createEvent = async (payload: Evento) => {
         },
       });
 
-      const asistencia = miembros.map((miembro) => {
+      const asistencia = miembros.map(miembro => {
         const asistencia = {
           evento_id: evento.id,
           people_id: miembro.persona_id,

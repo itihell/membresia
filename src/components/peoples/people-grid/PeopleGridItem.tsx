@@ -1,6 +1,6 @@
 "use client";
 
-import { People } from "@/interfaces";
+import type { People } from "@/interfaces";
 
 import { useRouter } from "next/navigation";
 import { FaCheck } from "react-icons/fa6";

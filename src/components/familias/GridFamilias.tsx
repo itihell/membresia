@@ -1,5 +1,5 @@
 "use client";
-import { Familia } from "@/interfaces";
+import type { Familia } from "@/interfaces";
 import { GridFamiliaRow } from "./GridFamiliaRow";
 
 interface Props {

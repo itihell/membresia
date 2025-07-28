@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth.config";
-import { Familia } from "@/interfaces";
+import type { Familia } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 export const getFamilias = async (): Promise<Familia[]> => {

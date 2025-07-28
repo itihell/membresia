@@ -2,7 +2,7 @@
 
 import { deleteMiembroHasFamilia, getFamiliaById } from "@/actions";
 import { titleFont } from "@/config/fonts";
-import { Familia } from "@/interfaces";
+import type { Familia } from "@/interfaces";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa6";
@@ -45,7 +45,7 @@ export const MiembrosHasFamilia = ({ familiaId, onDeleted }: Props) => {
         </div>
       </div>
       <div className="mt-4">
-        {familia.miembros?.map((miembro) => (
+        {familia.miembros?.map(miembro => (
           <div
             key={miembro.id}
             className="grid grid-cols-3 gap-4 border-b p-2 border-b-blue-100"

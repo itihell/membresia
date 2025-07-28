@@ -1,6 +1,6 @@
-import { Membresia } from "./membresia.interface";
-import { People } from "./people.interface";
-import { User } from "./user.interface";
+import type { Membresia } from "./membresia.interface";
+import type { People } from "./people.interface";
+import type { User } from "./user.interface";
 
 export interface Iglesia {
   id?: string;

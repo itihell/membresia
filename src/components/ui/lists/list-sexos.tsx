@@ -19,9 +19,9 @@ import {
 } from "../command";
 import { CommandList } from "cmdk";
 import { useListData } from "@/hooks";
-import { Sexos } from "@/interfaces";
+import type { Sexos } from "@/interfaces";
 import { getListSexos } from "@/actions";
-import {
+import type {
   ControllerRenderProps,
   FieldValues,
   Path,
@@ -59,7 +59,7 @@ export const ListSexo = <T extends FieldValues>({
       return relation.name;
     }
     return field.value
-      ? items.find((item) => item.id === parseInt(field.value.toString()))?.name
+      ? items.find(item => item.id === parseInt(field.value.toString()))?.name
       : "Sexos";
   };
 

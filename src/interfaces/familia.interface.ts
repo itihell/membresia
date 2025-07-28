@@ -1,6 +1,6 @@
-import { FamiliaHasPersona } from "./familia-has-persona.interface";
-import { Iglesia } from "./iglesia.interface";
-import { User } from "./user.interface";
+import type { FamiliaHasPersona } from "./familia-has-persona.interface";
+import type { Iglesia } from "./iglesia.interface";
+import type { User } from "./user.interface";
 
 export interface Familia {
   id?: string;

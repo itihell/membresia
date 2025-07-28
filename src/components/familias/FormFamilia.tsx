@@ -2,7 +2,7 @@
 import { FamiliaSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import {
   Form,
   FormControl,
@@ -14,7 +14,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
 import { createFamilia, getFamiliaById, updateFamilia } from "@/actions";
-import { Familia } from "@/interfaces";
+import type { Familia } from "@/interfaces";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

@@ -1,8 +1,5 @@
 "use client";
-import {
-  countAsistencia,
-  EventoHasAsistencia,
-} from "@/interfaces";
+import type { countAsistencia, EventoHasAsistencia } from "@/interfaces";
 
 export const useEvento = () => {
   const groupAsistenciaBySex = (events: EventoHasAsistencia[]) => {

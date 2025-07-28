@@ -1,4 +1,4 @@
-import { People } from "./people.interface";
+import type { People } from "./people.interface";
 
 export interface Barrio {
   id?: number;
