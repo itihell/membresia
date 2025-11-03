@@ -4,11 +4,8 @@ import { Suspense } from "react";
 
 export default function LoginPage() {
   return (
-    // El Layout ya centra todo, solo necesitamos la tarjeta de login
     <div className="w-full">
-      {/* Contenedor principal del formulario (La "tarjeta" de login) */}
       <div className="bg-white p-8 rounded-xl shadow-2xl border border-gray-100 transition duration-300 hover:shadow-3xl">
-        {/* Encabezado */}
         <div className="mb-6 text-center">
           <h1
             className={`${titleFont.className} text-4xl font-bold text-gray-800`}
@@ -20,12 +17,10 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Contenido del Formulario */}
         <Suspense>
           <LoginForm />
         </Suspense>
 
-        {/* Opcional: Enlace de recuperar contraseña o registro */}
         <p className="mt-6 text-center text-sm text-gray-500">
           ¿Olvidaste tu contraseña?{" "}
           <a

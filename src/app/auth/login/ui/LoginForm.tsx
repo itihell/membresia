@@ -5,7 +5,6 @@ import { createLogin } from "@/actions";
 
 import { useSearchParams } from "next/navigation";
 
-// Asumo que estos componentes ya están estilizados de forma moderna (shadcn/ui o similar)
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -25,7 +24,6 @@ export const LoginForm = () => {
   const searchParams = useSearchParams();
   const arrayPath = searchParams.get("callbackUrl")?.split("/");
 
-  // Lógica para el callbackUrl
   arrayPath?.splice(0, 3);
   const callbackUrl = arrayPath ? "/" + arrayPath?.join("/") : "/";
 
@@ -44,7 +42,6 @@ export const LoginForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof loginFormSchema>) => {
-    // Añade manejo de carga/error aquí
     createLogin(values, callbackUrl);
   };
 
@@ -52,15 +49,12 @@ export const LoginForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         {" "}
-        {/* Aumento el espacio entre campos */}
-        {/* Campo Email */}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                {/* Asegúrate de que tu componente Input tenga un estilo moderno (padding, border-radius, focus state) */}
                 <Input
                   type="email"
                   placeholder="Correo Electrónico" // Texto más amigable
