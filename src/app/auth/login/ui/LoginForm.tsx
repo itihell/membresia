@@ -57,9 +57,9 @@ export const LoginForm = () => {
               <FormControl>
                 <Input
                   type="email"
-                  placeholder="Correo Electrónico" // Texto más amigable
-                  autoComplete="email" // Importante para accesibilidad
-                  className="h-11 text-base" // Ajustes sutiles para Inputs
+                  placeholder="Correo Electrónico"
+                  autoComplete="email"
+                  className="h-11 text-base"
                   {...field}
                 />
               </FormControl>
@@ -67,7 +67,6 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-        {/* Campo Contraseña */}
         <FormField
           control={form.control}
           name="password"
@@ -77,7 +76,7 @@ export const LoginForm = () => {
                 <Input
                   type="password"
                   placeholder="Contraseña"
-                  autoComplete="current-password" // Importante para accesibilidad
+                  autoComplete="current-password"
                   className="h-11 text-base"
                   {...field}
                 />
@@ -86,14 +85,11 @@ export const LoginForm = () => {
             </FormItem>
           )}
         />
-        {/* Botón de Submit */}
         <div className="pt-2">
-          {" "}
-          {/* Espacio extra antes del botón */}
           <Button
             type="submit"
             className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-lg font-semibold transition duration-150"
-            disabled={form.formState.isSubmitting} // Deshabilitar durante el envío
+            disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "Cargando..." : "Entrar"}
           </Button>
