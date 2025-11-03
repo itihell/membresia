@@ -6,7 +6,7 @@ import { createLogin } from "@/actions";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import {
   Form,
   FormControl,
@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { loginFormSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
+import { InputLabel } from "@/components/common";
 
 export const LoginForm = () => {
   const { data: session } = useSession();
@@ -48,18 +49,16 @@ export const LoginForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {" "}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input
+                <InputLabel
                   type="email"
-                  placeholder="Correo Electrónico"
+                  label="Correo Electrónico"
                   autoComplete="email"
-                  className="h-11 text-base"
                   {...field}
                 />
               </FormControl>
@@ -73,13 +72,7 @@ export const LoginForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input
-                  type="password"
-                  placeholder="Contraseña"
-                  autoComplete="current-password"
-                  className="h-11 text-base"
-                  {...field}
-                />
+                <InputLabel type="password" label="Password" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
