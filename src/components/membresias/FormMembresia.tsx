@@ -15,13 +15,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Calendar } from "../ui/calendar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ListPersonas } from "../ui/lists/list-personas";
 import { ListTipoMembresia } from "../ui/lists/list-tipo-membresia";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
@@ -34,6 +29,7 @@ import {
 } from "@/actions";
 import type { Membresia } from "@/interfaces";
 import { toast } from "sonner";
+import { DataPicker } from "@/modules/common";
 
 interface Props {
   id?: string;
@@ -43,7 +39,6 @@ export const FormMembresia = ({ id }: Props) => {
   const params = useSearchParams();
   const personaId = params.get("persona");
   const route = useRouter();
-  const [openFecha, setOpenFecha] = useState(false);
 
   const form = useForm<MembresiaType>({
     resolver: zodResolver(MembresiaSchema),
@@ -138,44 +133,11 @@ export const FormMembresia = ({ id }: Props) => {
                   name="fecha"
                   render={({ field }) => (
                     <FormItem>
-                      <Popover open={openFecha} onOpenChange={setOpenFecha}>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant={"outline"}
-                              className={cn(
-                                "w-full pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
-                              )}
-                            >
-                              {field.value ? (
-                                format(field.value, "d-MM-yyyy")
-                              ) : (
-                                <span>Fecha de nacimiento</span>
-                              )}
-                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                            </Button>
-                          </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                          <Calendar
-                            onDayClick={() => {
-                              setOpenFecha(false);
-                            }}
-                            fromYear={1940}
-                            toYear={new Date().getFullYear()}
-                            mode="single"
-                            selected={
-                              field.value ? new Date(field.value) : undefined
-                            }
-                            onSelect={field.onChange}
-                            disabled={date =>
-                              date > new Date() || date < new Date("1900-01-01")
-                            }
-                            initialFocus
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <DataPicker
+                        date={field.value}
+                        setDate={field.onChange}
+                        placeholder="Fecha de Membresia"
+                      />
                       <FormMessage />
                     </FormItem>
                   )}
