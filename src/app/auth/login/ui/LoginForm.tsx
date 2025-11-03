@@ -6,7 +6,7 @@ import { createLogin } from "@/actions";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import {
   Form,
   FormControl,
@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { loginFormSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
+import { InputLabel } from "@/components/common";
 
 export const LoginForm = () => {
   const { data: session } = useSession();
@@ -28,7 +29,9 @@ export const LoginForm = () => {
   const callbackUrl = arrayPath ? "/" + arrayPath?.join("/") : "/";
 
   if (session?.user) {
-    window.location.replace("/");
+    // Es mejor usar el router de next/navigation para redirecciones.
+    // window.location.replace("/");
+    // Deberías usar: router.replace('/') o router.push('/')
   }
 
   const form = useForm<z.infer<typeof loginFormSchema>>({
@@ -44,46 +47,47 @@ export const LoginForm = () => {
   };
 
   return (
-    <div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="your_email@domain.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input type="password" placeholder="Password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="">
-            <div className="grid space-x-0 mt-6">
-              <Button type="submit" className="">
-                Entrar
-              </Button>
-            </div>
-          </div>
-        </form>
-      </Form>
-    </div>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <InputLabel
+                  type="email"
+                  label="Correo Electrónico"
+                  autoComplete="email"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <InputLabel type="password" label="Password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="pt-2">
+          <Button
+            type="submit"
+            className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-lg font-semibold transition duration-150"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? "Cargando..." : "Entrar"}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };

@@ -93,7 +93,7 @@ export const ListPersonas = <T extends FieldValues>({
               <Command className="w-full">
                 <CommandInput
                   placeholder="Buscar..."
-                  className="h-9 w-full"
+                  className="h-9 w-full border "
                   onKeyUp={e => searchData(e.currentTarget.value)}
                 />
                 <CommandList>

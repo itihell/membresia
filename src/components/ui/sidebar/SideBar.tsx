@@ -36,7 +36,7 @@ export const SideBar = () => {
       {/* SideMenu (el menú en sí) */}
       <nav
         className={clsx(
-          "fixed p-5 left-0 top-0 w-[500px] h-screen bg-blue-500 z-20 shadow-2xl transform transition-all duration-300 flex flex-col", // Agregado flex flex-col aquí
+          "fixed p-5 left-0 top-0 w-[400px] h-screen bg-blue-500 z-20 shadow-2xl transform transition-all duration-300 flex flex-col", // Agregado flex flex-col aquí
           {
             "-translate-x-full": !isSideMenuOpen,
             "translate-x-0": isSideMenuOpen,
