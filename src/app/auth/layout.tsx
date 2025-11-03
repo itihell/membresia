@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Autenticación",
-  description: "Aplicacion de membresia de FIEMCA",
+  title: "Autenticación - FIEMCA",
+  description: "Aplicación de membresía de FIEMCA - Inicio de Sesión",
 };
 
 export default function LoginLayout({
@@ -11,8 +11,8 @@ export default function LoginLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex justify-center">
-      <div className="w-full">{children}</div>
+    <main className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+      <div className="w-full max-w-md">{children}</div>
     </main>
   );
 }
