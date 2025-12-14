@@ -22,6 +22,7 @@ const config: Config = {
       screens: {
         "2sm": "400px",
         "3sm": "300px",
+        xs: "500px",
       },
       colors: {
         border: "hsl(var(--border))",
