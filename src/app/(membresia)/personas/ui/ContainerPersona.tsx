@@ -62,32 +62,34 @@ export const ContainerPersona = ({ id }: Props) => {
             onClick={() => navegacionTab("general")}
             value="general"
           >
-            <FaCircleUser size={15} />
-            General
+            <FaCircleUser size={28} />
+            <span className="hidden xs:block">General</span>
           </TabsTrigger>
           <TabsTrigger
             className="flex gap-2"
             onClick={() => navegacionTab("membresia")}
             value="membresia"
           >
-            <FaPersonShelter />
-            Membresia
+            <FaPersonShelter size={28} />
+            <span className="hidden xs:block">Membresia</span>
           </TabsTrigger>
           <TabsTrigger
             className="flex gap-2"
             onClick={() => navegacionTab("familia")}
             value="familia"
           >
-            <FaPeopleGroup size={15} />
-            Familia
+            <FaPeopleGroup size={28} />
+
+            <span className="hidden xs:block">Familia</span>
           </TabsTrigger>
           <TabsTrigger
             className="flex gap-2"
             onClick={() => navegacionTab("asistencia")}
             value="asistencia"
           >
-            <FaCalendarCheck />
-            Asistencia
+            <FaCalendarCheck size={28} />
+
+            <span className="hidden xs:block">Asistencia</span>
           </TabsTrigger>
         </TabsList>
         <TabsContent value="general">
