@@ -1,48 +1,56 @@
 export const revalidate = 0;
-import { Loading } from "@/components";
-import { ContainerPersona } from "../ui/ContainerPersona";
-import Link from "next/link";
-import { FaPencil, FaPeopleGroup } from "react-icons/fa6";
+
 import { Suspense } from "react";
-import { BodyPage } from "@/modules/common/components";
+import Link from "next/link";
+import { FaPencil, FaArrowLeft } from "react-icons/fa6"; // Cambié FaPeopleGroup por FaArrowLeft para "Volver"
+import { Loading } from "@/components";
+import { BodyPage } from "@/modules/common/components"; // Ajusta tus imports
+import { ContainerPersona } from "../ui/ContainerPersona";
+import { Button } from "@/components/ui/button"; // Asumiendo Shadcn Button
 
 interface Props {
   params: Promise<{
     id: string;
   }>;
 }
+
 const ShowPersonaPage = async (props: Props) => {
   const params = await props.params;
-
   const { id } = params;
 
   return (
-    <BodyPage title="Datos de la persona">
-      <div>
-        <div className="bg-gray-50 p-3 border border-blue-300">
-          <Suspense fallback={<Loading />}>
-            <ContainerPersona id={id} />
-          </Suspense>
-        </div>
-      </div>
-      <div className="right-8 bottom-8 fixed ">
-        <div className="flex">
-          <Link
-            href={`/personas`}
-            className="btn-primary !rounded-r-none p-2 rounded-md flex gap-1"
-          >
-            <FaPeopleGroup size={25} />
-            <span className="3sm:hidden md:block">Personas</span>
+    <BodyPage
+      title="Perfil del Miembro"
+      subtitle="Visualiza y gestiona la información detallada."
+      headerAction={
+        // BARA DE ACCIONES SUPERIOR (Responsive)
+        <div className="flex items-center gap-2">
+          {/* Botón Volver: Estilo "Ghost" o secundario */}
+          <Link href={`/personas`}>
+            <Button
+              variant="outline"
+              className="border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-900"
+            >
+              <FaArrowLeft className="mr-0 sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Volver a Lista</span>
+            </Button>
           </Link>
-          <Link
-            href={`/personas/edit/${id}`}
-            className="btn-primary p-2 rounded-l-none rounded-md flex gap-1"
-          >
-            <FaPencil size={25} />
-            <span className="3sm:hidden md:block">Editar</span>
+
+          {/* Botón Editar: Estilo Primario (Azul Marino) */}
+          <Link href={`/personas/edit/${id}`}>
+            <Button className="bg-blue-950 hover:bg-blue-900 text-white shadow-sm">
+              <FaPencil className="mr-0 sm:mr-2 h-4 w-4" />
+              <span className="hidden sm:inline">Editar Datos</span>
+            </Button>
           </Link>
         </div>
-      </div>
+      }
+    >
+      {/* CONTENIDO LIMPIO */}
+      {/* Eliminamos los bordes extra, dejamos que BodyPage maneje el contenedor */}
+      <Suspense fallback={<Loading />}>
+        <ContainerPersona id={id} />
+      </Suspense>
     </BodyPage>
   );
 };

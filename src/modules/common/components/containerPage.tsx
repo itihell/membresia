@@ -6,9 +6,5 @@ interface Props {
   className?: string; // 'className' es opcional y de tipo string
 }
 export function ContainerPage({ children, className }: Props) {
-  return (
-    <div className={cn("min-h-screen px-3 sm:px-10 ", className)}>
-      {children}
-    </div>
-  );
+  return <div className={cn("min-h-screen px-3", className)}>{children}</div>;
 }
