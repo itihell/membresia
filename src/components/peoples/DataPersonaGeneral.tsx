@@ -62,17 +62,17 @@ export const DataPersonaGeneral = ({ persona }: Props) => {
         <GridContainer>
           <InfoItem
             label="Fecha de Nacimiento"
-            value={persona.fecha_nacimiento}
+            value={persona.fecha_nacimiento?.toDateString()}
             isDate
           />
           <InfoItem
             label="Fecha de Conversión (Fe)"
-            value={persona.fecha_fe}
+            value={persona.fecha_fe?.toDateString()}
             isDate
           />
           <InfoItem
             label="Fecha de Bautismo"
-            value={persona.fecha_bautizo}
+            value={persona.fecha_bautizo?.toDateString()}
             isDate
           />
         </GridContainer>
