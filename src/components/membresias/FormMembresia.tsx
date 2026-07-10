@@ -79,9 +79,9 @@ export const FormMembresia = ({ id }: Props) => {
           toast.success("Éxito", {
             description: "Registro actualizado con éxito",
             classNames: {
-              toast: "!bg-green-100 border !border-green-300",
+              toast: "bg-green-100! border border-green-300!",
               title: "text-green-800 text-xl border-b border-green-600",
-              description: "!text-green-600",
+              description: "text-green-600!",
             },
           });
           route.push(`/personas/${membresia.persona_id}?tab=${tab}&id=${id}`);
@@ -92,9 +92,9 @@ export const FormMembresia = ({ id }: Props) => {
           toast.success("Éxito", {
             description: "Registro creado con éxito",
             classNames: {
-              toast: "!bg-green-100 border !border-green-300",
+              toast: "bg-green-100! border border-green-300!",
               title: "text-green-800 text-xl border-b border-green-600",
-              description: "!text-green-600",
+              description: "text-green-600!",
             },
           });
           route.push(
@@ -164,7 +164,7 @@ export const FormMembresia = ({ id }: Props) => {
                   control={form.control}
                   name="activo"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-xs">
                       <div className="space-y-0.5">
                         <FormLabel>Es un miembro activo</FormLabel>
                         <FormDescription>
@@ -187,7 +187,7 @@ export const FormMembresia = ({ id }: Props) => {
               <div>
                 <Button
                   type="button"
-                  className="!rounded-r-none btn-warning"
+                  className="rounded-r-none! btn-warning"
                   onClick={() => {
                     history.back();
                   }}
@@ -195,7 +195,7 @@ export const FormMembresia = ({ id }: Props) => {
                   <FaBan />
                   <span className="ml-2">Cancelar</span>
                 </Button>
-                <Button type="submit" className="!rounded-l-none btn-primary">
+                <Button type="submit" className="rounded-l-none! btn-primary">
                   <FaFloppyDisk />
                   {id && <span className="ml-2">Actualizar</span>}
                   {!id && <span className="ml-2">Guardar</span>}

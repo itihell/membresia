@@ -37,11 +37,11 @@ const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       // ESTILOS DE RESPONSIVIDAD: Evita que el botón se encoja y ajusta el padding
-      "flex-shrink-0 px-4 sm:px-6",
+      "shrink-0 px-4 sm:px-6",
 
       // Estilos base
       "inline-flex items-center justify-center whitespace-nowrap rounded-none py-2 text-sm font-medium transition-colors",
-      "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       "disabled:pointer-events-none disabled:opacity-50",
 
       // Estilos para el indicador de línea (Mantenidos)
@@ -68,7 +68,7 @@ const TabsContent = React.forwardRef<
   <TabsPrimitive.Content
     ref={ref}
     className={cn(
-      "mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+      "mt-2 ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
       className
     )}
     {...props}

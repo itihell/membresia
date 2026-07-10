@@ -378,7 +378,7 @@ export const FormPeople = ({ id, eventoId }: Props) => {
               <div>
                 <Button
                   type="button"
-                  className="!rounded-r-none btn-warning"
+                  className="rounded-r-none! btn-warning"
                   onClick={() => {
                     history.back();
                   }}
@@ -386,7 +386,7 @@ export const FormPeople = ({ id, eventoId }: Props) => {
                   <FaBan />
                   <span className="ml-2 md:block hidden">Cancelar</span>
                 </Button>
-                <Button type="submit" className="!rounded-l-none btn-primary">
+                <Button type="submit" className="rounded-l-none! btn-primary">
                   <FaFloppyDisk />
                   <span className="md:block hidden">
                     {id && <span className="ml-2">Actualizar</span>}

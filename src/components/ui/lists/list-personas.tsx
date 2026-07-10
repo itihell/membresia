@@ -89,7 +89,7 @@ export const ListPersonas = <T extends FieldValues>({
                 </Button>
               </FormControl>
             </PopoverTrigger>
-            <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+            <PopoverContent className="w-(--radix-popover-trigger-width) max-h-(--radix-popover-content-available-height)">
               <Command className="w-full">
                 <CommandInput
                   placeholder="Buscar..."

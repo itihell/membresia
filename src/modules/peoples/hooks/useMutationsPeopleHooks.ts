@@ -34,9 +34,9 @@ export const useMutationUpdatePeople = () => {
       toast.success("Éxito", {
         description: "Registro actualizado con éxito mutacion",
         classNames: {
-          toast: "!bg-green-100 border !border-green-300",
+          toast: "bg-green-100! border border-green-300!",
           title: "text-green-800 text-xl border-b border-green-600",
-          description: "!text-green-600",
+          description: "text-green-600!",
         },
       });
     },

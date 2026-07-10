@@ -43,7 +43,7 @@ const InputLabel = React.forwardRef<HTMLInputElement, Props>(
             // Cuando el input está enfocado O tiene valor:
             // Sube, se encoge, cambia de color
             (isFocused || hasValue) &&
-              "top-2 scale-75 -translate-y-0 text-blue-600 font-medium", // Estilo flotante
+              "top-2 scale-75 translate-y-0 text-blue-600 font-medium", // Estilo flotante
 
             // Estilo del borde cuando la etiqueta está flotando (simula el corte en el borde)
             (isFocused || hasValue) &&

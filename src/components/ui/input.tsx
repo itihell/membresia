@@ -18,7 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
 
           // FOCUS/INTERACCIÓN: El cambio clave al color primario (blue-600)
           // El borde se vuelve azul y el anillo de sombra es el blue-100 (más suave)
-          "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus-visible:outline-none", // <-- Colores azules aplicados
+          "focus:border-blue-600 focus:ring-4 focus:ring-blue-100 focus-visible:outline-hidden", // <-- Colores azules aplicados
 
           // PLACEHOLDER
           "placeholder:text-gray-400",

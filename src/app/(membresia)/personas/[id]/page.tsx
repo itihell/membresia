@@ -38,7 +38,7 @@ const ShowPersonaPage = async (props: Props) => {
 
           {/* Botón Editar: Estilo Primario (Azul Marino) */}
           <Link href={`/personas/edit/${id}`}>
-            <Button className="bg-blue-950 hover:bg-blue-900 text-white shadow-sm">
+            <Button className="bg-blue-950 hover:bg-blue-900 text-white shadow-xs">
               <FaPencil className="mr-0 sm:mr-2 h-4 w-4" />
               <span className="hidden sm:inline">Editar Datos</span>
             </Button>
