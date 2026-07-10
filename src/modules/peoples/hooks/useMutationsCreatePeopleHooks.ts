@@ -31,9 +31,9 @@ export const useMutationsCreatePeople = () => {
       toast.success("Éxito", {
         description: "Registro creado con éxito",
         classNames: {
-          toast: "!bg-green-100 border !border-green-300",
+          toast: "bg-green-100! border border-green-300!",
           title: "text-green-800 text-xl border-b border-green-600",
-          description: "!text-green-600",
+          description: "text-green-600!",
         },
       });
     },
@@ -43,9 +43,9 @@ export const useMutationsCreatePeople = () => {
       toast.error("Éxito", {
         description: "No se pudo crear el registro",
         classNames: {
-          toast: "!bg-red-100 border !border-red-300",
+          toast: "bg-red-100! border border-red-300!",
           title: "text-red-800 text-xl border-b border-red-600",
-          description: "!text-red-600",
+          description: "text-red-600!",
         },
       });
     },

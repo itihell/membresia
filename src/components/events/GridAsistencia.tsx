@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { useQueryAsistencia } from "@/modules/eventos/hooks";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import {
   FaCheck,
   FaCirclePlus,
@@ -32,11 +32,12 @@ export function GridAsistencia({ eventoId }: Prop) {
 
   const router = useRouter();
 
-  const [count, setCount] = useState<countAsistencia>({
-    hombres: 0,
-    mujeres: 0,
-    total: 0,
-  });
+  const count = useMemo<countAsistencia>(() => {
+    if (asistencias && asistencias.length > 0) {
+      return groupAsistenciaBySex(asistencias as EventoHasAsistencia[]);
+    }
+    return { hombres: 0, mujeres: 0, total: 0 };
+  }, [asistencias]);
 
   const groupAsistenciaBySex = (events: EventoHasAsistencia[]) => {
     return events.reduce(
@@ -54,16 +55,16 @@ export function GridAsistencia({ eventoId }: Prop) {
     );
   };
 
-  useEffect(() => {
-    if (asistencias && asistencias.length > 0) {
-      const cantidad = groupAsistenciaBySex(
-        asistencias as EventoHasAsistencia[]
-      );
-      setCount(cantidad);
-    } else if (asistencias && asistencias.length === 0) {
-      setCount({ hombres: 0, mujeres: 0, total: 0 });
-    }
-  }, [asistencias]);
+  // useEffect(() => {
+  //   if (asistencias && asistencias.length > 0) {
+  //     const cantidad = groupAsistenciaBySex(
+  //       asistencias as EventoHasAsistencia[]
+  //     );
+  //     setCount(cantidad);
+  //   } else if (asistencias && asistencias.length === 0) {
+  //     setCount({ hombres: 0, mujeres: 0, total: 0 });
+  //   }
+  // }, [asistencias]);
 
   const hundlerAsistio = async (id: string, status: boolean) => {
     await updateAsistencia(id, status);
@@ -95,7 +96,7 @@ export function GridAsistencia({ eventoId }: Prop) {
       <div className="fixed right-8 bottom-8 flex">
         <button
           type="button"
-          className="flex gap-1 items-center rounded-l-sm border border-red-400 bg-gradient-to-t from-red-600 to-red-500 hover:bg-gradient-to-b text-white p-3 shadow-sm shadow-red-800 "
+          className="flex gap-1 items-center rounded-l-sm border border-red-400 bg-linear-to-t from-red-600 to-red-500 hover:bg-linear-to-b text-white p-3 shadow-xs shadow-red-800 "
           onClick={() => router.back()}
         >
           <FaListCheck size={20} />
@@ -103,7 +104,7 @@ export function GridAsistencia({ eventoId }: Prop) {
         </button>
         <button
           type="button"
-          className="flex gap-1 items-center rounded-r-sm border border-green-400 bg-gradient-to-t from-green-600 to-green-500 hover:bg-gradient-to-br text-white p-3 shadow-sm shadow-red-800 "
+          className="flex gap-1 items-center rounded-r-sm border border-green-400 bg-linear-to-t from-green-600 to-green-500 hover:bg-linear-to-br text-white p-3 shadow-xs shadow-red-800 "
           onClick={() => router.push(`/eventos/${eventoId}/agregar-persona`)}
         >
           <FaCirclePlus size={20} />
@@ -111,20 +112,20 @@ export function GridAsistencia({ eventoId }: Prop) {
         </button>
       </div>
 
-      <div className="flex justify-between bg-gradient-to-t from-blue-500 to-blue-700 py-2 rounded-t-lg text-white">
+      <div className="flex justify-between bg-linear-to-t from-blue-500 to-blue-700 py-2 rounded-t-lg text-white">
         <div className="px-5 text-white rounded-t-lg">
           {`${evento.date && format(new Date(evento.date), "dd/MM/yyyy")} | ${
             evento.title
           }`}
         </div>
       </div>
-      <div className="grid grid-cols-7 bg-gradient-to-t bg-blue-500 py-2 text-white border-b border-white">
+      <div className="grid grid-cols-7 bg-linear-to-t bg-blue-500 py-2 text-white border-b border-white">
         <div className="px-5 col-span-7 flex gap-2">
           <strong>Descripción: </strong>
           <span>{evento.description}</span>
         </div>
       </div>
-      <div className="grid grid-cols-7 place-content-between bg-gradient-to-t bg-blue-500 py-2 text-white">
+      <div className="grid grid-cols-7 place-content-between bg-linear-to-t bg-blue-500 py-2 text-white">
         <div className="px-5 flex gap-2 col-span-2 ">
           <FaPersonHalfDress size={22} />
           <span className="">{count.total}</span>

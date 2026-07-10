@@ -89,7 +89,7 @@ export const ListTipoEventos = <T extends FieldValues>({
                 </Button>
               </FormControl>
             </PopoverTrigger>
-            <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height]">
+            <PopoverContent className="w-(--radix-popover-trigger-width) max-h-(--radix-popover-content-available-height)">
               <Command className="w-full">
                 <CommandInput placeholder="Buscar..." className="h-9 w-full" />
                 <CommandList>

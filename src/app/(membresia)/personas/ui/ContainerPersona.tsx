@@ -100,7 +100,7 @@ export const ContainerPersona = ({ id }: Props) => {
           {/* Altura mínima para evitar saltos */}
           <TabsContent
             value="general"
-            className="mt-0 outline-none animate-in fade-in-50 zoom-in-95 duration-300"
+            className="mt-0 outline-hidden animate-in fade-in-50 zoom-in-95 duration-300"
           >
             <Suspense
               fallback={
@@ -114,13 +114,13 @@ export const ContainerPersona = ({ id }: Props) => {
           </TabsContent>
           <TabsContent
             value="membresia"
-            className="mt-0 outline-none animate-in fade-in-50 zoom-in-95 duration-300"
+            className="mt-0 outline-hidden animate-in fade-in-50 zoom-in-95 duration-300"
           >
             <DataMembresia id={persona.id} membresias={persona.membresia} />
           </TabsContent>
           <TabsContent
             value="familia"
-            className="mt-0 outline-none animate-in fade-in-50 zoom-in-95 duration-300"
+            className="mt-0 outline-hidden animate-in fade-in-50 zoom-in-95 duration-300"
           >
             {/* Lógica condicional limpia */}
             {!persona.familia ? (
@@ -141,7 +141,7 @@ export const ContainerPersona = ({ id }: Props) => {
           </TabsContent>
           <TabsContent
             value="asistencia"
-            className="mt-0 outline-none animate-in fade-in-50 zoom-in-95 duration-300"
+            className="mt-0 outline-hidden animate-in fade-in-50 zoom-in-95 duration-300"
           >
             <div className="p-10 border border-dashed border-blue-200 rounded-lg text-center text-slate-500 bg-blue-50/20">
               <FaCalendarCheck className="mx-auto h-10 w-10 text-blue-200 mb-3" />
@@ -174,7 +174,7 @@ const TabItem = ({
       className="
         flex-1 min-w-[100px] flex items-center justify-center gap-2 py-2.5 px-3 rounded-md text-sm font-medium transition-all
         text-slate-500 hover:text-blue-700 hover:bg-white/50
-        data-[state=active]:bg-white data-[state=active]:text-blue-950 data-[state=active]:shadow-sm data-[state=active]:font-semibold
+        data-[state=active]:bg-white data-[state=active]:text-blue-950 data-[state=active]:shadow-xs data-[state=active]:font-semibold
       "
     >
       {icon}

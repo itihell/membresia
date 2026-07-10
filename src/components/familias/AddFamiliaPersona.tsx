@@ -55,9 +55,9 @@ export const AddFamiliaPersona = ({ personaId, created }: Props) => {
           toast.error("ERROR", {
             description: errorMessage,
             classNames: {
-              toast: "!bg-red-100 border !border-red-300",
+              toast: "bg-red-100! border border-red-300!",
               title: "text-red-800 text-xl border-b border-red-600",
-              description: "!text-red-600",
+              description: "text-red-600!",
             },
           });
         }
@@ -72,9 +72,9 @@ export const AddFamiliaPersona = ({ personaId, created }: Props) => {
         toast.success("Éxito", {
           description: "El miembro se agregó a la familia con éxito",
           classNames: {
-            toast: "!bg-green-100 border !border-green-300",
+            toast: "bg-green-100! border border-green-300!",
             title: "text-green-800 text-xl border-b border-green-600",
-            description: "!text-green-600",
+            description: "text-green-600!",
           },
         });
 
@@ -88,9 +88,9 @@ export const AddFamiliaPersona = ({ personaId, created }: Props) => {
       return toast.error("ERROR", {
         description: message,
         classNames: {
-          toast: "!bg-red-100 border !border-red-300",
+          toast: "bg-red-100! border border-red-300!",
           title: "text-red-800 text-xl border-b border-red-600",
-          description: "!text-red-600",
+          description: "text-red-600!",
         },
       });
     }

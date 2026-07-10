@@ -36,13 +36,13 @@ export function BodyPage({
               </div>
             )}
           </div>
-          {headerAction && <div className="flex-shrink-0">{headerAction}</div>}
+          {headerAction && <div className="shrink-0">{headerAction}</div>}
         </div>
       )}
 
       {/* CAMBIO 2: Contenedor de contenido "Full Canvas" */}
       {/* Mantenemos el borde y sombra sutiles, pero maximizamos el área interna */}
-      <div className="flex-1 rounded-lg border border-blue-100 bg-white shadow-sm overflow-hidden min-h-[calc(100vh-140px)]">
+      <div className="flex-1 rounded-lg border border-blue-100 bg-white shadow-xs overflow-hidden min-h-[calc(100vh-140px)]">
         {/* Padding interno cómodo para que el texto no toque el borde, pero no exagerado */}
         <div className="h-full w-full p-4 md:p-6">{children}</div>
       </div>

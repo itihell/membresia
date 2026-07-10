@@ -46,9 +46,9 @@ export const FormFamilia = ({ id }: Props) => {
           toast.success("Éxito", {
             description: "Familia actaulizada con éxito",
             classNames: {
-              toast: "!bg-green-100 border !border-green-300",
+              toast: "bg-green-100! border border-green-300!",
               title: "text-green-800 text-xl border-b border-green-600",
-              description: "!text-green-600",
+              description: "text-green-600!",
             },
           });
           route.push(`/familias/${familia.id}?familia=${familia.id}`);
@@ -59,9 +59,9 @@ export const FormFamilia = ({ id }: Props) => {
           toast.success("Éxito", {
             description: "Familia agregada con éxito",
             classNames: {
-              toast: "!bg-green-100 border !border-green-300",
+              toast: "bg-green-100! border border-green-300!",
               title: "text-green-800 text-xl border-b border-green-600",
-              description: "!text-green-600",
+              description: "text-green-600!",
             },
           });
           route.push(`/familias/${familia.id}`);
@@ -73,9 +73,9 @@ export const FormFamilia = ({ id }: Props) => {
       return toast.error("ERROR", {
         description: message,
         classNames: {
-          toast: "!bg-red-100 border !border-red-300",
+          toast: "bg-red-100! border border-red-300!",
           title: "text-red-800 text-xl border-b border-red-600",
-          description: "!text-red-600",
+          description: "text-red-600!",
         },
       });
     }
@@ -108,7 +108,7 @@ export const FormFamilia = ({ id }: Props) => {
             <div className="col-span-9">
               <Button
                 type="button"
-                className="!rounded-r-none btn-warning"
+                className="rounded-r-none! btn-warning"
                 onClick={() => {
                   history.back();
                 }}
@@ -116,7 +116,7 @@ export const FormFamilia = ({ id }: Props) => {
                 <FaBan />
                 <span className="ml-2">Cancelar</span>
               </Button>
-              <Button type="submit" className="!rounded-l-none btn-primary">
+              <Button type="submit" className="rounded-l-none! btn-primary">
                 <FaFloppyDisk />
                 {id && <span className="ml-2">Actualizar</span>}
                 {!id && <span className="ml-2">Guardar</span>}

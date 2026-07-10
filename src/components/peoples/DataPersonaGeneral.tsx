@@ -147,7 +147,7 @@ const InfoItem = ({ label, value, isDate }: InfoItemProps) => {
         {label}
       </dt>
       {/* Value: Oscuro, legible */}
-      <dd className="text-sm md:text-[15px] break-words">
+      <dd className="text-sm md:text-[15px] wrap-break-word">
         {formatValue(value, isDate)}
       </dd>
     </div>
