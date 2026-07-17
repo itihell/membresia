@@ -1,0 +1,5 @@
+{
+  "*.{js,jsx,ts,tsx}": ["prettier --write", "next lint --fix"],
+  "*.ts?(x)": ["bash -c 'tsc --noEmit'"],
+  "*.{json,md,css}": ["prettier --write"]
+}
