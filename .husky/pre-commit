@@ -1,12 +1,21 @@
-echo "🔍 Running pre-commit checks..."
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
 
-# Ejecutar lint-staged
-npx lint-staged
+echo "🔍 1/2 Verificando tipado de TypeScript en el proyecto..."
 
-# Si lint-staged falla, el commit se cancela automáticamente
-if [ $? -ne 0 ]; then
-  echo "❌ Pre-commit checks failed. Please fix the issues before committing."
+# Ejecuta el script de tu package.json (tsc --noEmit)
+if ! npm run check-types; then
+  echo "❌ Error de tipado en TypeScript. Corrige los errores antes de hacer el commit."
   exit 1
 fi
 
-echo "✅ Pre-commit checks passed!"
+echo "✅ Tipado correcto."
+echo "🔍 2/2 Ejecutando Linter y Prettier en los archivos modificados..."
+
+if npx lint-staged; then
+  echo "✅ ¡Todo perfecto! Commit exitoso."
+  exit 0
+else
+  echo "❌ El Linter encontró problemas. Revísalos antes de hacer el commit."
+  exit 1
+fi

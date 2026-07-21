@@ -105,19 +105,21 @@ model EventoHasAsistencia {
 }
 
 model Iglesia {
-  id               String           @id @default(uuid())
-  name             String           @db.VarChar(200)
-  email            String           @db.VarChar(200)
-  direccion        String
-  telefonos        String           @db.VarChar(100)
-  created_at       DateTime         @default(now())
-  updated_at       DateTime         @updatedAt
-  eventos          Evento[]         @relation("evento_iglesia_id")
-  Familia          Familia[]
-  membresia        Membresia[]
-  persona          Persona[]
-  users            User[]
-  users_has_church UsersHasChurch[]
+  id                   String                @id @default(uuid())
+  name                 String                @db.VarChar(200)
+  email                String                @db.VarChar(200)
+  direccion            String
+  telefonos            String                @db.VarChar(100)
+  created_at           DateTime              @default(now())
+  updated_at           DateTime              @updatedAt
+  eventos              Evento[]              @relation("evento_iglesia_id")
+  Familia              Familia[]
+  membresia            Membresia[]
+  persona              Persona[]
+  users                User[]
+  users_has_church     UsersHasChurch[]
+  ministerios          Ministerio[]
+  ministerioDirectivos MinisterioDirectivo[]
 
   @@map("iglesias")
 }
@@ -160,54 +162,56 @@ model Pais {
 }
 
 model Persona {
-  id                  String                @id @default(uuid())
-  nombres             String                @db.VarChar(60)
-  apellidos           String                @db.VarChar(60)
-  cedula              String?               @db.VarChar(20)
-  fecha_nacimiento    DateTime?
-  fecha_fe            DateTime?
-  fecha_bautizo       DateTime?
-  sexo_id             Int
-  direccion           String
-  telefono            String?               @db.VarChar(10)
-  user_id             String
-  editor_id           String?
-  estado_civil_id     Int
-  email               String?               @db.VarChar(100)
-  barrio_id           Int
-  created_at          DateTime              @default(now())
-  updated_at          DateTime?             @updatedAt
-  iglesia_id          String
-  bajas               Baja[]                @relation("baja_persona_id")
-  eventoHasAsistencia EventoHasAsistencia[]
-  familia             FamiliaHasPersona?
-  membresia           Membresia[]
-  barrio              Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
-  editor              User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
-  estadoCivil         EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
-  iglesia             Iglesia               @relation(fields: [iglesia_id], references: [id])
-  sexo                Sexo                  @relation(fields: [sexo_id], references: [id])
-  autor               User                  @relation("persona_autor_id", fields: [user_id], references: [id])
-  grupos_has_personas GrupoHasPersona[]
+  id                   String                @id @default(uuid())
+  nombres              String                @db.VarChar(60)
+  apellidos            String                @db.VarChar(60)
+  cedula               String?               @db.VarChar(20)
+  fecha_nacimiento     DateTime?
+  fecha_fe             DateTime?
+  fecha_bautizo        DateTime?
+  sexo_id              Int
+  direccion            String
+  telefono             String?               @db.VarChar(10)
+  user_id              String
+  editor_id            String?
+  estado_civil_id      Int
+  email                String?               @db.VarChar(100)
+  barrio_id            Int
+  created_at           DateTime              @default(now())
+  updated_at           DateTime?             @updatedAt
+  iglesia_id           String
+  bajas                Baja[]                @relation("baja_persona_id")
+  eventoHasAsistencia  EventoHasAsistencia[]
+  familia              FamiliaHasPersona?
+  membresia            Membresia[]
+  barrio               Barrio                @relation("persona_barrio_id", fields: [barrio_id], references: [id])
+  editor               User?                 @relation("persona_editor_id", fields: [editor_id], references: [id])
+  estadoCivil          EstadoCivil           @relation(fields: [estado_civil_id], references: [id])
+  iglesia              Iglesia               @relation(fields: [iglesia_id], references: [id])
+  sexo                 Sexo                  @relation(fields: [sexo_id], references: [id])
+  autor                User                  @relation("persona_autor_id", fields: [user_id], references: [id])
+  grupos_has_personas  GrupoHasPersona[]
+  ministerioDirectivos MinisterioDirectivo[]
 
   @@map("personas")
 }
 
 model Post {
-  id           String         @id @default(uuid())
+  id           String   @id @default(uuid())
   title        String
-  slug         String         @unique
-  content      String
-  published    Boolean        @default(false)
+  slug         String   @unique
+  content      String   @db.Text // Añadido para textos largos
+  published    Boolean  @default(false)
   user_id      String
-  created_at   DateTime       @default(now())
-  updated_at   DateTime       @updatedAt
   categoria_id Int
-  userId       String?
-  categoria    Categoria      @relation(fields: [categoria_id], references: [id])
-  User         User?          @relation(fields: [userId], references: [id])
-  users        User           @relation("post_autor_id", fields: [user_id], references: [id])
-  postHasImage PostHasImage[]
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  categoria Categoria      @relation(fields: [categoria_id], references: [id])
+  autor     User           @relation("post_autor_id", fields: [user_id], references: [id])
+  imagenes  PostHasImage[]
+  user      User?          @relation(fields: [userId], references: [id])
+  userId    String?
 
   @@map("posts")
 }
@@ -379,4 +383,34 @@ model GrupoHasPersona {
 
   @@unique([grupo_id, persona_id])
   @@map("grupos_has_personas")
+}
+
+model Ministerio {
+  id          String   @id @default(uuid())
+  nombre      String   @db.VarChar(100)
+  descripcion String?
+  iglesia_id  String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  iglesia    Iglesia               @relation(fields: [iglesia_id], references: [id])
+  directivos MinisterioDirectivo[]
+
+  @@map("ministerios")
+}
+
+model MinisterioDirectivo {
+  id            String    @id @default(uuid())
+  ministerio_id String
+  persona_id    String
+  cargo         String    @db.VarChar(60) // Ej: Presidente, Tesorero, Vocal
+  fecha_inicio  DateTime
+  fecha_fin     DateTime? // Null significa que sigue activo en el cargo
+  iglesia_id    String // Para mantener el multitenancy directo
+
+  ministerio Ministerio @relation(fields: [ministerio_id], references: [id])
+  persona    Persona    @relation(fields: [persona_id], references: [id])
+  iglesia    Iglesia    @relation(fields: [iglesia_id], references: [id])
+
+  @@map("ministerios_directivos")
 }

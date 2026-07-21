@@ -29,6 +29,60 @@ export const getEventos = async (): Promise<ListaEventos[]> => {
   }
 };
 
+export const getEventosConAsistencia = async () => {
+  try {
+    const session = await auth();
+    if (!session?.user?.iglesia_id) throw new Error("Sin sesión activa");
+
+    const eventos = await prisma.evento.findMany({
+      where: {
+        iglesia_id: session.user.iglesia_id,
+      },
+      include: {
+        tipos_evento: true,
+        eventos_has_asistencia: {
+          select: {
+            id: true,
+            asistio: true,
+            people_id: true,
+          },
+        },
+      },
+      orderBy: {
+        date: "desc",
+      },
+    });
+
+    // Calcular total de miembros activos de la iglesia para el porcentaje
+    const totalMiembros = await prisma.membresia.count({
+      where: {
+        iglesia_id: session.user.iglesia_id,
+        activo: true,
+      },
+    });
+
+    return eventos.map(evento => {
+      const totalEnEvento = evento.eventos_has_asistencia.length;
+      const asistieron = evento.eventos_has_asistencia.filter(
+        a => a.asistio
+      ).length;
+      return {
+        ...evento,
+        totalMiembros,
+        totalEnEvento,
+        asistieron,
+        porcentaje:
+          totalEnEvento > 0
+            ? Math.round((asistieron / totalEnEvento) * 100)
+            : 0,
+      };
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudo obtener los eventos con asistencia");
+  }
+};
+
 export const createEvent = async (payload: Evento) => {
   try {
     return await prisma.$transaction(async prisma => {
@@ -110,5 +164,33 @@ export const updateAsistencia = async (id: string, status: boolean) => {
   } catch (error) {
     console.error(error);
     throw new Error("No se pudo actualizar la asistencia");
+  }
+};
+
+export const addPersonaToEvento = async (
+  eventoId: string,
+  personaId: string
+) => {
+  try {
+    // Verificar si ya existe
+    const existing = await prisma.eventoHasAsistencia.findFirst({
+      where: {
+        evento_id: eventoId,
+        people_id: personaId,
+      },
+    });
+
+    if (existing) return existing;
+
+    return await prisma.eventoHasAsistencia.create({
+      data: {
+        evento_id: eventoId,
+        people_id: personaId,
+        asistio: true, // Si la agregan manualmente, se asume que asistió
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudo agregar la persona al evento");
   }
 };
