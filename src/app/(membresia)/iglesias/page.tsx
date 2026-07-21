@@ -1,18 +1,18 @@
-import Link from "next/link";
-import { IoCartOutline } from "react-icons/io5";
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
-export default function EmptyPage() {
+import { IglesiasList } from "@/components";
+import { BodyPage } from "@/modules/common/components";
+import { getIglesias } from "@/actions";
+
+export default async function IglesiasPage() {
+  const iglesias = await getIglesias();
+
   return (
-    <div className="flex justify-center items-center h-[800px]">
-      <IoCartOutline size={80} className="mx-5" />
-
-      <div className="flex flex-col items-center">
-        <h1 className="text-xl font-semibold">Tu carrito está vacío</h1>
-
-        <Link href="/" className="text-blue-500 mt-2 text-4xl">
-          Regresar
-        </Link>
+    <BodyPage title="Iglesias">
+      <div>
+        <IglesiasList iglesias={iglesias} />
       </div>
-    </div>
+    </BodyPage>
   );
 }

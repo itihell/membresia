@@ -10,6 +10,8 @@ export * from "./familias/MiembrosHasFamilia";
 export * from "./membresias/FormMembresia";
 export * from "./membresias/GridMembresia";
 export * from "./membresias/GridMembresiaItem";
+export * from "./iglesias/IglesiaDialog";
+export * from "./iglesias/IglesiasList";
 export * from "./peoples/DataMembresia";
 export * from "./peoples/DataPersonaGeneral";
 export * from "./peoples/people-grid/PeopleGrid";
