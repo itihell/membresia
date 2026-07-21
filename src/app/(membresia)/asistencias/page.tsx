@@ -1,14 +1,16 @@
-import { Title } from "@/components";
+import { AsistenciasGrid } from "@/components";
+import { BodyPage } from "@/modules/common/components";
 
-export default function AdminPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default function AsistenciasPage() {
   return (
-    <>
-    <Title
-        title="Asistencias"
-        subtitle="Listado de asistencias de eventos de tu iglesia"
-        className="mb-2"
-      />
-      <h1>Pagina de asistencias</h1>
-    </>
+    <BodyPage
+      title="Asistencias"
+      subtitle="Listado de eventos — selecciona uno para pasar asistencia"
+    >
+      <AsistenciasGrid />
+    </BodyPage>
   );
 }
