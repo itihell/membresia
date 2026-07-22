@@ -169,7 +169,8 @@ export const updateAsistencia = async (id: string, status: boolean) => {
 
 export const addPersonaToEvento = async (
   eventoId: string,
-  personaId: string
+  personaId: string,
+  visitante: boolean = false
 ) => {
   try {
     // Verificar si ya existe
@@ -187,10 +188,83 @@ export const addPersonaToEvento = async (
         evento_id: eventoId,
         people_id: personaId,
         asistio: true, // Si la agregan manualmente, se asume que asistió
+        visitante: visitante,
       },
     });
   } catch (error) {
     console.error(error);
     throw new Error("No se pudo agregar la persona al evento");
+  }
+};
+
+export const updateEvent = async (id: string, payload: Evento) => {
+  try {
+    const session = await auth();
+    const evento = await prisma.evento.update({
+      where: { id },
+      data: {
+        title: payload.title,
+        description: payload.description,
+        tipo_evento_id: payload.tipo_evento_id,
+        date: payload.date,
+        user_edit_id: session?.user?.id as string,
+      },
+    });
+    return evento;
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudo actualizar el evento");
+  }
+};
+
+export const deleteEvent = async (id: string) => {
+  try {
+    return await prisma.$transaction(async prisma => {
+      // Eliminar asistencia asociada
+      await prisma.eventoHasAsistencia.deleteMany({
+        where: { evento_id: id },
+      });
+      // Eliminar el evento
+      return await prisma.evento.delete({
+        where: { id },
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudo eliminar el evento");
+  }
+};
+
+export const searchPersonasVisitantes = async (
+  eventoId: string,
+  query: string
+) => {
+  try {
+    const session = await auth();
+    if (!session?.user?.iglesia_id) throw new Error("Sin sesión activa");
+
+    // Buscar personas en la misma iglesia que coincidan con el término,
+    // y que NO tengan un registro de asistencia para este evento
+    const personas = await prisma.persona.findMany({
+      where: {
+        iglesia_id: session.user.iglesia_id,
+        OR: [
+          { nombres: { contains: query, mode: "insensitive" } },
+          { apellidos: { contains: query, mode: "insensitive" } },
+          { cedula: { contains: query, mode: "insensitive" } },
+        ],
+        NOT: {
+          eventoHasAsistencia: {
+            some: { evento_id: eventoId },
+          },
+        },
+      },
+      take: 10, // Límite de resultados
+    });
+
+    return personas;
+  } catch (error) {
+    console.error(error);
+    throw new Error("No se pudieron buscar los visitantes");
   }
 };

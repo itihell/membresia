@@ -22,7 +22,11 @@ import { ListTipoEventos } from "../ui/lists/list-tipo-eventos";
 import { FaBan, FaFloppyDisk } from "react-icons/fa6";
 import { useCustomError } from "@/hooks";
 import { Textarea } from "../ui/textarea";
-import { createEvent } from "@/actions";
+import {
+  createEvent,
+  updateEvent,
+  getEventosByIdWhithAsistencia,
+} from "@/actions";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -42,6 +46,21 @@ export const FormEvents = ({ id }: Props) => {
   });
 
   useEffect(() => {
+    if (id) {
+      getEventosByIdWhithAsistencia(id).then(data => {
+        if (data) {
+          form.reset({
+            title: data.title,
+            description: data.description || "",
+            date: new Date(data.date),
+            tipo_evento_id: data.tipo_evento_id,
+          });
+        }
+      });
+    }
+  }, [id, form]);
+
+  useEffect(() => {
     if (form?.formState?.errors) {
       const errors = form?.formState?.errors;
       useErrors.handlerValidaError(errors);
@@ -50,14 +69,22 @@ export const FormEvents = ({ id }: Props) => {
 
   const onSubmit = async (data: z.infer<typeof EventoSchema>) => {
     try {
-      const evento = await createEvent(data);
-      if (evento.id) {
+      if (id) {
+        await updateEvent(id, data as any);
         useErrors.handlerSingleSuccess(
           "Éxito",
-          "Evento guardado correctamente"
+          "Evento actualizado correctamente"
         );
-
-        router.push(`/eventos/${evento.id}`);
+        router.push(`/eventos/${id}`);
+      } else {
+        const evento = await createEvent(data as any);
+        if (evento.id) {
+          useErrors.handlerSingleSuccess(
+            "Éxito",
+            "Evento guardado correctamente"
+          );
+          router.push(`/eventos/${evento.id}`);
+        }
       }
     } catch (error) {
       console.error({ error });

@@ -4,6 +4,7 @@ import type { People } from "./people.interface";
 export interface EventoHasAsistencia {
   id?: string;
   asistio: boolean;
+  visitante: boolean;
   evento_id: string;
   people_id: string;
   created_at?: Date | null;
