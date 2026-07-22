@@ -93,6 +93,7 @@ model Evento {
 model EventoHasAsistencia {
   id         String    @id @default(uuid())
   asistio    Boolean
+  visitante  Boolean   @default(false)
   evento_id  String
   people_id  String
   created_at DateTime  @default(now())

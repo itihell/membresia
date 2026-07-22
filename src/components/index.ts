@@ -15,6 +15,7 @@ export * from "./iglesias/IglesiasList";
 export * from "./asistencias/AsistenciasEventoCard";
 export * from "./asistencias/AsistenciasSheet";
 export * from "./asistencias/AsistenciasGrid";
+export * from "./asistencias/BuscarVisitanteDialog";
 export * from "./asistencias/AgregarPersonaDialog";
 export * from "./peoples/DataMembresia";
 export * from "./peoples/DataPersonaGeneral";

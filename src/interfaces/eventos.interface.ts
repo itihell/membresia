@@ -29,4 +29,5 @@ export interface countAsistencia {
   hombres: number;
   mujeres: number;
   total: number;
+  visitantes: number;
 }
